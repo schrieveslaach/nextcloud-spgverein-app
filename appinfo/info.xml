@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>spgverein</id>
+    <name>SPG Verein</name>
+    <summary>Access data of SPG-Verein in your Nextcloud instance</summary>
+    <description><![CDATA[Access data of SPG-Verein in your Nextcloud instance. For example, your club members will be available in your address book.]]></description>
+    <licence>agpl</licence>
+    <author mail="info@schrieveslaach.de" homepage="http://schrieveslaach.de">Schrieveslaach</author>
+    <version>0.0.1</version>
+    <namespace>SPGVerein</namespace>
+    <category>tools</category>
+    <dependencies>
+        <nextcloud min-version="11" max-version="12"/>
+    </dependencies>
+    
+    <repository type="git">https://gitlab.com/schrieveslaach/nextcloud-spgverein-app</repository>
+</info>
