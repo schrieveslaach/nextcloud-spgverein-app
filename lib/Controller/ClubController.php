@@ -14,10 +14,7 @@ class ClubController extends Controller {
     public function listMembers() {
         $club = new Club();
 
-        $club->getAllMembers();
-
-        /* $params = array('test' => 'hi');
-          return new JSONResponse($params); */
+        return $club->getAllMembers();
     }
 
 }

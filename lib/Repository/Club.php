@@ -2,6 +2,8 @@
 
 namespace OCA\SPGVerein\Repository;
 
+use OCP\AppFramework\Http\JSONResponse;
+
 class Club {
 
     private $startSymbols = "\x00\x00\x4c\x80";
@@ -12,34 +14,35 @@ class Club {
     }
 
     public function getAllMembers() {
+        $members = array();
+
         $handle = fopen($this->filename, "rb") or die("Couldn't get handle");
         if ($handle) {
 
             $previous = "";
-            $absolutePos = 0;
-            while (($buffer = fgets($handle, 4)) !== false) {
-
-                $absolutePos += 4;
+            while (($buffer = fgets($handle, 5)) !== false) {
 
                 $symbolSearchBuffer = $previous . $buffer;
                 $startSymbolPos = strpos($symbolSearchBuffer, $this->startSymbols);
                 if ($startSymbolPos !== false) {
 
-                    echo "Pos: $absolutePos...";
+                    $memberData = substr($symbolSearchBuffer, $startSymbolPos + strlen($this->startSymbols));
+                    $memberData .= fgets($handle, 3200 - strlen($memberData));
 
-                    $memberData = fgets($handle, 3200 - (strlen($symbolSearchBuffer) - $startSymbolPos));
+                    $member = array(
+                        "id" => (int) substr($memberData, 0, 10),
+                        "title" => trim(substr($memberData, 10, 15)),
+                    );
 
-                    $absolutePos += strlen($memberData);
-
-                    $memberId = substr($symbolSearchBuffer + $memberData, $startSymbolPos, 10);
-                    //echo "found: $memberId";
+                    array_push($members, $member);
                 }
 
                 $previous = $buffer;
-                echo ".";
             }
             fclose($handle);
         }
+
+        return new JSONResponse($members);
     }
 
 }
