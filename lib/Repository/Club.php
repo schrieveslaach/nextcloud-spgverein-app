@@ -8,8 +8,10 @@ class Club {
 
     private $startSymbols = "\x00\x00\x4c\x80";
     private $filename;
+    private $storage;
 
-    function __construct() {
+    function __construct($storage) {
+        $this->storage = $storage;
         $this->filename = "....";
     }
 
