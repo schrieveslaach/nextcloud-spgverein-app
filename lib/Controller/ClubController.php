@@ -19,7 +19,7 @@ class ClubController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function listMembers() {
+    public function listMembers(): \OCP\AppFramework\Http\JSONResponse {
         return $this->club->getAllMembers();
     }
 

@@ -1,6 +1,6 @@
-# SPG Verein
-
 ![Quality Gate](https://sonarqube.com/api/badges/gate?key=de.schrieveslaach.nextcloud.spgverein)
+
+# SPG Verein
 
 Place this app in **nextcloud/apps/**
 
