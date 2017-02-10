@@ -6,5 +6,6 @@
 </div>
 
 <?php
+script('spgverein', 'jspdf.min');
 script('spgverein', 'script');
 

@@ -1,7 +1,23 @@
+function printAsPdf(event) {
+    var doc = new jsPDF();
+    event.data.find('.address').each(function (row, d) {
+        $(d).find('p').each(function (j, p) {
+            doc.text($(p).text(),
+                    10,
+                    10 + 10 * j + (row % 6) * 50);
+        });
+
+        if (row % 6 === 0) {
+            doc.addPage();
+        }
+    });
+
+    doc.save(event.data.find('h1').text() + '.pdf');
+}
+
 $(document).ready(function () {
 
-    var authorUrl = OC.generateUrl('/apps/spgverein/members');
-    $.getJSON('members', function (data) {
+    $.getJSON(OC.generateUrl('/apps/spgverein/members'), function (data) {
         var orderByCity = new Map();
 
         $.each(data, function (i, member) {
@@ -25,11 +41,17 @@ $(document).ready(function () {
 
 
         for (var [key, groupedByAddress] of orderByCity) {
-            var city = $('<h1 class="city"/>').appendTo($('#members'));
+
+
+            var membersDiv = $('<div/>').appendTo($('#members'));
+            var city = $('<h1 class="city"/>').appendTo(membersDiv);
             city.append(document.createTextNode(key));
 
+            var printButton = $('<button class="download-address-lables" type="button">PDF</button>').appendTo(membersDiv);
+            printButton.click(membersDiv, printAsPdf);
+
             for (var [key, members] of groupedByAddress) {
-                var address = $('<div/>').appendTo($('#members'));
+                var address = $('<div/>').appendTo(membersDiv);
                 address.attr('class', "address");
 
                 var lastname = $('<p/>').appendTo(address);
