@@ -67,6 +67,8 @@ class Club {
         // if lastname contains none ascii code following fields need to be shifted
         $zipCode = substr($memberDataUtf8, 200, 6);
         $shift = $zipCode[0] === ' ' ? 1 : 0;
+        $shift += $zipCode[1] === ' ' ? 1 : 0;
+        $shift += $zipCode[2] === ' ' ? 1 : 0;
 
         return array(
             "id" => (int) substr($memberDataUtf8, 0, 10),
