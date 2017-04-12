@@ -65,8 +65,7 @@ class Member implements JsonSerializable {
             $persons .= " ";
         }
 
-        $persons .= $this->firstname . " " . $this->lastname;
-        return $persons;
+        return $persons . $this->firstname . " " . $this->lastname;
     }
 
     public function getId(): int {
