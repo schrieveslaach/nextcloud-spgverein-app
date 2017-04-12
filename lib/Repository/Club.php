@@ -2,6 +2,7 @@
 
 namespace OCA\SPGVerein\Repository;
 
+use OCA\SPGVerein\Model\Member;
 use OCP\Files\File;
 
 class Club {
@@ -33,8 +34,8 @@ class Club {
 
                 $i += self::MEMBER_DATA_FIELD_LENGTH - 4;
 
-                $member = $this->parseMember($memberData);
-                $members[$member["id"]] = $member;
+                $member = new Member($memberData);
+                array_push($members, $member);
             }
 
             $previous = $buffer;
@@ -57,35 +58,6 @@ class Club {
         } else {
             throw new StorageException('Could not open club file');
         }
-    }
-
-    private function parseMember(string $memberData): array {
-        $memberDataUtf8 = mb_convert_encoding($memberData, 'UTF-8', 'ISO-8859-1');
-
-        // These lines ensures that data after lastname is aligned correctly:
-        // if lastname contains none ascii code following fields need to be shifted
-        $zipCode = substr($memberDataUtf8, 200, 6);
-        $shift = $zipCode[0] === ' ' ? 1 : 0;
-        $shift += $zipCode[1] === ' ' ? 1 : 0;
-        $shift += $zipCode[2] === ' ' ? 1 : 0;
-
-        // Same as above...
-        $relatedId = substr($memberDataUtf8, 1432 + $shift, 10);
-        $shift2 = $relatedId[0] === ' ' ? 1 : 0;
-        $shift2 += $relatedId[1] === ' ' ? 1 : 0;
-        $shift2 += $relatedId[2] === ' ' ? 1 : 0;
-
-        return array(
-            "id" => (int) substr($memberDataUtf8, 0, 10),
-            "salutation" => trim(substr($memberDataUtf8, 10, 15)),
-            "title" => trim(substr($memberDataUtf8, 25, 35)),
-            "firstname" => trim(substr($memberDataUtf8, 60, 35)),
-            "lastname" => trim(substr($memberDataUtf8, 95, 70)),
-            "street" => trim(substr($memberDataUtf8, 165, 35)),
-            "zipcode" => substr($memberDataUtf8, 200 + $shift, 5),
-            "city" => trim(substr($memberDataUtf8, 205 + $shift, 40)),
-            "related-id" => (int) substr($memberDataUtf8, 1432 + $shift + $shift2, 10)
-        );
     }
 
 }

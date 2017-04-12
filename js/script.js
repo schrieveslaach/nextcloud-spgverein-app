@@ -2,7 +2,7 @@ function generatePdf(city) {
     var groupingOption = $(".grouping-option:checked").attr('id');
     $.getJSON(OC.generateUrl('/apps/spgverein/members/' + groupingOption), function (members) {
         var doc = new jsPDF('p', 'pt', 'letter');
-        var fontSize = 9;
+        var fontSize = 14;
         doc.setFontSize(fontSize);
 
         var row = 0;
@@ -13,33 +13,29 @@ function generatePdf(city) {
                 return;
             }
 
-            var margin = 25;
-            var pad = 2;
-            var width = 160;
+            var margin = 50;
+            var pad = 4;
+            var width = 320;
 
-            doc.text(member.lastname,
+            doc.text(member.fullnames,
                     margin + column * width,
                     margin + row * 100);
 
-            doc.text(member.firstname,
-                    margin + column * width,
-                    margin + pad + fontSize + row * 100);
-
             doc.text(member.street,
                     margin + column * width,
-                    margin + 2 * (pad + fontSize) + row * 100);
+                    margin + (member.fullnames.length) * (pad + fontSize) + row * 100);
 
             doc.text(member.zipcode + ' ' + member.city,
                     margin + column * width,
-                    margin + 3 * (pad + fontSize) + row * 100);
+                    margin + (member.fullnames.length + 1) * (pad + fontSize) + row * 100);
 
             ++column;
-            if (column % 3 === 0) {
+            if (column % 2 === 0) {
                 column = 0;
                 ++row;
             }
 
-            if ((row + 1) % 9 === 0) {
+            if ((row + 1) % 7 === 0) {
                 row = 0;
                 doc.addPage();
             }
@@ -92,10 +88,10 @@ function loadMembers() {
             var address = $('<div/>').appendTo($('h1[id="' + member.city + '"]').parent());
             address.attr('class', "address");
 
-            $('<p/>').appendTo(address)
-                    .append(member.lastname);
-            $('<p/>').appendTo(address)
-                    .append(member.firstname);
+            $.each(member.fullnames, function (j, fullname) {
+                $('<p/>').appendTo(address)
+                        .append(fullname);
+            });
             $('<p/>').appendTo(address)
                     .append(member.street);
             $('<p/>').appendTo(address)
