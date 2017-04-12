@@ -10,7 +10,7 @@
 
 ## Screenshots
 
-![Screenshot SPG Verein][assets/screenshot-01.png]
+![Screenshot SPG Verein](assets/screenshot-01.png)
 
 ## Installation
 
