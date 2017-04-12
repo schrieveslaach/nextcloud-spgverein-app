@@ -6,7 +6,7 @@
    <summary>Access data of SPG-Verein in your Nextcloud instance</summary>
    <description><![CDATA[Access data of SPG-Verein in your Nextcloud instance. For example, your club members will be available in your address book.]]></description>
    <licence>agpl</licence>
-   <author mail="info@schrieveslaach.de" homepage="http://schrieveslaach.de">Schrieveslaach</author>
+   <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Schrieveslaach</author>
    <version>0.0.1</version>
    <namespace>SPGVerein</namespace>
    <category>tools</category>

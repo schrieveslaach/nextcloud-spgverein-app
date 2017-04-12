@@ -1,6 +1,7 @@
 <?php
 script('spgverein', 'script');
 style('spgverein', 'style');
+style('spgverein', 'font-awesome.min');
 ?>
 
 <div id="app">
