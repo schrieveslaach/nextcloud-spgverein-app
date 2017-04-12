@@ -1,6 +1,9 @@
 {
     "translations": {
-        "SPG Verein": "SPG Verein",
-        "Address labels": "Adressetiketten"
+        "Address": "Anschrift",
+        "Districts": "Bezirke",
+        "None": "Keine",
+        "Related ID": "Verknüpfte Mitgliedsnummer",
+        "SPG Verein": "SPG Verein"
     }
 }

@@ -2,7 +2,6 @@
 
 namespace OCA\SPGVerein\Repository;
 
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\File;
 
 class Club {
@@ -16,7 +15,7 @@ class Club {
         $this->storage = $storage;
     }
 
-    public function getAllMembers(): JSONResponse {
+    public function getAllMembers(): array {
         $members = array();
 
         $clubFile = $this->openClubFile();
@@ -35,13 +34,13 @@ class Club {
                 $i += self::MEMBER_DATA_FIELD_LENGTH - 4;
 
                 $member = $this->parseMember($memberData);
-                array_push($members, $member);
+                $members[$member["id"]] = $member;
             }
 
             $previous = $buffer;
         }
 
-        return new JSONResponse($members);
+        return $members;
     }
 
     private function openClubFile(): File {
@@ -70,6 +69,12 @@ class Club {
         $shift += $zipCode[1] === ' ' ? 1 : 0;
         $shift += $zipCode[2] === ' ' ? 1 : 0;
 
+        // Same as above...
+        $relatedId = substr($memberDataUtf8, 1432 + $shift, 10);
+        $shift2 = $relatedId[0] === ' ' ? 1 : 0;
+        $shift2 += $relatedId[1] === ' ' ? 1 : 0;
+        $shift2 += $relatedId[2] === ' ' ? 1 : 0;
+
         return array(
             "id" => (int) substr($memberDataUtf8, 0, 10),
             "salutation" => trim(substr($memberDataUtf8, 10, 15)),
@@ -79,6 +84,7 @@ class Club {
             "street" => trim(substr($memberDataUtf8, 165, 35)),
             "zipcode" => substr($memberDataUtf8, 200 + $shift, 5),
             "city" => trim(substr($memberDataUtf8, 205 + $shift, 40)),
+            "related-id" => (int) substr($memberDataUtf8, 1432 + $shift + $shift2, 10)
         );
     }
 

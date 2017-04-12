@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+#app-navigation > ul ul {
+    display: inline;
+}
+
 .address {
     display: inline-block;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -24,6 +28,7 @@
 .city {
     font-weight: 700;
     font-size: x-large;
+    padding: 0.3em;
 }
 
 .download-address-lables {

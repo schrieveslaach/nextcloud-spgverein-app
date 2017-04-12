@@ -15,69 +15,60 @@ function printAsPdf(event) {
     doc.save(event.data.find('h1').text() + '.pdf');
 }
 
+function loadCities() {
+    $.getJSON(OC.generateUrl('/apps/spgverein/cities'), function (cities) {
+        $.each(cities, function (i, city) {
+            // Add to navigation
+            var cityShortCut = $('<li/>').appendTo($('#navigation-districts'));
+            $('<a/>').appendTo(cityShortCut)
+                    .addClass('district')
+                    .attr('href', '#' + city)
+                    .text(city);
+
+            // Create container holding all member of that district
+            var districtWithMembers = $('<div/>').appendTo($('#members'));
+            $('<h1/>').appendTo(districtWithMembers)
+                    .addClass("city")
+                    .attr('id', city)
+                    .append(document.createTextNode(city));
+        });
+    });
+}
+
+function loadMembers() {
+    var groupingOption = $(".grouping-option:checked").attr('id');
+
+    $.getJSON(OC.generateUrl('/apps/spgverein/members/' + groupingOption), function (members) {
+
+        // Remove old elements
+        $('.address').remove();
+
+        $.each(members, function (i, member) {
+
+            var address = $('<div/>').appendTo($('h1[id="' + member.city + '"]').parent());
+            address.attr('class', "address");
+
+            $('<p/>').appendTo(address)
+                    .append(member.lastname);
+            $('<p/>').appendTo(address)
+                    .append(member.firstname);
+            $('<p/>').appendTo(address)
+                    .append(member.street);
+            $('<p/>').appendTo(address)
+                    .append(member.zipcode + ' ' + member.city);
+        });
+    });
+}
+
 $(document).ready(function () {
 
-    $.getJSON(OC.generateUrl('/apps/spgverein/members'), function (data) {
-        var orderByCity = new Map();
+    $(".grouping-option").change(function () {
+        $(".grouping-option").prop('checked', false);
+        $(this).prop('checked', true);
 
-        $.each(data, function (i, member) {
-            var groupedByAddress = orderByCity.get(member.city);
-            if (groupedByAddress === undefined) {
-                groupedByAddress = new Map();
-                orderByCity.set(member.city, groupedByAddress);
-            }
-
-            var address = member.street + "\n" + member.zipcode + "\n" + member.city;
-
-            var groupedMembers = groupedByAddress.get(address);
-            if (groupedMembers === undefined) {
-                groupedMembers = [];
-            }
-            groupedMembers.push(member);
-
-            groupedByAddress.set(address, groupedMembers);
-        });
-
-
-
-        for (var [key, groupedByAddress] of orderByCity) {
-
-
-            var membersDiv = $('<div/>').appendTo($('#members'));
-            var city = $('<h1 class="city"/>').appendTo(membersDiv);
-            city.append(document.createTextNode(key));
-
-            var printButton = $('<button class="download-address-lables" type="button">PDF</button>').appendTo(membersDiv);
-            printButton.click(membersDiv, printAsPdf);
-
-            for (var [key, members] of groupedByAddress) {
-                var address = $('<div/>').appendTo(membersDiv);
-                address.attr('class', "address");
-
-                var lastname = $('<p/>').appendTo(address);
-                var names = $('<p/>').appendTo(address);
-                var street = $('<p/>').appendTo(address);
-                var zipCodeAndCity = $('<p/>').appendTo(address);
-                $.each(members, function (i, member) {
-                    if (i === 0) {
-                        lastname.append(document.createTextNode(member.lastname));
-                        street.append(document.createTextNode(member.street));
-                        zipCodeAndCity.append(document.createTextNode(member.zipcode + ' ' + member.city));
-                    }
-
-                    var prefix = "";
-                    if (members.length > 1) {
-                        if (i === members.length - 1) {
-                            prefix = " und ";
-                        } else if (i > 0) {
-                            prefix = ", ";
-                        }
-                    }
-
-                    var name = prefix + member.firstname;
-                    names.append(document.createTextNode(name));
-                });
-            }
-        }
+        loadMembers();
     });
+
+    loadCities();
+    loadMembers();
 });
