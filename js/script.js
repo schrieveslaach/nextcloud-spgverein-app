@@ -72,6 +72,8 @@ function loadCities() {
                                 generatePdf(city);
                             }));
         });
+
+        loadMembers();
     });
 }
 
@@ -110,5 +112,4 @@ $(document).ready(function () {
     });
 
     loadCities();
-    loadMembers();
 });
