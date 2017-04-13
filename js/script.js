@@ -67,7 +67,7 @@ function loadCities() {
                     .append($('<a/>')
                             .addClass('pdf-link')
                             .append($('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> '))
-                            .append(document.createTextNode(t('spgverein', 'Download as PDF')))
+                            .append(document.createTextNode(' ' + t('spgverein', 'Download as PDF')))
                             .click(function () {
                                 generatePdf(city);
                             }));
@@ -80,24 +80,61 @@ function loadCities() {
 function loadMembers() {
     var groupingOption = $(".grouping-option:checked").attr('id');
 
-    $.getJSON(OC.generateUrl('/apps/spgverein/members/' + groupingOption), function (members) {
+    $.getJSON(OC.generateUrl('/apps/spgverein/members/' + groupingOption), function (data) {
 
         // Remove old elements
-        $('.address').remove();
+        $('.ui-grid-a').remove();
 
-        $.each(members, function (i, member) {
+        var numberOfColumns = function () {
+            if (window.matchMedia('(min-width: 992px)').matches) {
+                return 4;
+            }
 
-            var address = $('<div/>').appendTo($('h1[id="' + member.city + '"]').parent());
-            address.attr('class', "address");
+            if (window.matchMedia('(min-width: 768px)').matches) {
+                return 3;
+            }
 
-            $.each(member.fullnames, function (j, fullname) {
+            if (window.matchMedia('(min-width: 576px)').matches) {
+                return 2;
+            }
+
+            return 1;
+        };
+
+        var row = function (city, j, membersCount) {
+            if (j % numberOfColumns() === 0) {
+                return $('<div/>')
+                        .addClass('ui-grid-a')
+                        .appendTo($('h1[id="' + city + '"]').parent());
+            } else {
+                return $('h1[id="' + city + '"]')
+                        .parent()
+                        .find('.ui-grid-a')
+                        .last();
+            }
+        };
+
+        var members = new Members(data);
+        $.each(members.getCities(), function (i, city) {
+            var cityMembers = members.getMembersOf(city);
+
+            $.each(cityMembers, function (j, member) {
+                var address = $('<div/>')
+                        .addClass('ui-block-a');
+
+                $.each(member.fullnames, function (j, fullname) {
+                    $('<p/>').appendTo(address)
+                            .append(fullname);
+                });
                 $('<p/>').appendTo(address)
-                        .append(fullname);
+                        .append(member.street);
+                $('<p/>').appendTo(address)
+                        .append(member.zipcode + ' ' + member.city);
+
+                row(city, j, cityMembers.length).append(address);
             });
-            $('<p/>').appendTo(address)
-                    .append(member.street);
-            $('<p/>').appendTo(address)
-                    .append(member.zipcode + ' ' + member.city);
+
+
         });
     });
 }

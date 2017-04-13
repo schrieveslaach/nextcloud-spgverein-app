@@ -17,16 +17,33 @@
 }
 
 .pdf-link {
-    float: right;
+    padding: 5px;
+    padding-bottom: 15px;
+    padding-top: 15px;
 }
 
-.address {
+.ui-block-a {
+    border: #ddd 1px solid;
     display: inline-block;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 250px;
-    height: 150px;
-    padding: 0.5em;
-    margin: 20px;
+    padding: 2px;
+    margin: 2px;
+    height: 110px;
+}
+
+@media all and (min-width: 576px) {
+    .ui-block-a {
+        width: 48%;
+    }
+}
+@media all and (min-width: 768px) {
+    .ui-block-a {
+        width: 32%;
+    }
+}
+@media all and (min-width: 992px) {
+    .ui-block-a {
+        width: 24.50%;
+    }
 }
 
 .city {
