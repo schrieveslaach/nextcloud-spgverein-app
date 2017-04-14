@@ -1,50 +1,3 @@
-function generatePdf(city) {
-    var groupingOption = $(".grouping-option:checked").attr('id');
-    $.getJSON(OC.generateUrl('/apps/spgverein/members/' + groupingOption), function (members) {
-        var doc = new jsPDF('p', 'pt', 'letter');
-        var fontSize = 14;
-        doc.setFontSize(fontSize);
-
-        var row = 0;
-        var column = 0;
-
-        $.each(members, function (i, member) {
-            if (member.city !== city) {
-                return;
-            }
-
-            var margin = 50;
-            var pad = 4;
-            var width = 320;
-
-            doc.text(member.fullnames,
-                    margin + column * width,
-                    margin + row * 100);
-
-            doc.text(member.street,
-                    margin + column * width,
-                    margin + (member.fullnames.length) * (pad + fontSize) + row * 100);
-
-            doc.text(member.zipcode + ' ' + member.city,
-                    margin + column * width,
-                    margin + (member.fullnames.length + 1) * (pad + fontSize) + row * 100);
-
-            ++column;
-            if (column % 2 === 0) {
-                column = 0;
-                ++row;
-            }
-
-            if ((row + 1) % 7 === 0) {
-                row = 0;
-                doc.addPage();
-            }
-        });
-
-        doc.save(city + '.pdf');
-    });
-}
-
 function loadCities() {
     $.getJSON(OC.generateUrl('/apps/spgverein/cities'), function (cities) {
         $.each(cities, function (i, city) {
@@ -66,10 +19,10 @@ function loadCities() {
                     .addClass("w100")
                     .append($('<a/>')
                             .addClass('pdf-link')
-                            .append($('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> '))
-                            .append(document.createTextNode(' ' + t('spgverein', 'Download as PDF')))
+                            .append($('<i class="fa fa-print" aria-hidden="true"></i> '))
+                            .append(document.createTextNode(' ' + t('spgverein', 'Print')))
                             .click(function () {
-                                generatePdf(city);
+                                printMembersOfCity(city);
                             }));
         });
 
