@@ -45,6 +45,7 @@ class Member implements JsonSerializable {
 
     public function jsonSerialize() {
         return array(
+            "id" => $this->id,
             "fullnames" => array($this->getFullname()),
             "street" => $this->street,
             "zipcode" => $this->zipcode,

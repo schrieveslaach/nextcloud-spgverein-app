@@ -41,6 +41,10 @@ function printMembersOfCity(city) {
                 return;
             }
 
+            if (!$('#member-' + member.id + ' .address-block-checkbox').is(':checked')) {
+                return;
+            }
+
             var address = $('<div/>')
                     .addClass('address')
                     .appendTo(rowDiv(memberIndex));

@@ -11,7 +11,7 @@
    <namespace>SPGVerein</namespace>
    <category>tools</category>
    <dependencies>
-      <nextcloud min-version="11" max-version="12"/>
+      <nextcloud min-version="11" max-version="13"/>
    </dependencies>
     
    <repository type="git">https://gitlab.com/schrieveslaach/nextcloud-spgverein-app</repository>

@@ -46,6 +46,16 @@
     }
 }
 
+.address-block {
+    position: relative;
+}
+
+.address-block-checkbox {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .city {
     font-weight: 700;
     font-size: x-large;

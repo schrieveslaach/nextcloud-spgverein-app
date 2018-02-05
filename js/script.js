@@ -73,7 +73,9 @@ function loadMembers() {
 
             $.each(cityMembers, function (j, member) {
                 var address = $('<div/>')
-                        .addClass('ui-block-a');
+                        .addClass('ui-block-a')
+                        .addClass('address-block')
+                        .attr('id', 'member-' + member.id);
 
                 $.each(member.fullnames, function (j, fullname) {
                     $('<p/>').appendTo(address)
@@ -83,6 +85,12 @@ function loadMembers() {
                         .append(member.street);
                 $('<p/>').appendTo(address)
                         .append(member.zipcode + ' ' + member.city);
+
+                $('<input/>').appendTo(address)
+                        .attr('type', 'checkbox')
+                        .attr('value', member.id)
+                        .attr('checked', 'true')
+                        .addClass('address-block-checkbox');
 
                 row(city, j, cityMembers.length).append(address);
             });

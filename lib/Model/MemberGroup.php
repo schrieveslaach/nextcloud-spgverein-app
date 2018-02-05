@@ -20,6 +20,7 @@ class MemberGroup implements JsonSerializable {
         }
 
         return array(
+            "id" => $this->memberId,
             "fullnames" => $this->getFullnames(),
             "street" => $this->members[0]->getStreet(),
             "zipcode" => $this->members[0]->getZipcode(),
