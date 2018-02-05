@@ -23,6 +23,13 @@ function loadCities() {
                             .append(document.createTextNode(' ' + t('spgverein', 'Print')))
                             .click(function () {
                                 printMembersOfCity(city);
+                            }))
+                    .append($('<a/>')
+                            .append(document.createTextNode(' ' + t('spgverein', 'Invert Selection')))
+                            .click(function () {
+                                $('[id="' + city + '"]').parent().find('input.address-block-checkbox').each(function (i, checkbox) {
+                                    $(checkbox).attr('checked', !$(checkbox).attr('checked'));
+                                });
                             }));
         });
 

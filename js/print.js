@@ -49,6 +49,11 @@ function printMembersOfCity(city) {
                     .addClass('address')
                     .appendTo(rowDiv(memberIndex));
 
+            // TODO: make sure to make this value configurable
+            $('<p/>').appendTo(address)
+                    .append('TuS Mützenich 1921 e.V. • Am Nassenhof 4 • 52156 Monschau')
+                    .addClass('sender');
+
             $.each(member.fullnames, function (j, fullname) {
                 $('<p/>').appendTo(address)
                         .append(fullname);
@@ -56,7 +61,8 @@ function printMembersOfCity(city) {
             $('<p/>').appendTo(address)
                     .append(member.street);
             $('<p/>').appendTo(address)
-                    .append(member.zipcode + ' ' + member.city);
+                    .append(member.zipcode + ' ' + member.city)
+                    .addClass('city-line');
 
             ++memberIndex;
         });

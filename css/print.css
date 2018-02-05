@@ -29,7 +29,19 @@ body {
     display: block;
     padding: 3mm;
     width: 102.5mm;
-    height: 49mm;
+    height: 47.5mm;
+
+    line-height: 0.5em;
+}
+
+.sender {
+    font-size: 0.6em;
+    line-height: 2em;
+    text-decoration: underline;
+}
+
+.city-line {
+    line-height: 2.0em;
 }
 
 @page {

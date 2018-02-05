@@ -5,7 +5,7 @@ function Members(data) {
         this.data.sort(function (m1, m2) {
             var cmp = m1.city.localeCompare(m2.city);
             if (cmp === 0) {
-                cmp = m1.fullnames[0].localeCompare(m2.fullnames[0]);
+                cmp = m1.street[0].localeCompare(m2.street[0]);
             }
             return cmp;
         });
