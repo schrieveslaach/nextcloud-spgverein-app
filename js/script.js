@@ -34,6 +34,10 @@ function loadCities() {
         });
 
         loadMembers();
+
+        $('#printAll').click(function () {
+            printMembersOfCity(undefined);
+        });
     });
 }
 

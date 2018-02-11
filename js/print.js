@@ -2,6 +2,19 @@ function printMembersOfCity(city) {
     var groupingOption = $(".grouping-option:checked").attr('id');
     $.getJSON(OC.generateUrl('/apps/spgverein/members/' + groupingOption), function (members) {
 
+        var wrapper = new Members(members);
+        wrapper.filter(function (member) {
+            if (city !== undefined && member.city !== city) {
+                return false;
+            }
+
+            if (!$('#member-' + member.id + ' .address-block-checkbox').is(':checked')) {
+                return false;
+            }
+
+            return true;
+        });
+
         var labels = $('<div/>');
 
         $('<link>')
@@ -34,20 +47,11 @@ function printMembersOfCity(city) {
             return page.find('.row').last();
         };
 
-        var memberIndex = 0;
-
-        $.each(members, function (i, member) {
-            if (member.city !== city) {
-                return;
-            }
-
-            if (!$('#member-' + member.id + ' .address-block-checkbox').is(':checked')) {
-                return;
-            }
+        $.each(wrapper.data, function (i, member) {
 
             var address = $('<div/>')
                     .addClass('address')
-                    .appendTo(rowDiv(memberIndex));
+                    .appendTo(rowDiv(i));
 
             // TODO: make sure to make this value configurable
             $('<p/>').appendTo(address)
@@ -63,8 +67,6 @@ function printMembersOfCity(city) {
             $('<p/>').appendTo(address)
                     .append(member.zipcode + ' ' + member.city)
                     .addClass('city-line');
-
-            ++memberIndex;
         });
 
         var printWindow = window.open();
