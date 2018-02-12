@@ -39,9 +39,14 @@ class MemberGroup implements JsonSerializable {
             $persons = array($this->members[0]->getLastname());
             $firstnames = "";
 
-            foreach ($this->members as $member) {
+            $cnt = count($this->members);
+            foreach ($this->members as $i => $member) {
                 if ($firstnames !== "") {
-                    $firstnames .= ", ";
+                    if ($i + 1 == $cnt) {
+                        $firstnames .= " & ";
+                    } else {
+                        $firstnames .= ", ";
+                    }
                 }
 
                 $firstnames .= $member->getFirstname();
@@ -90,7 +95,13 @@ class MemberGroup implements JsonSerializable {
             }
         }
 
-        return $groups;
+        $data = array();
+
+        foreach ($groups as $key => $grp) {
+            array_push($data, $grp);
+        }
+
+        return $data;
     }
 
 }
