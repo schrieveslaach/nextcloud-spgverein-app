@@ -69,12 +69,13 @@ body {
     }
     .page {
         margin: 0;
-        border: initial;
-        border-radius: initial;
+        border: none;
+        border-radius: 0;
         width: 210mm;
-        min-height: initial;
-        box-shadow: initial;
-        background: initial;
+        min-width: 210mm;
+        min-height: 290mm;
+        box-shadow: none;
+        background: none;
         page-break-after: always;
     }
 }
