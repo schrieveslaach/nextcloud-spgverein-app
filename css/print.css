@@ -22,15 +22,15 @@ body {
 }
 
 .row {
-    float: left;
 }
 
 .address {
     display: block;
-    padding: 3mm;
+    padding-top: 3mm;
+    padding-left: 10mm;
     width: 102.5mm;
     height: 47.5mm;
-
+    float: left;
     line-height: 0.5em;
 }
 
