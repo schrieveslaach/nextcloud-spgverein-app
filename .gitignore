@@ -1,4 +1,5 @@
 build/
+spgverein.tar.gz
 
 /js/node_modules/
 /js/spgverein.js
