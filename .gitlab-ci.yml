@@ -28,7 +28,7 @@ sonarqube:
 package:
   stage: Package
   script:
-   - tar --exclude='./js/node_modules' --exclude='.git' -zcvf spgverein.tar.gz .
+   - tar --exclude='js/node_modules' --exclude='.git' -zcvf spgverein.tar.gz *
   artifacts:
     paths:
     - spgverein.tar.gz
