@@ -21,8 +21,8 @@ class ClubController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function listMembers($grouping): \OCP\AppFramework\Http\JSONResponse {
-        $members = $this->club->getAllMembers();
+    public function listMembers(string $club, $grouping): \OCP\AppFramework\Http\JSONResponse {
+        $members = $this->club->getAllMembers($club);
 
         if ($grouping === "none") {
             return new JSONResponse($members);
@@ -39,10 +39,10 @@ class ClubController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function listCities(): \OCP\AppFramework\Http\JSONResponse {
+    public function listCities(string $club): JSONResponse {
         $cities = array();
 
-        $members = $this->club->getAllMembers();
+        $members = $this->club->getAllMembers($club);
 
         foreach ($members as $member) {
             array_push($cities, $member->getCity());
@@ -53,4 +53,11 @@ class ClubController extends Controller {
         return new JSONResponse($uniqueCities);
     }
 
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function listClubs(): JSONResponse {
+        return new JSONResponse($this->club->getAllClubs());
+    }
 }

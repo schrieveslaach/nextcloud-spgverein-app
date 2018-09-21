@@ -14,6 +14,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 new Vue({
     el: '#app-content-wrapper',
     data: {
+        clubs: [],
         cities: [],
         members: [],
         groupingOption: 'none'
@@ -35,7 +36,7 @@ new Vue({
         },
 
         fetchMembers() {
-            fetch(OC.generateUrl(`/apps/spgverein/members/${this.groupingOption}`,))
+            fetch(OC.generateUrl(`/apps/spgverein/members/${this.clubs[0]}/${this.groupingOption}`,))
                 .then(response => response.json())
                 .then(members => {
                     const regex = /(.*)\s+((\d+)\s*([a-z])?)/;
@@ -68,11 +69,9 @@ new Vue({
     },
 
     created() {
-        fetch(OC.generateUrl('/apps/spgverein/cities'))
+        fetch(OC.generateUrl('/apps/spgverein/clubs'))
             .then(response => response.json())
-            .then(cities => this.cities = cities);
-
-        this.fetchMembers();
+            .then(clubs => this.clubs = clubs);
     },
 
     mounted() {
@@ -88,7 +87,14 @@ new Vue({
         };
     },
 
-
+    watch: {
+        clubs(newClubs) {
+            fetch(OC.generateUrl(`/apps/spgverein/cities/${newClubs[0]}`))
+                .then(response => response.json())
+                .then(cities => this.cities = cities)
+                .then(() => this.fetchMembers());
+        }
+    }
 });
 
 const labelFormat = {

@@ -5,21 +5,26 @@ namespace OCA\SPGVerein\Repository;
 use OCA\SPGVerein\Model\Member;
 use OCP\Files\File;
 
-class Club {
+class Club
+{
 
     const MEMBER_DATA_FIELD_LENGTH = 3200;
     const START_SYMBOLS = "\x00\x00\x4c\x80";
 
     private $storage;
 
-    function __construct($storage) {
+    const MITGL_DAT = "mitgl.dat";
+
+    function __construct($storage)
+    {
         $this->storage = $storage;
     }
 
-    public function getAllMembers(): array {
+    public function getAllMembers(string $club): array
+    {
         $members = array();
 
-        $clubFile = $this->openClubFile();
+        $clubFile = $this->openClubFile($club);
         $content = $clubFile->getContent();
         $length = strlen($content);
 
@@ -44,8 +49,9 @@ class Club {
         return $members;
     }
 
-    private function openClubFile(): File {
-        $clubMemberFiles = $this->storage->search("mitgl.dat");
+    private function openClubFile(string $club): File
+    {
+        $clubMemberFiles = $this->storage->search($club . self::MITGL_DAT);
 
         if (empty($clubMemberFiles)) {
             return false;
@@ -58,6 +64,20 @@ class Club {
         } else {
             throw new StorageException('Could not open club file');
         }
+    }
+
+    public function getAllClubs() {
+        $clubMemberFiles = $this->storage->search(self::MITGL_DAT);
+
+        $clubs = array();
+
+        foreach ($clubMemberFiles as $file) {
+            $name = $file->getName();
+            $name = substr($name, 0, strlen($name) - strlen(self::MITGL_DAT));
+            array_push($clubs, $name);
+        }
+
+        return $clubs;
     }
 
 }
