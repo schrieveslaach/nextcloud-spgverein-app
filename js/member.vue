@@ -5,7 +5,6 @@
         </p>
         <p>{{ member.street }}</p>
         <p>{{ member.zipcode }} {{ member.city }}</p>
-        <!--<input value="1983010" checked="checked" class="address-block-checkbox" type="checkbox">-->
     </div>
 </template>
 
