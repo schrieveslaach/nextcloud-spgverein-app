@@ -7,8 +7,8 @@
                     Bestand
                 </h3>
 
-                <select v-model="selectedClub" v-for="club in clubs">
-                    <option :value="club">{{ club }}</option>
+                <select v-model="selectedClub">
+                    <option :value="club" v-for="club in clubs">{{ club }}</option>
                 </select>
             </section>
 
