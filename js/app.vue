@@ -48,7 +48,7 @@
             },
 
             fetchMembers() {
-                fetch(OC.generateUrl(`/apps/spgverein/members/${this.clubs[0]}/${this.groupingOption}`,))
+                fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}/${this.groupingOption}`,))
                     .then(response => response.json())
                     .then(members => {
                         const regex = /(.*)\s+((\d+)\s*([a-z])?)/;
