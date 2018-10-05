@@ -19,7 +19,6 @@
 
 <script>
     import Members from './members.vue';
-    import jsPDF from 'jspdf';
 
     export default {
         data() {
