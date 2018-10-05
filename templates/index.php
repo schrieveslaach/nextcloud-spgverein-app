@@ -16,5 +16,10 @@ style('spgverein', 'style');
 </div>
 
 <?php
+script('spgverein', 'lib/jsLabel2PDF');
+script('spgverein', 'lib/base64');
+script('spgverein', 'lib/sprintf');
+script('spgverein', 'lib/pdf');
+script('spgverein', 'lib/pdf.worker');
 script('spgverein', 'spgverein');
 

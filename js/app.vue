@@ -12,7 +12,7 @@
                 </select>
             </section>
 
-            <members v-bind:members="members" v-bind:cities="cities" v-on:print="print"></members>
+            <members v-bind:members="members" v-bind:cities="cities"></members>
         </div>
     </div>
 </template>
@@ -112,55 +112,5 @@
                     .then(() => this.fetchMembers());
             }
         }
-    }
-
-    const labelFormat = {
-        width: 105,
-        height: 48.5,
-        columns: 2,
-        rows: 6
-    };
-
-    function generatePdf(members) {
-        const fontSize = 10;
-
-        const doc = new jsPDF();
-        doc.setFontSize(fontSize);
-
-        let column = 0;
-        let row = 0;
-
-        members.forEach(member => {
-            let rowOffset = 0.5 * fontSize;
-
-            member.fullnames.forEach(name => {
-                doc.text(name,
-                    column * labelFormat.width + 1,
-                    row * labelFormat.height + rowOffset);
-                rowOffset += fontSize;
-            });
-
-            doc.text(member.street,
-                column * labelFormat.width + 1,
-                row * labelFormat.height + rowOffset);
-            rowOffset += fontSize;
-
-            doc.text(member.zipcode + ' ' + member.city,
-                column * labelFormat.width + 1,
-                row * labelFormat.height + rowOffset);
-            rowOffset += fontSize;
-
-            if (++column % labelFormat.columns === 0) {
-                column = 0;
-                ++row;
-            }
-
-            if (row > 0 && row % labelFormat.rows === 0) {
-                row = 0;
-                doc.addPage();
-            }
-        });
-
-        doc.save('labels.pdf');
     }
 </script>
