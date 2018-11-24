@@ -12,7 +12,7 @@
                 </select>
             </section>
 
-            <members v-bind:members="members" v-bind:cities="cities"></members>
+            <members v-bind:members="members" v-bind:cities="cities" :club="selectedClub"></members>
         </div>
     </div>
 </template>

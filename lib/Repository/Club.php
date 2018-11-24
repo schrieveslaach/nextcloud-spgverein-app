@@ -56,15 +56,12 @@ class Club
         try {
             $id = str_pad($member->getId(), 10, "0", STR_PAD_LEFT);
 
-            $searchPath = $clubFile->getParent()->getPath() . '/archiv/' . $id;
+            $searchPath = '/archiv/' . $id;
             $archiveDirectories = $this->storage->search($id);
 
             foreach ($archiveDirectories as $directory) {
-                if ($directory->getPath() === $searchPath) {
+                if ($this->endsWith($directory->getPath(), $searchPath)) {
                     foreach ($directory->getDirectoryListing() as $archivedFile) {
-
-                        error_log("mount: " . $archivedFile->getMountPoint()->getMountPoint() );
-
                         $member->addFile($archivedFile);
                     }
                 }
@@ -74,6 +71,11 @@ class Club
 
         return array();
     }
+
+    private function endsWith( $str, $sub ) {
+        return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
+    }
+
 
     private function openClubFile(string $club): File
     {

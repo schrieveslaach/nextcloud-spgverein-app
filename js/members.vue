@@ -20,7 +20,7 @@
             </div>
 
             <div class="members">
-                <member v-bind:member="member" v-for="member in getMembersOf(city)"></member>
+                <member :club="club" v-bind:member="member" v-for="member in getMembersOf(city)"></member>
             </div>
         </section>
     </div>
@@ -51,6 +51,9 @@
             },
             cities: {
                 type: Array
+            },
+            club: {
+                type: String
             }
         },
 

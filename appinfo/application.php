@@ -4,6 +4,7 @@ namespace OCA\SPGVerein\AppInfo;
 
 use \OCP\AppFramework\App;
 use \OCA\SPGVerein\Controller\ClubController;
+use \OCA\SPGVerein\Controller\FileController;
 use \OCA\SPGVerein\Controller\PageController;
 use OCA\SPGVerein\Repository\Club;
 
@@ -26,6 +27,12 @@ class Application extends App {
         $container->registerService('ClubController', function ($c) {
             return new ClubController(
                     $c->query('AppName'), $c->query('Request'), $c->query('Club')
+            );
+        });
+
+        $container->registerService('FileController', function ($c) {
+            return new FileController(
+                $c->query('AppName'), $c->query('Request'), $c->query('Club')
             );
         });
 

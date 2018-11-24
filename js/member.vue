@@ -8,8 +8,8 @@
 
         <br v-if="Object.keys(member.files).length > 0">
         <p class="docs" v-if="Object.keys(member.files).length > 0">
-            <a class="button" :href="`/remote.php/webdav${member.files[index]}`" v-for="index in Object.keys(member.files)">
-                <font-awesome-icon icon="file"/> {{ index }}
+            <a class="button" :href="getFileUrl(file)" v-for="file in member.files">
+                <font-awesome-icon icon="file"/> {{ file }}
             </a>
         </p>
     </div>
@@ -26,6 +26,15 @@
         props: {
             member: {
                 type: Object
+            },
+            club: {
+                type: String
+            }
+        },
+
+        methods: {
+            getFileUrl(file) {
+                return OC.generateUrl(`/apps/spgverein/files/${this.club}/${this.member.id}/${file}`);
             }
         }
     }

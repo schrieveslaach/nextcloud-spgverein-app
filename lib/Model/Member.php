@@ -66,10 +66,7 @@ class Member implements JsonSerializable
         $files = array();
 
         foreach ($this->files as $file) {
-            $files[$file->getName()] = str_replace(
-                $file->getMountPoint()->getMountPoint() . "files",
-                "",
-                $file->getPath());
+            array_push($files, $file->getName());
         }
 
         return $files;
@@ -135,5 +132,10 @@ class Member implements JsonSerializable
     public function addFile($file)
     {
         array_push($this->files, $file);
+    }
+
+    public function getFiles(): array
+    {
+        return $this->files;
     }
 }
