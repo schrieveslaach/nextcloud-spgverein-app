@@ -40,6 +40,9 @@ class Club
                 $i += self::MEMBER_DATA_FIELD_LENGTH - 4;
 
                 $member = new Member($memberData);
+
+                $this->addDocuments($clubFile, $member);
+
                 array_push($members, $member);
             }
 
@@ -47,6 +50,29 @@ class Club
         }
 
         return $members;
+    }
+
+    private function addDocuments(File $clubFile, Member $member) : array {
+        try {
+            $id = str_pad($member->getId(), 10, "0", STR_PAD_LEFT);
+
+            $searchPath = $clubFile->getParent()->getPath() . '/archiv/' . $id;
+            $archiveDirectories = $this->storage->search($id);
+
+            foreach ($archiveDirectories as $directory) {
+                if ($directory->getPath() === $searchPath) {
+                    foreach ($directory->getDirectoryListing() as $archivedFile) {
+
+                        error_log("mount: " . $archivedFile->getMountPoint()->getMountPoint() );
+
+                        $member->addFile($archivedFile);
+                    }
+                }
+            }
+        } catch(\OCP\Files\NotFoundException $e) {
+        }
+
+        return array();
     }
 
     private function openClubFile(string $club): File

@@ -5,6 +5,13 @@
         </p>
         <p>{{ member.street }}</p>
         <p>{{ member.zipcode }} {{ member.city }}</p>
+
+        <br v-if="Object.keys(member.files).length > 0">
+        <p class="docs" v-if="Object.keys(member.files).length > 0">
+            <a class="button" :href="`/remote.php/webdav${member.files[index]}`" v-for="index in Object.keys(member.files)">
+                <font-awesome-icon icon="file"/> {{ index }}
+            </a>
+        </p>
     </div>
 </template>
 

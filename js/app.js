@@ -1,9 +1,10 @@
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faFilePdf, faPrint, faTimes} from '@fortawesome/free-solid-svg-icons'
+import {faFile, faFilePdf, faPrint, faTimes} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import App from './app.vue';
 import Modal from './modal.vue';
 
+library.add(faFile);
 library.add(faFilePdf);
 library.add(faPrint);
 library.add(faTimes);
