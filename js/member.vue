@@ -7,11 +7,11 @@
         <p>{{ member.zipcode }} {{ member.city }}</p>
 
         <br v-if="Object.keys(member.files).length > 0">
-        <p class="docs" v-if="Object.keys(member.files).length > 0">
+        <div class="docs" v-if="Object.keys(member.files).length > 0">
             <a class="button" :href="getFileUrl(file)" v-for="file in member.files">
                 <font-awesome-icon icon="file"/> {{ file }}
             </a>
-        </p>
+        </div>
     </div>
 </template>
 
