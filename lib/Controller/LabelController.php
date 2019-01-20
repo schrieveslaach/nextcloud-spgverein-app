@@ -35,16 +35,21 @@ class LabelController extends Controller
 
         $pdf = new Labels('L7163');
         $pdf->AddPage();
-        foreach ($members as $member) {
-            $text = sprintf("%s\n%s\n%s %s", $member->getFullname(), $member->getStreet(), $member->getZipCode(), $member->getCity());
+
+        $member_groups = MemberGroup::groupByRelatedMemberId($members);
+
+        foreach ($member_groups as $mg) {
+            $text = sprintf("%s\n%s\n%s %s",
+                implode(" ", $mg->getFullnames()),
+                $mg->getStreet(),
+                $mg->getZipcode(),
+                $mg->getCity()
+            );
             $pdf->Add_Label($text);
         }
 
-        $path = tempnam(sys_get_temp_dir(), 'spgverein');
-
+        $path = tempnam(sys_get_temp_dir(), 'spgverein-');
         $pdf->Output('F', $path, true);
-
-        error_log($path);
 
         $response = new StreamResponse($path);
         $response->addHeader("Content-type", "application/pdf");
