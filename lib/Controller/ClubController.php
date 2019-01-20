@@ -21,18 +21,9 @@ class ClubController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function listMembers(string $club, $grouping): \OCP\AppFramework\Http\JSONResponse {
+    public function listMembers(string $club): \OCP\AppFramework\Http\JSONResponse {
         $members = $this->club->getAllMembers($club);
-
-        if ($grouping === "none") {
-            return new JSONResponse($members);
-        } elseif ($grouping === "related-id") {
-            return new JSONResponse(
-                    MemberGroup::groupByRelatedMemberId($members)
-            );
-        }
-
-        return NULL;
+        return new JSONResponse($members);
     }
 
     /**

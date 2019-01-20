@@ -17,5 +17,5 @@ Vue.component('app', App);
 
 new Vue({
     el: '#app-content-wrapper',
-    template: '<app></app>'
+    render: h => h(App)
 });

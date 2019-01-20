@@ -26,7 +26,6 @@
                 clubs: [],
                 cities: [],
                 members: [],
-                groupingOption: 'none',
                 selectedClub: ''
             };
         },
@@ -47,7 +46,7 @@
             },
 
             fetchMembers() {
-                fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}/${this.groupingOption}`,))
+                fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}`,))
                     .then(response => response.json())
                     .then(members => {
                         const regex = /(.*)\s+((\d+)\s*([a-z])?)/;
@@ -87,16 +86,7 @@
         },
 
         mounted() {
-            const self = this;
-            document.getElementById("groupmembers-checkbox").onchange = e => {
-                if (!e.target.checked) {
-                    self.groupingOption = 'none';
-                } else {
-                    self.groupingOption = 'related-id';
-                }
-
-                self.fetchMembers();
-            };
+            this.fetchMembers();
         },
 
         watch: {

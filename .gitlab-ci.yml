@@ -12,7 +12,7 @@ build:
   stage: Build
   script:
    - cd js
-   - npm install
+   - npm ci
    - npm run build
   artifacts:
     paths:

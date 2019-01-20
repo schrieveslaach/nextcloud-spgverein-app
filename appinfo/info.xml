@@ -25,7 +25,7 @@
     <screenshot>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/raw/master/assets/screenshot-01.png</screenshot>
 
     <dependencies>
-        <nextcloud min-version="11" max-version="13"/>
+        <nextcloud min-version="11" max-version="15"/>
     </dependencies>
    
     <settings>
