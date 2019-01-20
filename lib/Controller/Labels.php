@@ -111,7 +111,7 @@ class Labels extends FPDF {
         $_PosX = $this->_Margin_Left + $this->_COUNTX*($this->_Width+$this->_X_Space) + $this->_Padding;
         $_PosY = $this->_Margin_Top + $this->_COUNTY*($this->_Height+$this->_Y_Space) + $this->_Padding;
         $this->SetXY($_PosX, $_PosY);
-        $this->MultiCell($this->_Width - $this->_Padding, $this->_Line_Height, $text, 0, 'L');
+        $this->MultiCell($this->_Width - $this->_Padding, $this->_Line_Height, utf8_decode($text), 0, 'L');
     }
 
     function _putcatalog()
