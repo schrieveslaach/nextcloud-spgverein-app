@@ -26,6 +26,12 @@
                         <label class="marker-label" for="group-by-checkbox">
                             Gruppieren über Mitgliedsnummer
                         </label>
+
+                        <select class="marker-select" v-model="selectedLabelFormat">
+                            <option v-for="(item, index) in labelFormats" :value="item.id" :selected="index === 0">
+                                {{item.id}} ({{item.size}}, {{item.rows}}&#215;{{item.columns}})
+                            </option>
+                        </select>
                     </div>
 
                     <br>
@@ -40,11 +46,7 @@
                     <embed :src="labelsUrl" type="application/pdf"/>
                 </object>
 
-                <p>
-                    &nbsp;
-                </p>
-
-                <p>
+                <p style="padding-top: 25px">
                     <a class="button" :href="labelsUrl" target="_blank" style="float: right">
                         <font-awesome-icon icon="file"/>
                         Download
@@ -64,7 +66,9 @@
             return {
                 selectedCityForLabels: null,
                 addressLine: '',
-                groupMembers: false
+                groupMembers: false,
+                labelFormatData: {},
+                selectedLabelFormat: null
             }
         },
 
@@ -75,6 +79,16 @@
             if (localStorage.groupMembers) {
                 this.groupMembers = localStorage.groupMembers;
             }
+
+            fetch(OC.generateUrl(`/apps/spgverein/labels/formats`))
+                .then(response => response.json())
+                .then(formats => {
+                    this.labelFormatData = formats;
+
+                    if (localStorage.selectedLabelFormat != null) {
+                        this.selectedLabelFormat = localStorage.selectedLabelFormat;
+                    }
+                });
         },
 
         components: {
@@ -82,6 +96,11 @@
         },
 
         computed: {
+            labelFormats() {
+                return Object.keys(this.labelFormatData)
+                    .map(id => ({id, ...this.labelFormatData[id]}))
+            },
+
             showModal() {
                 return this.selectedCityForLabels != null;
             },
@@ -93,6 +112,9 @@
                 }
                 if (this.groupMembers) {
                     params.groupMembers = this.groupMembers;
+                }
+                if (this.selectedLabelFormat != null) {
+                    params.format = this.selectedLabelFormat;
                 }
 
                 const query = Object.keys(params)
@@ -144,6 +166,10 @@
 
             groupMembers(newGroupMembers) {
                 localStorage.groupMembers = newGroupMembers;
+            },
+
+            selectedLabelFormat(newSelectedLabelFormat) {
+                localStorage.selectedLabelFormat = newSelectedLabelFormat;
             }
         }
     }

@@ -5,7 +5,6 @@ namespace OCA\SPGVerein\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
-use OCA\SPGVerein\Model\MemberGroup;
 use OCA\SPGVerein\Repository\Club;
 
 class ClubController extends Controller {

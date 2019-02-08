@@ -27,6 +27,7 @@
 }
 
 .labels {
+    padding-top: 25px;
     min-width: 600px;
     min-height: 250px;
 }
@@ -42,6 +43,10 @@
 .marker-checkbox {
     float: left;
     margin-top: -1px !important;
+}
+
+.marker-select {
+    float: right;
 }
 
 .member {

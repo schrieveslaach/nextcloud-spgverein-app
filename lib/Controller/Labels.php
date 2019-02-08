@@ -22,7 +22,7 @@ class Labels extends FPDF {
     private $font_size;
 
     // List of label formats
-    protected $_Avery_Labels = array(
+    public static $_Avery_Labels = array(
         '5160' => array('paper-size'=>'letter',    'metric'=>'mm',    'marginLeft'=>1.762,    'marginTop'=>10.7,        'NX'=>3,    'NY'=>10,    'SpaceX'=>3.175,    'SpaceY'=>0,    'width'=>66.675,    'height'=>25.4,        'font-size'=>8),
         '5161' => array('paper-size'=>'letter',    'metric'=>'mm',    'marginLeft'=>0.967,    'marginTop'=>10.7,        'NX'=>2,    'NY'=>10,    'SpaceX'=>3.967,    'SpaceY'=>0,    'width'=>101.6,        'height'=>25.4,        'font-size'=>8),
         '5162' => array('paper-size'=>'letter',    'metric'=>'mm',    'marginLeft'=>0.97,        'marginTop'=>20.224,    'NX'=>2,    'NY'=>7,    'SpaceX'=>4.762,    'SpaceY'=>0,    'width'=>100.807,    'height'=>35.72,    'font-size'=>8),
@@ -40,9 +40,9 @@ class Labels extends FPDF {
             $Tformat = $format;
         } else {
             // Built-in format
-            if (!isset($this->_Avery_Labels[$format]))
+            if (!isset(self::$_Avery_Labels[$format]))
                 $this->Error('Unknown label format: '.$format);
-            $Tformat = $this->_Avery_Labels[$format];
+            $Tformat = self::$_Avery_Labels[$format];
         }
 
         parent::__construct('P', $unit, $Tformat['paper-size']);
@@ -116,8 +116,11 @@ class Labels extends FPDF {
         $this->SetXY($_PosX, $_PosY);
 
         if (!empty($addressLine)) {
-            $this->Set_Font_Size(6);
+            $this->Set_Font_Size(intval($this->font_size * 0.75));
             $this->MultiCell($this->_Width - $this->_Padding, $this->_Line_Height, utf8_decode($addressLine), 0, 'L');
+
+            $width = $this->GetStringWidth(utf8_decode($addressLine));
+            $this->Line($_PosX + 1, $_PosY + 3, $_PosX + $width + 1, $_PosY + 3);
 
             $_PosY = $_PosY + 3 * $this->_Padding;
             $this->SetXY($_PosX, $_PosY);
