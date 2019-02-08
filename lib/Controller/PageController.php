@@ -2,13 +2,16 @@
 
 namespace OCA\SPGVerein\Controller;
 
-use OCP\IRequest;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
 
-class PageController extends Controller {
+class PageController extends Controller
+{
 
-    public function __construct($AppName, IRequest $request) {
+    public function __construct($AppName, IRequest $request)
+    {
         parent::__construct($AppName, $request);
     }
 
@@ -22,8 +25,26 @@ class PageController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function index() {
-        return new TemplateResponse('spgverein', 'index');  // templates/index.php
+    public function index()
+    {
+        $response = new TemplateResponse('spgverein', 'index');
+        $csp = new ContentSecurityPolicy();
+
+        $csp->allowInlineScript(true)
+            ->allowInlineStyle(true)
+            ->allowEvalScript(true);
+
+        $csp->addAllowedScriptDomain('*')
+            ->addAllowedStyleDomain('*')
+            ->addAllowedFontDomain('*')
+            ->addAllowedImageDomain('*')
+            ->addAllowedConnectDomain('*')
+            ->addAllowedMediaDomain('*')
+            ->addAllowedObjectDomain('*')
+            ->addAllowedFrameDomain('*')
+            ->addAllowedChildSrcDomain('*');
+        $response->setContentSecurityPolicy($csp);
+        return $response;
     }
 
 }

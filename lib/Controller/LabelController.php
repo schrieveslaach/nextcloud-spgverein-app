@@ -7,7 +7,6 @@ require_once('fpdf.php');
 use OCA\SPGVerein\Model\MemberGroup;
 use OCA\SPGVerein\Repository\Club;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Http\StreamResponse;
 use OCP\IRequest;
@@ -36,16 +35,30 @@ class LabelController extends Controller
         $pdf = new Labels('L7163');
         $pdf->AddPage();
 
-        $member_groups = MemberGroup::groupByRelatedMemberId($members);
+        $addressLine = trim(urldecode($this->request->getParam("addressLine", "")));
+        $groupMembers = filter_var(urldecode($this->request->getParam("groupMembers", "false")), FILTER_VALIDATE_BOOLEAN);
+        if ($groupMembers) {
+            $member_groups = MemberGroup::groupByRelatedMemberId($members);
 
-        foreach ($member_groups as $mg) {
-            $text = sprintf("%s\n%s\n%s %s",
-                implode(" ", $mg->getFullnames()),
-                $mg->getStreet(),
-                $mg->getZipcode(),
-                $mg->getCity()
-            );
-            $pdf->Add_Label($text);
+            foreach ($member_groups as $mg) {
+                $text = sprintf("%s\n%s\n%s %s",
+                    implode(" ", $mg->getFullnames()),
+                    $mg->getStreet(),
+                    $mg->getZipcode(),
+                    $mg->getCity()
+                );
+                $pdf->Add_Label($text, $addressLine);
+            }
+        } else {
+            foreach ($members as $m) {
+                $text = sprintf("%s\n%s\n%s %s",
+                    $m->getFullname(),
+                    $m->getStreet(),
+                    $m->getZipcode(),
+                    $m->getCity()
+                );
+                $pdf->Add_Label($text, $addressLine);
+            }
         }
 
         $path = tempnam(sys_get_temp_dir(), 'spgverein-');

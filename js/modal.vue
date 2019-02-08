@@ -24,7 +24,7 @@
                             class="btn-close"
                             @click="close"
                             aria-label="Close modal">
-                        <font-awesome-icon icon="times" />
+                        <font-awesome-icon icon="times"/>
                     </button>
                 </header>
                 <section class="modal-body"
@@ -37,6 +37,3 @@
         </div>
     </transition>
 </template>
-<style>
-
-</style>

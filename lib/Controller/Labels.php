@@ -19,6 +19,8 @@ class Labels extends FPDF {
     protected $_COUNTX;                // Current x position
     protected $_COUNTY;                // Current y position
 
+    private $font_size;
+
     // List of label formats
     protected $_Avery_Labels = array(
         '5160' => array('paper-size'=>'letter',    'metric'=>'mm',    'marginLeft'=>1.762,    'marginTop'=>10.7,        'NX'=>3,    'NY'=>10,    'SpaceX'=>3.175,    'SpaceY'=>0,    'width'=>66.675,    'height'=>25.4,        'font-size'=>8),
@@ -62,7 +64,8 @@ class Labels extends FPDF {
         $this->_Y_Number     = $format['NY'];
         $this->_Width         = $this->_Convert_Metric($format['width'], $format['metric']);
         $this->_Height         = $this->_Convert_Metric($format['height'], $format['metric']);
-        $this->Set_Font_Size($format['font-size']);
+        $this->font_size = $format['font-size'];
+        $this->Set_Font_Size($this->font_size);
         $this->_Padding        = $this->_Convert_Metric(3, 'mm');
     }
 
@@ -95,7 +98,7 @@ class Labels extends FPDF {
     }
 
     // Print a label
-    function Add_Label($text) {
+    function Add_Label($text, $addressLine = '') {
         $this->_COUNTX++;
         if ($this->_COUNTX == $this->_X_Number) {
             // Row full, we start a new one
@@ -111,6 +114,16 @@ class Labels extends FPDF {
         $_PosX = $this->_Margin_Left + $this->_COUNTX*($this->_Width+$this->_X_Space) + $this->_Padding;
         $_PosY = $this->_Margin_Top + $this->_COUNTY*($this->_Height+$this->_Y_Space) + $this->_Padding;
         $this->SetXY($_PosX, $_PosY);
+
+        if (!empty($addressLine)) {
+            $this->Set_Font_Size(6);
+            $this->MultiCell($this->_Width - $this->_Padding, $this->_Line_Height, utf8_decode($addressLine), 0, 'L');
+
+            $_PosY = $_PosY + 3 * $this->_Padding;
+            $this->SetXY($_PosX, $_PosY);
+            $this->Set_Font_Size($this->font_size);
+        }
+
         $this->MultiCell($this->_Width - $this->_Padding, $this->_Line_Height, utf8_decode($text), 0, 'L');
     }
 

@@ -26,6 +26,24 @@
     grid-gap: 5px;
 }
 
+.labels {
+    min-width: 600px;
+    min-height: 250px;
+}
+
+.label-parameters > input {
+    width: 100%;
+}
+
+.marker-label {
+    float:left;
+    line-height:30px;
+}
+.marker-checkbox {
+    float: left;
+    margin-top: -1px !important;
+}
+
 .member {
     width: 90%;
     min-height: 7rem;

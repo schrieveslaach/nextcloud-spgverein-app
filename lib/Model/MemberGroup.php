@@ -50,7 +50,7 @@ class MemberGroup implements JsonSerializable
     {
         $persons = array();
 
-        if (!$this->haveAllMembersCommonLastnames()) {
+        if (count($this->members) === 1 || !$this->haveAllMembersCommonLastnames()) {
             foreach ($this->members as $member) {
                 array_push($persons, $member->getFullname());
             }
