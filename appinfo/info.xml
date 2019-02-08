@@ -5,13 +5,10 @@
     <name>SPG Verein</name>
     <summary>Access data of SPG-Verein in your Nextcloud instance</summary>
 
-    <description>
-        Access data of SPG-Verein in your Nextcloud instance. For example, your club members will be available in
-        your address book.
-    </description>
+    <description><![CDATA[Access data of SPG-Verein in your Nextcloud instance]]></description>
 
     <licence>agpl</licence>
-    <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Schrieveslaach</author>
+    <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Marc Schreiber</author>
     <version>0.5.0</version>
     <namespace>SPGVerein</namespace>
 
@@ -20,16 +17,13 @@
     <category>organization</category>
 
     <website>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app</website>
-    <issues>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/issues</issues>
+    <bugs>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/issues</bugs>
     <repository type="git">https://gitlab.com/schrieveslaach/nextcloud-spgverein-app.git</repository>
+
     <screenshot>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/raw/master/assets/screenshot-01.png</screenshot>
 
     <dependencies>
-        <nextcloud min-version="15" max-version="15"/>
+        <nextcloud min-version="14" max-version="15"/>
     </dependencies>
-   
-    <settings>
-        <admin>OCA\SPGVerein\Settings\Settings</admin>
-        <admin-section>OCA\SPGVerein\Settings\Section</admin-section>
-    </settings>
+
 </info>
