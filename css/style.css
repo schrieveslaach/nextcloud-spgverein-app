@@ -32,21 +32,16 @@
     min-height: 250px;
 }
 
-.label-parameters > input {
+.label-parameters {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-box-label {
+    display: block;
+}
+.text-box-input {
     width: 100%;
-}
-
-.marker-label {
-    float:left;
-    line-height:30px;
-}
-.marker-checkbox {
-    float: left;
-    margin-top: -1px !important;
-}
-
-.marker-select {
-    float: right;
 }
 
 .member {

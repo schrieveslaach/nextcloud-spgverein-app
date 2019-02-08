@@ -75,11 +75,18 @@ class LabelController extends Controller
 
         $addressLine = trim(urldecode($this->request->getParam("addressLine", "")));
         $groupMembers = filter_var(urldecode($this->request->getParam("groupMembers", "false")), FILTER_VALIDATE_BOOLEAN);
+
+        $offset = intval(urldecode($this->request->getParam("offset", "0")));
+        for ($i = 0; $i < $offset; ++$i) {
+            $pdf->Add_Label('', '');
+        }
+
+        $textFormat = "%s\n%s\n\n%s %s";
         if ($groupMembers) {
             $member_groups = MemberGroup::groupByRelatedMemberId($members);
 
             foreach ($member_groups as $mg) {
-                $text = sprintf("%s\n%s\n%s %s",
+                $text = sprintf($textFormat,
                     implode("\n", $mg->getFullnames()),
                     $mg->getStreet(),
                     $mg->getZipcode(),
@@ -89,7 +96,7 @@ class LabelController extends Controller
             }
         } else {
             foreach ($members as $m) {
-                $text = sprintf("%s\n%s\n%s %s",
+                $text = sprintf($textFormat,
                     $m->getFullname(),
                     $m->getStreet(),
                     $m->getZipcode(),

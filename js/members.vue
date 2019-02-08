@@ -20,35 +20,50 @@
 
             <template slot="body">
                 <div class="label-parameters">
-                    <div style="white-space:nowrap">
-                        <input class="marker-checkbox" id="group-by-checkbox" type="checkbox" @input="groupMembersInput"
-                               :checked="groupMembers">
-                        <label class="marker-label" for="group-by-checkbox">
+                    <div>
+                        <label for="group-by-checkbox" style="word-wrap:break-word">
+                            <input id="group-by-checkbox" type="checkbox" @input="groupMembersInput"
+                                   :checked="groupMembers" style="vertical-align: middle;">
                             Gruppieren über Mitgliedsnummer
                         </label>
-
-                        <select class="marker-select" v-model="selectedLabelFormat">
-                            <option v-for="(item, index) in labelFormats" :value="item.id" :selected="index === 0">
-                                {{item.id}} ({{item.size}}, {{item.rows}}&#215;{{item.columns}})
-                            </option>
-                        </select>
                     </div>
 
-                    <br>
-                    <input placeholder="Adresszeile" @input="addressLineInput" :value="addressLine">
-                </div>
+                    <div>
+                        <label for="addressline-input" class="text-box-label">
+                            Adresszeile
+                        </label>
+                        <input placeholder="Adresszeile" id="addressline-input" @input="addressLineInput"
+                               :value="addressLine" class="text-box-input">
+                    </div>
 
-                <p>
-                    &nbsp;
-                </p>
+                    <div>
+                        <div style="width: 49%; float: left;">
+                            <label for="label-format-select" class="text-box-label">
+                                Etikettenformat
+                            </label>
+                            <select id="label-format-select" v-model="selectedLabelFormat" class="text-box-input">
+                                <option v-for="(item, index) in labelFormats" :value="item.id" :selected="index === 0">
+                                    {{item.id}} ({{item.size}}, {{item.rows}}&#215;{{item.columns}})
+                                </option>
+                            </select>
+                        </div>
+                        <div style="width: 49%; float: right;">
+                            <label for="label-offset" class="text-box-label">
+                                Anfang leere Etiketten
+                            </label>
+                            <input type="number" min="0" v-model="labelOffset" :max="maxLabelOffset" step="1"
+                                   id="label-offset" class="text-box-input">
+                        </div>
+                    </div>
+                </div>
 
                 <object :data="labelsUrl" type="application/pdf" class="labels">
                     <embed :src="labelsUrl" type="application/pdf"/>
                 </object>
 
-                <p style="padding-top: 25px">
+                <p style="position: absolute; top: 0; right: 0;">
                     <a class="button" :href="labelsUrl" target="_blank" style="float: right">
-                        <font-awesome-icon icon="file"/>
+                        <font-awesome-icon icon="download"/>
                         Download
                     </a>
                 </p>
@@ -68,7 +83,8 @@
                 addressLine: '',
                 groupMembers: false,
                 labelFormatData: {},
-                selectedLabelFormat: null
+                selectedLabelFormat: null,
+                labelOffset: 0
             }
         },
 
@@ -96,6 +112,15 @@
         },
 
         computed: {
+            maxLabelOffset() {
+                if (this.labelFormatData == null || this.selectedLabelFormat == null) {
+                    return 0;
+                }
+
+                const format = this.labelFormatData[this.selectedLabelFormat];
+                return format.columns * format.rows - 1;
+            },
+
             labelFormats() {
                 return Object.keys(this.labelFormatData)
                     .map(id => ({id, ...this.labelFormatData[id]}))
@@ -115,6 +140,9 @@
                 }
                 if (this.selectedLabelFormat != null) {
                     params.format = this.selectedLabelFormat;
+                }
+                if (this.labelOffset > 0) {
+                    params.offset = this.labelOffset;
                 }
 
                 const query = Object.keys(params)
