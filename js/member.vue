@@ -1,18 +1,24 @@
 <template>
-    <div :id="member.id" class="member">
-        <p v-for="name in member.fullnames">
+    <tr :id="member.id">
+        <td v-for="name in member.fullnames">
             {{ name }}
-        </p>
-        <p>{{ member.street }}</p>
-        <p>{{ member.zipcode }} {{ member.city }}</p>
+        </td>
+        <td>{{ member.street }}</td>
+        <td>{{ member.zipcode }}</td>
+        <td>{{ member.city }}</td>
 
-        <br v-if="Object.keys(member.files).length > 0">
-        <div class="docs" v-if="Object.keys(member.files).length > 0">
-            <a class="button" :href="getFileUrl(file)" v-for="file in member.files">
-                <font-awesome-icon icon="file"/> {{ file }}
-            </a>
-        </div>
-    </div>
+        <td>
+            <template v-if="Object.keys(member.files).length > 0">
+                <a class="attachment-link" :href="getFileUrl(file)" v-for="file in member.files">
+                    <font-awesome-icon icon="file"/>
+                    {{ file }}
+                </a>
+            </template>
+            <template v-else>
+                <span>&nbsp;</span>
+            </template>
+        </td>
+    </tr>
 </template>
 
 <script>

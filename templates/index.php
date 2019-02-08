@@ -4,11 +4,8 @@ style('spgverein', 'style');
 
 ?>
 
-<div id="app">
-
-    <div id="app-content">
-        <div id="app-content-wrapper">
-        </div>
+<div id="app-content">
+    <div id="app-content-wrapper">
     </div>
 </div>
 

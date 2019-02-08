@@ -1,8 +1,7 @@
 <template>
     <div id="app-content-wrapper">
         <div style="width: 100%">
-
-            <section class="club-selection">
+            <section class="club-selection" v-if="clubs.length > 1">
                 <h3>
                     Bestand
                 </h3>

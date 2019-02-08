@@ -8,9 +8,27 @@
                 </a>
             </div>
 
-            <div class="members">
-                <member :club="club" v-bind:member="member" v-for="member in getMembersOf(city)"></member>
-            </div>
+            <table>
+                <colgroup>
+                    <col style="width:25%">
+                    <col style="width:20%">
+                    <col style="width:5%">
+                    <col style="width:20%">
+                    <col style="width:30%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Straße</th>
+                    <th>Postleitzahl</th>
+                    <th>Ort</th>
+                    <th>Anhänge</th>
+                </tr>
+                </thead>
+                <tbody>
+                <member :club="club" v-bind:member="member" v-for="member in getMembersOf(city)"/>
+                </tbody>
+            </table>
         </section>
 
         <modal v-if="showModal" v-on:close="closeLabelsDialog()">
