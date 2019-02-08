@@ -1,6 +1,6 @@
 {
   "name": "spgverein",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "scripts": {
     "build": "webpack --config webpack.config.js"
   },

@@ -49,6 +49,33 @@ class Club
             $previous = $buffer;
         }
 
+        usort($members, function ($a, $b) {
+            $cmp = strcmp($a->getCity(), $b->getCity());
+            if ($cmp !== 0) {
+                return $cmp;
+            }
+
+            $m1 = array();
+            $m2 = array();
+            preg_match('/(.*)\s+((\d+)\s*([a-z])?)/', $a->getStreet(), $m1);
+            preg_match('/(.*)\s+((\d+)\s*([a-z])?)/', $b->getStreet(), $m2);
+
+            $cmp = strcmp($m1[1], $m2[1]);
+            if ($cmp === 0) {
+                $n1 = intval($m1[3]);
+                $n2 = intval($m2[3]);
+
+                if ($n1 < $n2)
+                    $cmp = -1;
+                else if ($n1 > $n2)
+                    $cmp = 1;
+                else
+                    $cmp = 0;
+            }
+
+            return $cmp;
+        });
+
         return $members;
     }
 

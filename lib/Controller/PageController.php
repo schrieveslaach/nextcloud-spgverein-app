@@ -29,20 +29,7 @@ class PageController extends Controller
     {
         $response = new TemplateResponse('spgverein', 'index');
         $csp = new ContentSecurityPolicy();
-
-        $csp->allowInlineScript(true)
-            ->allowInlineStyle(true)
-            ->allowEvalScript(true);
-
-        $csp->addAllowedScriptDomain('*')
-            ->addAllowedStyleDomain('*')
-            ->addAllowedFontDomain('*')
-            ->addAllowedImageDomain('*')
-            ->addAllowedConnectDomain('*')
-            ->addAllowedMediaDomain('*')
-            ->addAllowedObjectDomain('*')
-            ->addAllowedFrameDomain('*')
-            ->addAllowedChildSrcDomain('*');
+        $csp->addAllowedObjectDomain('*');
         $response->setContentSecurityPolicy($csp);
         return $response;
     }

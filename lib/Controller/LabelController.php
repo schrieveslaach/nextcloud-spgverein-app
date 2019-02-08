@@ -40,33 +40,14 @@ class LabelController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function downloadLabels(string $club, string $city): StreamResponse
+    public function downloadLabels(string $club): StreamResponse
     {
         $members = $this->club->getAllMembers($club);
-        $members = array_filter($members, function ($member) use ($city) {
-            return $member->getCity() === $city;
-        });
 
-        usort($members, function ($a, $b) {
-            $m1 = array();
-            $m2 = array();
-            preg_match('/(.*)\s+((\d+)\s*([a-z])?)/', $a->getStreet(), $m1);
-            preg_match('/(.*)\s+((\d+)\s*([a-z])?)/', $b->getStreet(), $m2);
-
-            $cmp = strcmp($m1[1], $m2[1]);
-            if ($cmp === 0) {
-                $n1 = intval($m1[3]);
-                $n2 = intval($m2[3]);
-
-                if ($n1 < $n2)
-                    $cmp = -1;
-                else if ($n1 > $n2)
-                    $cmp = 1;
-                else
-                    $cmp = 0;
-            }
-
-            return $cmp;
+        $cities = str_getcsv(urldecode($this->request->getParam("cities", "")));
+        error_log("cities " . implode(" ", $cities));
+        $members = array_filter($members, function ($member) use ($cities) {
+            return in_array($member->getCity(), $cities);
         });
 
         $format = trim(urldecode($this->request->getParam("format", "L7163")));

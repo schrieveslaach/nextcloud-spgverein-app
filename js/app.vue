@@ -1,6 +1,6 @@
 <template>
     <div id="app-content-wrapper">
-        <div style="width: 100%">
+        <div style="width: 100%; margin-bottom: 75px">
             <section class="club-selection" v-if="clubs.length > 1">
                 <h3>
                     Bestand
@@ -13,11 +13,21 @@
 
             <members v-bind:members="members" v-bind:cities="cities" :club="selectedClub"></members>
         </div>
+
+        <footer>
+            <a class="button" @click="showPrintAllMembers()">
+                <font-awesome-icon icon="print"/>
+                Etiketten aller Mitgliedre drucken
+            </a>
+        </footer>
+
+        <labels-modal :club="selectedClub" :cities="cities" v-if="printAllLabels" @close="closePrintAllMembers()" />
     </div>
 </template>
 
 <script>
     import Members from './members.vue';
+    import LabelsModal from './labels-modal.vue';
 
     export default {
         data() {
@@ -25,24 +35,23 @@
                 clubs: [],
                 cities: [],
                 members: [],
-                selectedClub: ''
+                selectedClub: '',
+                printAllLabels: false
             };
         },
         components: {
-            'members': Members
+            Members,
+            LabelsModal
         },
 
         methods: {
-            print(e) {
-                const members = this.members.filter(member => {
-                    if (!e.city) {
-                        return true;
-                    }
-                    return member.city === e.city;
-                });
-
-                generatePdf(members);
+            showPrintAllMembers() {
+                this.printAllLabels = true;
             },
+            closePrintAllMembers() {
+                this.printAllLabels = false;
+            },
+
 
             fetchMembers() {
                 fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}`,))
