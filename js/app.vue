@@ -17,7 +17,7 @@
         <footer>
             <a class="button" @click="showPrintAllMembers()">
                 <font-awesome-icon icon="print"/>
-                Etiketten aller Mitgliedre drucken
+                Etiketten aller Mitglieder drucken
             </a>
         </footer>
 
