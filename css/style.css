@@ -211,3 +211,10 @@ footer {
 footer > a {
     float: right;
 }
+
+.wait-for-data {
+    margin: auto;
+    width: 50%;
+    padding: 25px;
+    text-align: center;
+}

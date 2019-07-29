@@ -11,7 +11,11 @@
                 </select>
             </section>
 
-            <members v-bind:members="members" v-bind:cities="cities" :club="selectedClub"></members>
+            <div class="wait-for-data" v-if="isLoading">
+                <font-awesome-icon icon="spinner" size="lg" spin />
+                Vereinsdaten werden geladen…
+            </div>
+            <members v-else v-bind:members="members" v-bind:cities="cities" :club="selectedClub"></members>
         </div>
 
         <footer>
@@ -39,6 +43,13 @@
                 printAllLabels: false
             };
         },
+
+        computed: {
+            isLoading() {
+                return this.clubs.length === 0 || this.cities.length === 0 || this.members.length === 0;
+            }
+        },
+
         components: {
             Members,
             LabelsModal
@@ -54,7 +65,7 @@
 
 
             fetchMembers() {
-                fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}`,))
+                fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}`))
                     .then(response => response.json())
                     .then(members => {
                         const regex = /(.*)\s+((\d+)\s*([a-z])?)/;
