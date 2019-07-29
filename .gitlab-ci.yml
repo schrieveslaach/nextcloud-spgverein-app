@@ -1,6 +1,6 @@
 stages:
  - Build
- - Quality
+# - Quality
  - Package
 
 image: openjdk:8-jre-alpine
@@ -18,12 +18,12 @@ build:
     paths:
     - js/spgverein.js
 
-sonarqube:
-  stage: Quality
-  script:
-   - curl -O http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist/2.4/sonar-runner-dist-2.4.zip
-   - unzip sonar-runner-dist-2.4.zip
-   - ./sonar-runner-2.4/bin/sonar-runner -Dsonar.projectKey=de.schrieveslaach.nextcloud.spgverein -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONARQUBE_TOKEN
+#sonarqube:
+#  stage: Quality
+#  script:
+#   - curl -O http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist/2.4/sonar-runner-dist-2.4.zip
+#   - unzip sonar-runner-dist-2.4.zip
+#   - ./sonar-runner-2.4/bin/sonar-runner -Dsonar.projectKey=de.schrieveslaach.nextcloud.spgverein -Dsonar.sources=. -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONARQUBE_TOKEN
 
 package:
   stage: Package
