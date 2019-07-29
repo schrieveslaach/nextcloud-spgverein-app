@@ -127,6 +127,10 @@ td, th {
     }
 
     td:nth-of-type(5):before {
+        content: "Datümer";
+    }
+
+    td:nth-of-type(6):before {
         content: "Anhänge";
     }
 }

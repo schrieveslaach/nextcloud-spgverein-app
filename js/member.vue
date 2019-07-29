@@ -8,6 +8,13 @@
         <td>{{ member.city }}</td>
 
         <td>
+            <ul>
+                <li>Geburtsdatum: {{ member.birth }}</li>
+                <li>Eintrittsdatum: {{ member.admissionDate }}</li>
+            </ul>
+        </td>
+
+        <td>
             <template v-if="Object.keys(member.files).length > 0">
                 <a class="attachment-link" :href="getFileUrl(file)" v-for="file in member.files">
                     <font-awesome-icon icon="file"/>

@@ -17,6 +17,9 @@ class Member implements JsonSerializable
     private $city;
     private $relatedMemberId;
 
+    private $birth;
+    private $admissionDate;
+
     private $files;
 
     function __construct(string $memberData)
@@ -46,6 +49,14 @@ class Member implements JsonSerializable
         $this->city = trim(substr($memberDataUtf8, 205 + $shift, 40));
         $this->relatedMemberId = (int)substr($memberDataUtf8, 1432 + $shift + $shift2, 10);
 
+        $i = 0;
+        $re = '/\d{2}\.\d{2}\.\d{4}/m';
+        while (!preg_match($re, substr($memberDataUtf8, 305 + $shift + $shift2 + $i, 10))) {
+            $i = $i - 1;
+        }
+        $this->birth = substr($memberDataUtf8, 305 + $shift + $shift2 + $i, 10);
+        $this->admissionDate = substr($memberDataUtf8, 419 + $shift + $shift2 + $i, 10);
+
         $this->files = array();
     }
 
@@ -57,6 +68,8 @@ class Member implements JsonSerializable
             "street" => $this->street,
             "zipcode" => $this->zipcode,
             "city" => $this->city,
+            "birth" => $this->birth,
+            "admissionDate" => $this->admissionDate,
             "files" => $this->jsonFiles()
         );
     }
