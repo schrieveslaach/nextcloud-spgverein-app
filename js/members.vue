@@ -1,36 +1,38 @@
 <template>
     <div style="width: 100%">
-        <section class="city" v-for="city in cities">
-            <div class="city-header">
-                <h2> {{ city }} </h2>
-                <a class="button" v-on:click="openLabelsDialog(city)">
-                    <font-awesome-icon icon="print"/>
-                </a>
-            </div>
+        <template v-for="city in cities">
+            <section class="city" v-if="getMembersOf(city).length > 0">
+                <div class="city-header">
+                    <h2> {{ city }} </h2>
+                    <a class="button" v-on:click="openLabelsDialog(city)">
+                        <font-awesome-icon icon="print"/>
+                    </a>
+                </div>
 
-            <table>
-                <colgroup>
-                    <col style="width:25%">
-                    <col style="width:20%">
-                    <col style="width:5%">
-                    <col style="width:20%">
-                    <col style="width:30%">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Straße</th>
-                    <th>Postleitzahl</th>
-                    <th>Ort</th>
-                    <th>Datümer</th>
-                    <th>Anhänge</th>
-                </tr>
-                </thead>
-                <tbody>
-                <member :club="club" v-bind:member="member" v-for="member in getMembersOf(city)" :key="member.id"/>
-                </tbody>
-            </table>
-        </section>
+                <table>
+                    <colgroup>
+                        <col style="width:25%">
+                        <col style="width:20%">
+                        <col style="width:5%">
+                        <col style="width:20%">
+                        <col style="width:30%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Straße</th>
+                        <th>Postleitzahl</th>
+                        <th>Ort</th>
+                        <th>Datümer</th>
+                        <th>Anhänge</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <member :club="club" v-bind:member="member" v-for="member in getMembersOf(city)" :key="member.id"/>
+                    </tbody>
+                </table>
+            </section>
+        </template>
 
         <labels-modal :club="club" :cities="[selectedCityForLabels]" v-if="showModal" @close="closeLabelsDialog" />
     </div>

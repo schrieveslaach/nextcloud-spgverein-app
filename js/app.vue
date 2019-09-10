@@ -15,7 +15,7 @@
                 <font-awesome-icon icon="spinner" size="lg" spin />
                 Vereinsdaten werden geladen…
             </div>
-            <members v-else v-bind:members="members" v-bind:cities="cities" :club="selectedClub"></members>
+            <members v-else v-bind:members="membersByFilter" v-bind:cities="cities" :club="selectedClub"></members>
         </div>
 
         <footer>
@@ -40,6 +40,7 @@
                 cities: [],
                 members: [],
                 selectedClub: '',
+                nameFilter: null,
                 printAllLabels: false
             };
         },
@@ -47,6 +48,17 @@
         computed: {
             isLoading() {
                 return this.clubs.length === 0 || this.cities.length === 0 || this.members.length === 0;
+            },
+
+            membersByFilter() {
+                if (this.nameFilter == null) {
+                    return this.members;
+                }
+
+                const filter = this.nameFilter;
+                return this.members.filter(member => {
+                    return member.fullnames.filter(name => name.indexOf(filter) !== -1).length > 0;
+                })
             }
         },
 
@@ -63,6 +75,12 @@
                 this.printAllLabels = false;
             },
 
+            filter(nameFilter) {
+                this.nameFilter = nameFilter;
+            },
+            cleanSearch() {
+                this.nameFilter = null;
+            },
 
             fetchMembers() {
                 fetch(OC.generateUrl(`/apps/spgverein/members/${this.selectedClub}`))
@@ -105,6 +123,7 @@
         },
 
         mounted() {
+            OC.Search = new OCA.Search(this.filter, this.cleanSearch);
             this.fetchMembers();
         },
 
