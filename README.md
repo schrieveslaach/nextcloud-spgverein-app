@@ -1,5 +1,4 @@
 [![Build Status](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/badges/master/build.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/pipelines)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=de.schrieveslaach.nextcloud.spgverein&metric=alert_status)](https://sonarcloud.io/dashboard?id=de.schrieveslaach.nextcloud.spgverein)
 [![Download](https://img.shields.io/badge/download-spgverein.tar.gz-blue.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/jobs/artifacts/master/raw/spgverein.tar.gz?job=package)
 
 # SPG Verein

@@ -107,6 +107,26 @@ class Member implements JsonSerializable
         return $this->id;
     }
 
+    public function getSalutation(): string
+    {
+        return $this->salutation;
+    }
+
+    public function getBirth()
+    {
+        return $this->birth;
+    }
+
+    public function getAdmissionDate()
+    {
+        return $this->admissionDate;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
     public function getLastname(): string
     {
         return $this->lastname;

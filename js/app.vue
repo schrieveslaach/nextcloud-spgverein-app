@@ -19,6 +19,10 @@
         </div>
 
         <footer>
+            <a class="button" :href="exportUrl" download>
+                <font-awesome-icon icon="file-excel"/>
+                Export
+            </a>
             <a class="button" @click="showPrintAllMembers()">
                 <font-awesome-icon icon="print"/>
                 Etiketten aller Mitglieder drucken
@@ -57,8 +61,12 @@
 
                 const filter = this.nameFilter;
                 return this.members.filter(member => {
-                    return member.fullnames.filter(name => name.indexOf(filter) !== -1).length > 0;
+                    return member.fullnames.filter(name => name.toLowerCase().indexOf(filter) !== -1).length > 0;
                 })
+            },
+
+            exportUrl() {
+                return OC.generateUrl(`/apps/spgverein/files/${this.selectedClub}.ods`);
             }
         },
 
