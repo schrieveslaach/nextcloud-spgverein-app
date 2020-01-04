@@ -10,7 +10,7 @@ before_script:
 build-backend:
   stage: Build
   script:
-    - apk add --no-cache composer
+    - apk add --no-cache composer php7-zip php7-xmlreader
     - composer install
   artifacts:
     paths:
