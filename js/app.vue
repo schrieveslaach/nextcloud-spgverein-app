@@ -59,7 +59,7 @@
                     return this.members;
                 }
 
-                const filter = this.nameFilter;
+                const filter = this.nameFilter.toLowerCase();
                 return this.members.filter(member => {
                     return member.fullnames.filter(name => name.toLowerCase().indexOf(filter) !== -1).length > 0;
                 })
