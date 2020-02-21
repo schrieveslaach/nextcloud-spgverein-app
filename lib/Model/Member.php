@@ -19,6 +19,7 @@ class Member implements JsonSerializable
 
     private $birth;
     private $admissionDate;
+    private $resignationDate;
 
     private $files;
 
@@ -56,7 +57,10 @@ class Member implements JsonSerializable
         }
         $this->birth = substr($memberDataUtf8, 305 + $shift + $shift2 + $i, 10);
         $this->admissionDate = substr($memberDataUtf8, 419 + $shift + $shift2 + $i, 10);
-
+        $resignationDate = substr($memberDataUtf8, 430 + $shift + $shift2 + $i, 10);
+        if($resignationDate != "00.00.0000") {
+			$this->resignationDate = $resignationDate;
+		}
         $this->files = array();
     }
 
@@ -70,6 +74,7 @@ class Member implements JsonSerializable
             "city" => $this->city,
             "birth" => $this->birth,
             "admissionDate" => $this->admissionDate,
+            "resignationDate" => $this->resignationDate,
             "files" => $this->jsonFiles()
         );
     }
@@ -121,6 +126,10 @@ class Member implements JsonSerializable
     {
         return $this->admissionDate;
     }
+
+	public function getResignationDate() {
+		return $this->resignationDate;
+	}
 
     public function getTitle()
     {

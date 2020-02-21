@@ -11,6 +11,7 @@
             <ul>
                 <li>Geburtsdatum: {{ member.birth }}</li>
                 <li>Eintrittsdatum: {{ member.admissionDate }}</li>
+                <li v-if="member.resignationDate">Austrittsdatum: {{ member.resignationDate }}</li>
             </ul>
         </td>
 

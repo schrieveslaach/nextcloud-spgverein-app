@@ -12,6 +12,11 @@
                                :checked="groupMembers" style="vertical-align: middle;">
                         Gruppieren über Mitgliedsnummer
                     </label>
+					<label for="resigned-members-checkbox" style="word-wrap:break-word">
+						<input id="resigned-members-checkbox" type="checkbox" @input="resignedMembersInput"
+							   :checked="resignedMembers" style="vertical-align: middle;">
+						Ausgetretene Mitglieder
+					</label>
                 </div>
 
                 <div>
@@ -65,6 +70,7 @@
             return {
                 addressLine: '',
                 groupMembers: false,
+				resignedMembers: false,
                 labelFormatData: {},
                 selectedLabelFormat: null,
                 labelOffset: 0
@@ -113,6 +119,9 @@
                 if (this.groupMembers) {
                     params.groupMembers = this.groupMembers;
                 }
+                if (this.resignedMembers) {
+					params.resignedMembers = this.resignedMembers;
+				}
                 if (this.selectedLabelFormat != null) {
                     params.format = this.selectedLabelFormat;
                 }
@@ -154,7 +163,12 @@
             groupMembersInput: debounce(function (e) {
                 const checked = e.target.checked;
                 this.groupMembers = checked != null && checked;
-            }, 750)
+            }, 750),
+
+			resignedMembersInput: debounce(function (e) {
+				const checked = e.target.checked;
+				this.resignedMembers = checked != null && checked;
+			}, 750)
         },
 
         watch: {
@@ -165,6 +179,10 @@
             groupMembers(newGroupMembers) {
                 localStorage.groupMembers = newGroupMembers;
             },
+
+			resignedMembers(newResignedMembers) {
+				localStorage.resignedMembers = newResignedMembers;
+			},
 
             selectedLabelFormat(newSelectedLabelFormat) {
                 localStorage.selectedLabelFormat = newSelectedLabelFormat;

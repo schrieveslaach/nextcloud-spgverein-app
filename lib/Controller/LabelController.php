@@ -50,6 +50,11 @@ class LabelController extends Controller
             return in_array($member->getCity(), $cities);
         });
 
+		$resignedMembers = filter_var(urldecode($this->request->getParam("resignedMembers", "false")), FILTER_VALIDATE_BOOLEAN);
+		$members = array_filter($members, function ($member) use ($resignedMembers) {
+			return $member->getResignationDate() == null || $resignedMembers;
+		});
+
         $format = trim(urldecode($this->request->getParam("format", "L7163")));
         $pdf = new Labels($format);
         $pdf->AddPage();
