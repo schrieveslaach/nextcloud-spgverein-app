@@ -52,19 +52,19 @@ class FileController extends Controller {
 
         foreach ($members as $member) {
             $values = [
-                $member->getId(),
-                $member->getSalutation(),
-                $member->getTitle(),
-                $member->getLastname(),
-                $member->getFirstname(),
-                $member->getBirth(),
-                $member->getAdmissionDate(),
-                $member->getResignationDate(),
-                $member->getStreet(),
-                $member->getZipcode(),
-                $member->getCity(),
+                WriterEntityFactory::createCell($member->getId()),
+                WriterEntityFactory::createCell($member->getSalutation()),
+                WriterEntityFactory::createCell($member->getTitle()),
+                WriterEntityFactory::createCell($member->getLastname()),
+                WriterEntityFactory::createCell($member->getFirstname()),
+                WriterEntityFactory::createCell($member->getBirth()),
+                WriterEntityFactory::createCell($member->getAdmissionDate()),
+                WriterEntityFactory::createCell($member->getResignationDate()),
+                WriterEntityFactory::createCell($member->getStreet()),
+                WriterEntityFactory::createCell($member->getZipcode()),
+                WriterEntityFactory::createCell($member->getCity()),
             ];
-            $rowFromValues = WriterEntityFactory::createRowFromArray($values);
+            $rowFromValues = WriterEntityFactory::createRow($values);
             $writer->addRow($rowFromValues);
         }
         $writer->close();

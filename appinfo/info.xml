@@ -23,7 +23,7 @@
     <screenshot>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/raw/master/assets/screenshot-01.png</screenshot>
 
     <dependencies>
-        <nextcloud min-version="14" max-version="18"/>
+        <nextcloud min-version="14" max-version="19"/>
         <lib>zip</lib>
         <lib>xmlreader</lib>
     </dependencies>
