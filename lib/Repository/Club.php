@@ -122,6 +122,37 @@ class Club
     }
 
     public function getAllClubs() {
+		$clubMemberFiles = $this->storage->search(".mdf");
+
+		foreach ($clubMemberFiles as $file) {
+			$descriptors = array(
+				0 => array("pipe", "r"),  // STDIN
+				1 => array("pipe", "w"),  // STDOUT
+				2 => array("pipe", "w")   // STDERR
+			);
+
+			$cmd;
+			if (php_uname("m") == "x86_64") {
+				$cmd = __DIR__  . "/parser-x86_64";
+			}
+			else if (php_uname("m") == "armv7l") {
+				$cmd = __DIR__  . "/parser-armv7l";
+			}
+			$process = proc_open($cmd, $descriptors, $pipes);
+
+			fwrite($pipes[0], $file->getContent());
+			fclose($pipes[0]);
+
+			$stdout = stream_get_contents($pipes[1]);
+			fclose($pipes[1]);
+			fclose($pipes[2]);
+
+			$returnCode = proc_close($process);
+			if ($returnCode === 0) {
+				error_log("----> " . $stdout);
+			}
+		}
+
         $clubMemberFiles = $this->storage->search(self::MITGL_DAT);
 
         $clubs = array();

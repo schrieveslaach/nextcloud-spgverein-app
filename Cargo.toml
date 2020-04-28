@@ -1,0 +1,10 @@
+[package]
+name = "spg-parser"
+version = "0.7.0"
+authors = ["Marc Schreiber <info@schrieveslaach.de>"]
+edition = "2018"
+
+[dependencies]
+async-std = { version = "1.5", features = ["attributes"] }
+oxidized-mdf = { git = "https://gitlab.com/schrieveslaach/oxidized-mdf.git" }
+structopt = "0.3"

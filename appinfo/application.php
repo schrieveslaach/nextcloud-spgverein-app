@@ -16,9 +16,6 @@ class Application extends App {
 
         $container = $this->getContainer();
 
-        /**
-         * Controllers
-         */
         $container->registerService('PageController', function($c) {
             return new PageController(
                     $c->query('AppName'), $c->query('Request')
@@ -43,9 +40,6 @@ class Application extends App {
             );
         });
 
-        /**
-         * Repository Layer
-         */
         $container->registerService('Club', function($c) {
             return new Club($c->query('UserFolder'));
         });
