@@ -21,18 +21,31 @@ build-backend:
 build-frontend:
   stage: Build
   script:
-   - cd js
    - npm ci
    - npm run build
   artifacts:
     paths:
-    - js/spgverein.js
+    - build/**
 
 package:
   stage: Package
   script:
    - apk add --no-cache tar
-   - tar --exclude='js/node_modules' --exclude='.git' --transform 's,^,spgverein/,' -cvzf spgverein.tar.gz *
+   - mkdir spgverein
+   - cp -r appinfo/ spgverein/
+   - cp -r build/ spgverein/
+   - cp -r css/ spgverein/
+   - cp -r fonts/ spgverein/
+   - cp -r img/ spgverein/
+   - cp -r js/ spgverein/
+   - cp -r l10n/ spgverein/
+   - cp -r lib/ spgverein/
+   - cp -r templates/ spgverein/
+   - cp -r vendor/ spgverein/
+   - cp -r CHANGELOG.md spgverein/
+   - cp -r README.md spgverein/
+   - cp -r COPYING spgverein/
+   - tar  -cvzf spgverein.tar.gz spgverein/
   artifacts:
     paths:
     - spgverein.tar.gz

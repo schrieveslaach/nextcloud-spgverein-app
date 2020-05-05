@@ -1,3 +1,8 @@
+# 0.6.0
+
+- Improve UI: align it with Nextcloud design
+- Show that there is no data aivalable to display.
+
 # 0.5.1
 
 - Fix app signing (#2)

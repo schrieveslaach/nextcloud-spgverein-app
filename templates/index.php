@@ -1,14 +1,10 @@
 <?php
-/** @var \OCP\IL10N $l */
-style('spgverein', 'style');
-
+style('spgverein', 'app');
 ?>
 
-<div id="app-content">
-    <div id="app-content-wrapper">
-    </div>
-</div>
+<div id="vue-content"></div>
 
 <?php
-script('spgverein', 'spgverein');
+script('spgverein', 'app');
+script('spgverein', 'chunk-vendors');
 
