@@ -1,5 +1,5 @@
-use structopt::StructOpt;
 use std::str::FromStr;
+use structopt::StructOpt;
 
 #[derive(Debug)]
 pub enum SpgFileVersion {
@@ -8,15 +8,21 @@ pub enum SpgFileVersion {
 }
 
 impl FromStr for SpgFileVersion {
-    type Err = &'static str;
+    type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        todo!()
+        match s {
+            "3" => Ok(SpgFileVersion::V3),
+            "4" => Ok(SpgFileVersion::V4),
+            _ => Err(format!("Cannot parse {} as file version", s)),
+        }
     }
 }
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "spg-parser")]
 pub struct Opt {
-    pub file_version: SpgFileVersion
+    /// The SPG version that generated the file content
+    #[structopt(short = "v")]
+    pub file_version: SpgFileVersion,
 }

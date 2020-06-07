@@ -133,10 +133,10 @@ class Club
 
 			$cmd;
 			if (php_uname("m") == "x86_64") {
-				$cmd = __DIR__  . "/parser-x86_64";
+				$cmd = __DIR__  . "/parser-x86_64 -v 3";
 			}
 			else if (php_uname("m") == "armv7l") {
-				$cmd = __DIR__  . "/parser-armv7l";
+				$cmd = __DIR__  . "/parser-armv7l -v 3";
 			}
 			$process = proc_open($cmd, $descriptors, $pipes);
 
@@ -150,7 +150,8 @@ class Club
 			$returnCode = proc_close($process);
 			if ($returnCode === 0) {
 				error_log("----> " . $stdout);
-			}
+            }
+            error_log("------exit---->" . $returnCode);
 		}
 
         $clubMemberFiles = $this->storage->search(self::MITGL_DAT);

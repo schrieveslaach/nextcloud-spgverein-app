@@ -5,6 +5,12 @@ authors = ["Marc Schreiber <info@schrieveslaach.de>"]
 edition = "2018"
 
 [dependencies]
-async-std = { version = "1.5", features = ["attributes"] }
+async-std = { version = "1.6", features = ["attributes"] }
+chrono = { version = "0.4", features = ["serde"]}
+derive_builder = "0.9"
+encoding_rs = "0.8"
+heapless = "0.5"
 oxidized-mdf = { git = "https://gitlab.com/schrieveslaach/oxidized-mdf.git" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
 structopt = "0.3"
