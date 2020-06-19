@@ -1,3 +1,7 @@
+# 0.7.0
+
+- Update JS Dependencies
+
 # 0.6.0
 
 - Improve UI: align it with Nextcloud design
