@@ -41,7 +41,7 @@ class Application extends App {
         });
 
         $container->registerService('Club', function($c) {
-            return new Club($c->query('UserFolder'));
+            return new Club($c->query('UserFolder'), $c->query('ServerContainer'));
         });
 
         $container->registerService('UserFolder', function($c) {

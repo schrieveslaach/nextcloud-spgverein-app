@@ -4,6 +4,7 @@ namespace OCA\SPGVerein\Repository;
 
 use OCA\SPGVerein\Model\Member;
 use OCP\Files\File;
+use OCP\IServerContainer;
 
 class Club
 {
@@ -12,12 +13,14 @@ class Club
     const START_SYMBOLS = "\x00\x00\x4c\x80";
 
     private $storage;
+    private $dataDirectory;
 
     const MITGL_DAT = "mitgl.dat";
 
-    function __construct($storage)
+    function __construct($storage, IServerContainer $container)
     {
         $this->storage = $storage;
+        $this->dataDirectory = $container->getConfig()->getSystemValue('datadirectory');
     }
 
     public function getAllMembers(string $club): array
@@ -122,43 +125,15 @@ class Club
     }
 
     public function getAllClubs() {
-		$clubMemberFiles = $this->storage->search(".mdf");
-
-		foreach ($clubMemberFiles as $file) {
-			$descriptors = array(
-				0 => array("pipe", "r"),  // STDIN
-				1 => array("pipe", "w"),  // STDOUT
-				2 => array("pipe", "w")   // STDERR
-			);
-
-			$cmd;
-			if (php_uname("m") == "x86_64") {
-				$cmd = __DIR__  . "/parser-x86_64 -v 3";
-			}
-			else if (php_uname("m") == "armv7l") {
-				$cmd = __DIR__  . "/parser-armv7l -v 3";
-			}
-			$process = proc_open($cmd, $descriptors, $pipes);
-
-			fwrite($pipes[0], $file->getContent());
-			fclose($pipes[0]);
-
-			$stdout = stream_get_contents($pipes[1]);
-			fclose($pipes[1]);
-			fclose($pipes[2]);
-
-			$returnCode = proc_close($process);
-			if ($returnCode === 0) {
-				error_log("----> " . $stdout);
-            }
-            error_log("------exit---->" . $returnCode);
-		}
-
         $clubMemberFiles = $this->storage->search(self::MITGL_DAT);
 
         $clubs = array();
 
         foreach ($clubMemberFiles as $file) {
+            $absolutePath = $this->dataDirectory . $file->getPath();
+           
+            $this->parseFile($absolutePath);
+
             $name = $file->getName();
             $name = substr($name, 0, strlen($name) - strlen(self::MITGL_DAT));
             array_push($clubs, $name);
@@ -167,4 +142,35 @@ class Club
         return $clubs;
     }
 
+    private function parseFile($path): array {
+        $descriptors = array(
+            0 => array("pipe", "r"),  // STDIN
+            1 => array("pipe", "w"),  // STDOUT
+            2 => array("pipe", "w")   // STDERR
+        );
+
+        $cmd;
+        if (php_uname("m") == "x86_64") {
+            $cmd = __DIR__  . "/parser-x86_64 -v 3";
+        }
+        else if (php_uname("m") == "armv7l") {
+            $cmd = __DIR__  . "/parser-armv7l -v 3";
+        }
+        // TODO (use path parameter): $cmd = $cmd . " -f " . $path;
+        $process = proc_open($cmd, $descriptors, $pipes);
+
+        fwrite($pipes[0], file_get_contents($path));
+        fclose($pipes[0]);
+
+        $stdout = stream_get_contents($pipes[1]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+
+        $returnCode = proc_close($process);
+        if ($returnCode === 0) {
+            $members = json_decode($stdout);
+        }
+
+        return array();
+    }
 }
