@@ -25,32 +25,8 @@ class Club
 
     public function getAllMembers(string $club): array
     {
-        $members = array();
-
         $clubFile = $this->openClubFile($club);
-        $content = $clubFile->getContent();
-        $length = strlen($content);
-
-        $previous = "";
-        for ($i = 0; $i < $length; $i += 4) {
-            $buffer = substr($content, $i, 4);
-
-            $symbolSearchBuffer = $previous . $buffer;
-            $startSymbolPos = strpos($symbolSearchBuffer, self::START_SYMBOLS);
-            if ($startSymbolPos !== false) {
-                $memberData = substr($content, $i + $startSymbolPos, self::MEMBER_DATA_FIELD_LENGTH);
-
-                $i += self::MEMBER_DATA_FIELD_LENGTH - 4;
-
-                $member = new Member($memberData);
-
-                $this->addDocuments($clubFile, $member);
-
-                array_push($members, $member);
-            }
-
-            $previous = $buffer;
-        }
+        $members = $this->parseFile($clubFile);
 
         usort($members, function ($a, $b) {
             $cmp = strcmp($a->getCity(), $b->getCity());
@@ -86,7 +62,7 @@ class Club
         try {
             $id = str_pad($member->getId(), 10, "0", STR_PAD_LEFT);
 
-            $searchPath = '/archiv/' . $id;
+            $searchPath = "/archiv/" . $id;
             $archiveDirectories = $this->storage->search($id);
 
             foreach ($archiveDirectories as $directory) {
@@ -130,10 +106,6 @@ class Club
         $clubs = array();
 
         foreach ($clubMemberFiles as $file) {
-            $absolutePath = $this->dataDirectory . $file->getPath();
-           
-            $this->parseFile($absolutePath);
-
             $name = $file->getName();
             $name = substr($name, 0, strlen($name) - strlen(self::MITGL_DAT));
             array_push($clubs, $name);
@@ -142,7 +114,7 @@ class Club
         return $clubs;
     }
 
-    private function parseFile($path): array {
+    private function parseFile(File $clubFile): array {
         $descriptors = array(
             0 => array("pipe", "r"),  // STDIN
             1 => array("pipe", "w"),  // STDOUT
@@ -159,6 +131,7 @@ class Club
         // TODO (use path parameter): $cmd = $cmd . " -f " . $path;
         $process = proc_open($cmd, $descriptors, $pipes);
 
+        $path = $this->dataDirectory . $clubFile->getPath();
         fwrite($pipes[0], file_get_contents($path));
         fclose($pipes[0]);
 
@@ -166,11 +139,17 @@ class Club
         fclose($pipes[1]);
         fclose($pipes[2]);
 
+        $members = array();
         $returnCode = proc_close($process);
         if ($returnCode === 0) {
-            $members = json_decode($stdout);
+            $json = json_decode($stdout);
+            foreach($json as $jsonData) {
+                $member = new Member($jsonData);
+                $this->addDocuments($clubFile, $member);
+                array_push($members, $member);
+            }
         }
 
-        return array();
+        return $members;
     }
 }

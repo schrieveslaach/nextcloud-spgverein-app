@@ -23,44 +23,44 @@ class Member implements JsonSerializable
 
     private $files;
 
-    function __construct(string $memberData)
+    function __construct($jsonData)
     {
-        $memberDataUtf8 = mb_convert_encoding($memberData, 'UTF-8', 'ISO-8859-1');
-
-        // These lines ensures that data after lastname is aligned correctly:
-        // if lastname contains none ascii code following fields need to be shifted
-        $zipCode = substr($memberDataUtf8, 200, 6);
-        $shift = $zipCode[0] === ' ' ? 1 : 0;
-        $shift += $zipCode[1] === ' ' ? 1 : 0;
-        $shift += $zipCode[2] === ' ' ? 1 : 0;
-
-        // Same as above...
-        $relatedId = substr($memberDataUtf8, 1432 + $shift, 10);
-        $shift2 = $relatedId[0] === ' ' ? 1 : 0;
-        $shift2 += $relatedId[1] === ' ' ? 1 : 0;
-        $shift2 += $relatedId[2] === ' ' ? 1 : 0;
-
-        $this->id = (int)substr($memberDataUtf8, 0, 10);
-        $this->salutation = trim(substr($memberDataUtf8, 10, 15));
-        $this->title = trim(substr($memberDataUtf8, 25, 35));
-        $this->firstname = trim(substr($memberDataUtf8, 60, 35));
-        $this->lastname = trim(substr($memberDataUtf8, 95, 70));
-        $this->street = trim(substr($memberDataUtf8, 165, 35));
-        $this->zipcode = substr($memberDataUtf8, 200 + $shift, 5);
-        $this->city = trim(substr($memberDataUtf8, 205 + $shift, 40));
-        $this->relatedMemberId = (int)substr($memberDataUtf8, 1432 + $shift + $shift2, 10);
-
-        $i = 0;
-        $re = '/\d{2}\.\d{2}\.\d{4}/m';
-        while (!preg_match($re, substr($memberDataUtf8, 305 + $shift + $shift2 + $i, 10))) {
-            $i = $i - 1;
+        $this->id = (int) $jsonData->id;
+        if(isset($jsonData->salutation)) {
+            $this->salutation = $jsonData->salutation;
         }
-        $this->birth = substr($memberDataUtf8, 305 + $shift + $shift2 + $i, 10);
-        $this->admissionDate = substr($memberDataUtf8, 419 + $shift + $shift2 + $i, 10);
-        $resignationDate = substr($memberDataUtf8, 430 + $shift + $shift2 + $i, 10);
-        if($resignationDate != "00.00.0000") {
-			$this->resignationDate = $resignationDate;
-		}
+        if(isset($jsonData->title)) {
+            $this->title = $jsonData->title;
+        }
+        if(isset($jsonData->firstName)) {
+            $this->firstname = $jsonData->firstName;
+        }
+        if(isset($jsonData->lastName)) {
+            $this->lastname = $jsonData->lastName;
+        }
+        if(isset($jsonData->street)) {
+            $this->street = $jsonData->street;
+        }
+        if(isset($jsonData->zipcode)) {
+            $this->zipcode = $jsonData->zipcode;
+        }
+        if(isset($jsonData->city)) {
+            $this->city = $jsonData->city;
+        }
+        if(isset($jsonData->relatedMemberId)) {
+            $this->relatedMemberId = $jsonData->relatedMemberId;
+        }
+
+        if(isset($jsonData->birth)) {
+            $this->birth = $jsonData->birth;
+        }
+        if(isset($jsonData->admissionDate)) {
+            $this->admissionDate = $jsonData->admissionDate;
+        }
+        if(isset($jsonData->resignationDate)) {
+            $this->resignationDate = $jsonData->resignationDate;
+        }
+
         $this->files = array();
     }
 

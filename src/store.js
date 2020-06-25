@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { generateUrl } from '@nextcloud/router';
+import dayjs from 'dayjs';
 
 Vue.use(Vuex);
 
@@ -54,7 +55,27 @@ export default new Vuex.Store({
 		},
 
 		updateMembers(state, { members, cities, club }) {
-			state.members = members;
+			if (members != null) {
+				state.members = members.map(member => {
+					let birth = null;
+					if (member.birth != null) {
+						birth = dayjs(member.birth);
+					}
+
+					let admissionDate = null;
+					if (member.admissionDate != null) {
+						admissionDate = dayjs(member.admissionDate);
+					}
+
+					let resignationDate = null;
+					if (member.resignationDate != null) {
+						resignationDate = dayjs(member.resignationDate);
+					}
+					return { ...member, birth, admissionDate, resignationDate };
+				});
+			} else {
+				state.members = null;
+			}
 			state.cities = cities;
 			state.club = club;
 		},

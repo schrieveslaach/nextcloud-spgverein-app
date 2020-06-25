@@ -12,6 +12,7 @@
     "@nextcloud/router": "^1.1.0",
     "@nextcloud/vue": "^2.1.0",
     "core-js": "^3.6.4",
+    "dayjs": "^1.8.28",
     "debounce": "^1.2.0",
     "vue": "^2.6.11",
     "vuex": "^3.4.0"

@@ -7,10 +7,10 @@
 
 		<td>
 			<ul>
-				<li>Geburtsdatum: {{ member.birth }}</li>
-				<li>Eintrittsdatum: {{ member.admissionDate }}</li>
+				<li>Geburtsdatum: {{ member.birth | date }}</li>
+				<li>Eintrittsdatum: {{ member.admissionDate | date }}</li>
 				<li v-if="member.resignationDate">
-					Austrittsdatum: {{ member.resignationDate }}
+					Austrittsdatum: {{ member.resignationDate | date }}
 				</li>
 			</ul>
 		</td>
@@ -101,9 +101,15 @@
 
 <script>
 import { generateUrl } from '@nextcloud/router';
+import dayjs from 'dayjs';
 
 export default {
-
+	filters: {
+		date: function(value) {
+			if (!value) return '';
+			return dayjs(value).format('L');
+		},
+	},
 	props: {
 		member: {
 			type: Object,
