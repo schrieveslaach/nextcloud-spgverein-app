@@ -1,3 +1,4 @@
+use std::path::PathBuf;
 use std::str::FromStr;
 use structopt::StructOpt;
 
@@ -25,4 +26,7 @@ pub struct Opt {
     /// The SPG version that generated the file content
     #[structopt(short = "v")]
     pub file_version: SpgFileVersion,
+    /// The path to the file that should be parsed.
+    #[structopt(short = "f")]
+    pub file_path: PathBuf,
 }

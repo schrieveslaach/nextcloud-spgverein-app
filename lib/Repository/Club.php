@@ -128,12 +128,10 @@ class Club
         else if (php_uname("m") == "armv7l") {
             $cmd = __DIR__  . "/parser-armv7l -v 3";
         }
-        // TODO (use path parameter): $cmd = $cmd . " -f " . $path;
-        $process = proc_open($cmd, $descriptors, $pipes);
 
         $path = $this->dataDirectory . $clubFile->getPath();
-        fwrite($pipes[0], file_get_contents($path));
-        fclose($pipes[0]);
+        $cmd = "$cmd  -f '$path'";
+        $process = proc_open($cmd, $descriptors, $pipes);
 
         $stdout = stream_get_contents($pipes[1]);
         fclose($pipes[1]);

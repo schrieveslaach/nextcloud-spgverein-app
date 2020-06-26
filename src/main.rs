@@ -2,10 +2,11 @@ mod member;
 mod opts;
 mod v3;
 
+use crate::member::{Member, MemberBuilder};
 use crate::opts::{Opt, SpgFileVersion};
+use async_std::fs::File;
 use async_std::io::prelude::*;
 use async_std::io::{self, Read, Result};
-pub use member::{Member, MemberBuilder};
 use oxidized_mdf::MdfDatabase;
 use std::pin::Pin;
 use structopt::StructOpt;
@@ -14,12 +15,12 @@ use structopt::StructOpt;
 async fn main() -> std::io::Result<()> {
     let opt = Opt::from_args();
 
-    let stdin = Box::pin(io::stdin());
+    let file = Box::pin(File::open(opt.file_path).await?);
 
     let members = match opt.file_version {
-        SpgFileVersion::V3 => v3::parse(stdin).await?,
+        SpgFileVersion::V3 => v3::parse(file).await?,
         SpgFileVersion::V4 => {
-            parse_v4(stdin).await?;
+            parse_v4(file).await?;
             todo!()
         }
     };

@@ -26,16 +26,16 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
                     window.enqueue(*b).unwrap();
                 }
 
-                let data = window.iter().map(|b| *b).collect::<Vec<u8>>();
+                let data = window.iter().copied().collect::<Vec<u8>>();
 
                 if let Some(v) = data
                     .windows(start_symbols.len())
-                    .position(|window| &window[..] == &start_symbols[..])
+                    .position(|window| window[..] == start_symbols[..])
                 {
                     let data = &data[(v + start_symbols.len())..];
 
                     let mut member_data_buffer = vec![0; 3200];
-                    *&member_data_buffer[..data.len()].clone_from_slice(data);
+                    member_data_buffer[..data.len()].clone_from_slice(data);
                     read.read_exact(&mut member_data_buffer[data.len()..])
                         .await?;
 
@@ -44,7 +44,7 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
 
                     let id = chars[0..10]
                         .iter()
-                        .map(|c| c.clone())
+                        .copied()
                         .collect::<String>()
                         .parse::<usize>()
                         .expect("The member ID should be parseble as number");
@@ -87,7 +87,7 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
 }
 
 fn to_opt_string(member_data: &[char]) -> Option<String> {
-    let s = member_data.iter().map(|c| c.clone()).collect::<String>();
+    let s = member_data.iter().copied().collect::<String>();
     let s = s.trim();
     if s.is_empty() {
         None
@@ -102,4 +102,29 @@ fn parse_date(date_str: Option<String>) -> Option<Date<Utc>> {
         .map(|s| NaiveDate::parse_from_str(&s, "%d.%m.%Y").ok())
         .flatten()
         .map(|d| Date::from_utc(d, Utc))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use async_std::fs::File;
+    use async_std::io::Result;
+
+    #[async_std::test]
+    async fn should_parse_spg_test_club() -> Result<()> {
+        let file = Box::pin(File::open("tests/TESmitgl.dat").await?);
+        let members = parse(file).await?;
+
+        let names = members
+            .iter()
+            .filter_map(|m| m.last_name.as_ref())
+            .collect::<Vec<_>>();
+
+        assert_eq!(
+            names,
+            vec!["Altmeier", "Lippenlos", "Engelchen", "Mustermann"]
+        );
+
+        Ok(())
+    }
 }
