@@ -17,13 +17,15 @@ async fn main() -> std::io::Result<()> {
 
     let file = Box::pin(File::open(opt.file_path).await?);
 
-    let members = match opt.file_version {
+    let mut members = match opt.file_version {
         SpgFileVersion::V3 => v3::parse(file).await?,
         SpgFileVersion::V4 => {
             parse_v4(file).await?;
             todo!()
         }
     };
+
+    members.sort();
 
     let mut out = io::stdout();
     out.write_all(b"[").await?;

@@ -37,6 +37,7 @@ build-frontend:
   script:
    - apk add --no-cache curl unzip nodejs nodejs-npm
    - npm ci
+   - npm run test:unit
    - npm run build
   artifacts:
     paths:
