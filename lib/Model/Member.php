@@ -117,14 +117,20 @@ class Member implements JsonSerializable
         return $this->salutation;
     }
 
-    public function getBirth(): \DateTime
+    public function getBirth()
     {
-        return \DateTime::createFromFormat('d.m.Y', $this->birth);
+    	if(empty($this->birth)) {
+    		return null;
+		}
+        return \DateTime::createFromFormat('Y-m-dT', $this->birth);
     }
 
-    public function getAdmissionDate(): \DateTime
+    public function getAdmissionDate()
     {
-        return \DateTime::createFromFormat('d.m.Y', $this->admissionDate);
+    	if(empty($this->admissionDate)) {
+    		return null;
+		}
+        return \DateTime::createFromFormat('Y-m-dT', $this->admissionDate);
     }
 
     public function getResignationDate()
@@ -132,7 +138,7 @@ class Member implements JsonSerializable
         if (empty($this->resignationDate)) {
             return null;
         }
-        return \DateTime::createFromFormat('d.m.Y', $this->resignationDate);
+        return \DateTime::createFromFormat('Y-m-dT', $this->resignationDate);
 	}
 
     public function getTitle()
