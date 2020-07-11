@@ -29,24 +29,6 @@ class ClubController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function listCities(string $club): JSONResponse {
-        $cities = array();
-
-        $members = $this->club->getAllMembers($club);
-
-        foreach ($members as $member) {
-            array_push($cities, $member->getCity());
-        }
-
-        $uniqueCities = array_unique($cities);
-        sort($uniqueCities);
-        return new JSONResponse($uniqueCities);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
     public function listClubs(): JSONResponse {
         return new JSONResponse($this->club->getAllClubs());
     }

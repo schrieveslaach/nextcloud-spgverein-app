@@ -21,10 +21,18 @@ function compareWith(a, b, comparator) {
 export const getters = {
 	club: state => state.club,
 	clubs: state => state.clubs,
-	cities: state => state.cities,
-	selectedCities: state => {
+	cities: state => {
+		const cities = state.members.map(m => m.city)
+			.filter(c => c != null)
+			.filter((v, i, a) => a.indexOf(v) === i);
+
+		cities.sort();
+
+		return cities;
+	},
+	selectedCities: (state, getters) => {
 		if (state.selectedCities.size === 0) {
-			return state.cities;
+			return getters.cities;
 		}
 
 		return Array.from(state.selectedCities.values());
@@ -79,15 +87,13 @@ export const mutations = {
 		state.clubs = clubs;
 
 		if (clubs.length === 0) {
-			state.cities = [];
 			state.members = [];
 		} else {
-			state.cities = null;
 			state.members = null;
 		}
 	},
 
-	updateMembers(state, { members, cities, club }) {
+	updateMembers(state, { members, club }) {
 		if (members != null) {
 			state.members = members.map(member => {
 				let birth = null;
@@ -109,8 +115,8 @@ export const mutations = {
 		} else {
 			state.members = null;
 		}
-		state.cities = cities;
 		state.club = club;
+		state.selectedCities.clear();
 	},
 
 	updateNameFilter(state, nameFilter) {
@@ -143,13 +149,11 @@ export const actions = {
 
 		commit('updateMembers', {});
 
-		fetch(generateUrl(`/apps/spgverein/cities/${club}`))
+		fetch(fetch(generateUrl(`/apps/spgverein/members/${club}`))
 			.then(response => response.json())
-			.then(cities => fetch(generateUrl(`/apps/spgverein/members/${club}`))
-				.then(response => response.json())
-				.then(members => {
-					commit('updateMembers', { members, cities, club });
-				}));
+			.then(members => {
+				commit('updateMembers', { members, club });
+			}));
 	},
 
 	filterMembersByCities({ commit }, cities) {
@@ -169,7 +173,6 @@ export default new Vuex.Store({
 	state: {
 		club: null,
 		clubs: null,
-		cities: null,
 		members: null,
 		nameFilter: null,
 		selectedCities: new Set(),
