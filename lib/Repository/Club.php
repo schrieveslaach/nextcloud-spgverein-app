@@ -13,14 +13,12 @@ class Club
     const START_SYMBOLS = "\x00\x00\x4c\x80";
 
     private $storage;
-    private $dataDirectory;
 
     const MITGL_DAT = "mitgl.dat";
 
-    function __construct($storage, IServerContainer $container)
+    function __construct($storage)
     {
         $this->storage = $storage;
-        $this->dataDirectory = $container->getConfig()->getSystemValue('datadirectory');
     }
 
     public function getAllMembers(string $club): array
@@ -94,15 +92,19 @@ class Club
 
         $cmd;
         if (php_uname("m") == "x86_64") {
-            $cmd = __DIR__  . "/parser-x86_64 -v 3";
+            $cmd = __DIR__  . "/parser-x86_64";
         }
         else if (php_uname("m") == "armv7l") {
-            $cmd = __DIR__  . "/parser-armv7l -v 3";
+            $cmd = __DIR__  . "/parser-armv7l";
         }
 
-        $path = $this->dataDirectory . $clubFile->getPath();
-        $cmd = "$cmd  -f '$path'";
+        $cmd = "$cmd  -v 3";
         $process = proc_open($cmd, $descriptors, $pipes);
+
+        $fileStream = $clubFile->fopen("rb");
+        stream_copy_to_stream($fileStream, $pipes[0]);
+        fclose($pipes[0]);
+        fclose($fileStream);
 
         $stdout = stream_get_contents($pipes[1]);
         fclose($pipes[1]);
