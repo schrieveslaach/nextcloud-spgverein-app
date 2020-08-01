@@ -2,7 +2,7 @@ use crate::{Member, MemberBuilder};
 use async_std::io::prelude::*;
 use async_std::io::{ErrorKind, Read, Result};
 use chrono::{Date, NaiveDate, Utc};
-use heapless::{consts::U64, spsc::Queue};
+use smallvec::SmallVec;
 use std::pin::Pin;
 
 pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
@@ -12,19 +12,16 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
 
     let mut read = read;
 
-    let mut window: Queue<u8, U64, _> = Queue::u8();
+    let mut window = SmallVec::<[u8; 64]>::new();
     loop {
         let mut buffer = [0u8; 32];
         match read.read_exact(&mut buffer).await {
             Ok(_) => {
                 if window.len() as usize > buffer.len() {
-                    for _ in 0..(window.len() as usize - buffer.len()) {
-                        window.dequeue().unwrap();
-                    }
+                    window.drain(0..(window.len() as usize - buffer.len()));
                 }
-                for b in buffer.iter() {
-                    window.enqueue(*b).unwrap();
-                }
+
+                window.extend_from_slice(&buffer[..]);
 
                 let data = window.iter().copied().collect::<Vec<u8>>();
 
@@ -71,7 +68,7 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
 
                     members.push(member);
 
-                    window = Queue::u8();
+                    window.clear();
                 }
             }
             Err(err) if err.kind() == ErrorKind::UnexpectedEof => {
