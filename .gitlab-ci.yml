@@ -7,18 +7,25 @@ image: alpine:edge
 build-parser:
   stage: Build
   image: rust
+  services:
+   - docker:19.03.12-dind
+  variables:
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_DRIVER: "overlay2"
   script:
-   # - apt update && apt-get install -qq gcc-arm-linux-gnueabihf
-   # - rustup target add armv7-unknown-linux-gnueabihf
-   # - mkdir ~/.cargo
-   # - echo [target.armv7-unknown-linux-gnueabihf] >> ~/.cargo/config
-   # - echo linker = "arm-linux-gnueabihf-gcc" >> ~/.cargo/config
    - cargo test
-   # - cargo build --release --target armv7-unknown-linux-gnueabihf
-   - cargo build --target x86_64-unknown-linux-gnu --release
+   - apt -qq update
+   - apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common > /dev/null
+   - curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+   - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+   - apt -qq update
+   - apt install -y docker-ce > /dev/null
+   - cargo install -q cross cargo install --git https://github.com/schrieveslaach/cross.git --branch docker-remote
+   - cross build --release --target armv7-unknown-linux-gnueabihf
+   - cross build --release --target x86_64-unknown-linux-gnu
   artifacts:
     paths:
-      # - parser/target/armv7-unknown-linux-gnueabihf/release/parser
+      - target/armv7-unknown-linux-gnueabihf/release/spg-parser
       - target/x86_64-unknown-linux-gnu/release/spg-parser
 
 build-backend:
@@ -61,7 +68,7 @@ package:
    - cp -r CHANGELOG.md spgverein/
    - cp -r README.md spgverein/
    - cp -r COPYING spgverein/
-   # - cp target/armv7-unknown-linux-gnueabihf/release/parser lib/Repository/parser-armv7l
+   - cp target/armv7-unknown-linux-gnueabihf/release/spg-parser spgverein/lib/Repository/parser-armv7l
    - cp target/x86_64-unknown-linux-gnu/release/spg-parser spgverein/lib/Repository/parser-x86_64
    - tar  -cvzf spgverein.tar.gz spgverein/
   artifacts:
