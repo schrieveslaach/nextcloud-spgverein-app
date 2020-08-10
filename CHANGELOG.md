@@ -1,7 +1,7 @@
 # 0.7.0
 
 - Update JS Dependencies
-- Support of SPG v3 and v4
+- Make parsing of SPG files more robust (#5).
 
 # 0.6.0
 
