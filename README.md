@@ -16,9 +16,8 @@
 
 ## Screenshots
 
-![Screenshot SPG Verein](assets/screenshot-01.png)
+![Screenshot SPG Verein](assets/screencast.gif)
 
-![Screenshot SPG Verein](assets/screenshot-02.png)
 
 ## Usage
 

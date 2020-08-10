@@ -20,7 +20,7 @@
     <bugs>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/issues</bugs>
     <repository type="git">https://gitlab.com/schrieveslaach/nextcloud-spgverein-app.git</repository>
 
-    <screenshot>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/raw/master/assets/screenshot-01.png</screenshot>
+    <screenshot>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/raw/master/assets/screencast.gif</screenshot>
 
     <dependencies>
         <nextcloud min-version="14" max-version="19"/>
