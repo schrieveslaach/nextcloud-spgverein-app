@@ -112,7 +112,7 @@ class Member implements JsonSerializable
         return $this->id;
     }
 
-    public function getSalutation(): string
+    public function getSalutation()
     {
         return $this->salutation;
     }

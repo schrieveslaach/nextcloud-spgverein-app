@@ -1,3 +1,7 @@
+# Next Version
+
+- Fix export error when salutation is empty
+
 # 0.7.0
 
 - Update JS Dependencies
