@@ -1,8 +1,7 @@
 <?php
 namespace OCA\SPGVerein\Controller;
 
-require_once('fpdf.php');
-class Labels extends FPDF {
+class Labels extends \FPDF {
 
     // Private properties
     protected $_Margin_Left;        // Left margin of labels

@@ -1,5 +1,6 @@
 # Next Version
 
+- Install FPDF via composer
 - Fix export error when salutation is empty
 
 # 0.7.0

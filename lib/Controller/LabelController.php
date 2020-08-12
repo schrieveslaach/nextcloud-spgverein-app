@@ -2,8 +2,6 @@
 
 namespace OCA\SPGVerein\Controller;
 
-require_once('fpdf.php');
-
 use OCA\SPGVerein\Model\MemberGroup;
 use OCA\SPGVerein\Repository\Club;
 use OCP\AppFramework\Controller;
@@ -45,7 +43,7 @@ class LabelController extends Controller
         $members = $this->club->getAllMembers($club);
 
         $cities = str_getcsv(urldecode($this->request->getParam("cities", "")));
-        error_log("cities " . implode(" ", $cities));
+
         $members = array_filter($members, function ($member) use ($cities) {
             return in_array($member->getCity(), $cities);
         });
