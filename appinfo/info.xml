@@ -5,11 +5,30 @@
     <name>SPG Verein</name>
     <summary>Access data of SPG-Verein in your Nextcloud instance</summary>
 
-    <description><![CDATA[Access data of SPG-Verein in your Nextcloud instance]]></description>
+    <description lang="en"><![CDATA[
+# SPG-Verein in Your Nextcloud Hub
+
+The Nextcloud app _spgverein_ makes the data of the proprietary windows program
+[SPG-Verein](https://spg-direkt.de/) accessible in your Nextcloud hub. You can
+synchronize clubs that are managed by SPG-Verein into your nextcloud instance
+and the Nextcloud app _spgverein_ displays all your members in the web interface.
+This allows you to access your clubs when you are on the road.
+]]></description>
+    <description lang="de"><![CDATA[
+# SPG-Verein in Ihrem Nextcloud Hub
+
+Die Nextcloud-App _spgverein_ macht die Daten des proprietären Windows-Programms
+[SPG-Verein](https://spg-direkt.de/) in Ihrem Nextcloud Hub verfügbar. Sie können
+die Bestände, die durch SPG-Verein verwaltet werden, mit Ihren Nextcloud-Dateien
+synchronisieren und die Nextcloud-App _spgverein_ zeigt Ihnen Ihre Mitglieder im
+web interface an. So können Sie von unterwegs auf Ihre Bestände zugreifen.
+]]></description>
+
+SPG-Verein. 
 
     <licence>agpl</licence>
     <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Marc Schreiber</author>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
     <namespace>SPGVerein</namespace>
 
     <category>office</category>

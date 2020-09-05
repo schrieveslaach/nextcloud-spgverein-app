@@ -34,7 +34,20 @@
 			<Members v-if="hasMembers" />
 			<div v-else-if="isReady"
 				class="no-data">
-				Keine Vereinsdaten vorhanden
+				<h1>Keine Vereinsdaten vorhanden</h1>
+				<p>
+					Synchronisieren Sie die Daten Ihres Programms <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
+					mit <a class="external-link" target="_blank" href="https://nextcloud.com/clients/">Nextcloud Desktop Client</a>
+					und besuchen Sie diese Seite erneut.
+				</p>
+				<p>
+					Aktuell wird Version 3 von <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
+					unterstützt. Synchronisieren Sie aus dem Installationsverzeichnis die Ordner, die Dateien beinhalten, die <i>mitgl.dat</i> enden.
+				</p>
+				<p>
+					Die Unterstützung von Version 4 befindet sich gerade in Arbeit. Weitere Informationen finden Sie
+					<a class="external-link" target="_blank" href="https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3">hier</a>.
+				</p>
 			</div>
 		</AppContent>
 
@@ -70,9 +83,22 @@
 	padding-top: 1rem;
 }
 
+.no-data > h1 {
+	font-size: 130%;
+	padding-bottom: 1rem;
+}
+
+.no-data > p {
+	padding-bottom: 0.25rem;
+}
+
 .action-buttons {
 	position: absolute;
 	right: 0;
+}
+
+a.external-link {
+	text-decoration: underline;
 }
 </style>
 

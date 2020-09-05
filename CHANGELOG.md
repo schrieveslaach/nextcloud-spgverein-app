@@ -1,3 +1,8 @@
+# 0.7.2
+
+- Add usage instructions to `info.xml` and to the web interface (#11).
+- Update library dependencies
+
 # 0.7.1
 
 - Install FPDF via composer
