@@ -25,6 +25,9 @@ class Club
 
     const PARSED_CLUBS_FOLDER_NAME = "ParsedClubs";
 
+    const V4_PREFIX = "spg_verein_";
+    const V4_ENDING = ".mdf";
+
     function __construct(LoggerInterface $logger, Folder $userFolder, IAppData $appData)
     {
         $this->logger = $logger;
@@ -70,29 +73,31 @@ class Club
         return array();
     }
 
-    public static function isClubFile(File $clubFile): bool {
-        return self::endsWith($clubFile->getName(), self::MITGL_DAT);
+    public static function isV3ClubFile(String $clubFileName): bool {
+        return self::endsWith($clubFileName, self::MITGL_DAT);
+    }
+
+    public static function isV4ClubFile(String $clubFileName): bool {
+        return self::startsWith($clubFileName, self::V4_PREFIX) && 
+            self::endsWith($clubFileName, self::V4_ENDING);
     }
 
     private static function endsWith( $str, $sub ) {
         return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
     }
 
+    private static function startsWith($string, $startString) { 
+        $len = strlen($startString); 
+        return (substr($string, 0, $len) === $startString); 
+    }
 
-    private function openClubFile(string $club): File
+    private function openClubFile(string $clubFileId): File
     {
-        $clubMemberFiles = $this->userFolder->search($club . self::MITGL_DAT);
-
-        if (empty($clubMemberFiles)) {
-            return false;
-        }
-
-        $clubFile = $clubMemberFiles[0];
-
-        if ($clubFile instanceof File) {
-            return $clubFile;
+        $clubFile = $this->userFolder->getById($clubFileId);
+        if ($clubFile[0] instanceof File) {
+            return $clubFile[0];
         } else {
-            throw new StorageException('Could not open club file');
+            throw new ClubException('Could not open club file');
         }
     }
 
@@ -102,9 +107,50 @@ class Club
         $clubs = array();
 
         foreach ($clubMemberFiles as $file) {
+            try {
+                $this->getJsonFilePath($file);
+            } catch(NotFoundException $e) {
+                $this->logger->warning("No parsed data for club file", [
+                    "file" => $file, 
+                    "msg" => $e->getMessage()
+                ]);
+                continue;
+            }
+
             $name = $file->getName();
             $name = substr($name, 0, strlen($name) - strlen(self::MITGL_DAT));
-            array_push($clubs, $name);
+            array_push($clubs, array(
+                "name" => $name,
+                "id" => $file->getId(),
+                "path" => $file->getPath(),
+            ));
+        }
+
+        $clubMemberFiles = $this->userFolder->search(self::V4_ENDING);
+
+        foreach ($clubMemberFiles as $file) {
+            $name = $file->getName();
+            if (!self::startsWith($name, self::V4_PREFIX)) {
+                continue;
+            }
+
+            try {
+                $this->getJsonFilePath($file);
+            } catch(NotFoundException $e) {
+                $this->logger->warning("No parsed data for club file", [
+                    "file" => $file, 
+                    "msg" => $e->getMessage()
+                ]);
+                continue;
+            }
+
+            $name = substr($name, 0, strlen($name) - strlen(self::V4_ENDING));
+            $name = substr($name, strlen(self::V4_PREFIX));
+            array_push($clubs, array(
+                "name" => $name,
+                "id" => $file->getId(),
+                "path" => $file->getPath(),
+            ));
         }
 
         return $clubs;
@@ -112,50 +158,16 @@ class Club
 
     private function parseMembers(File $clubFile): array {
         try {
-            $parsedClubs = $this->appData->getFolder(self::PARSED_CLUBS_FOLDER_NAME);
-            $file = $parsedClubs->getFile($clubFile->getId() . ".json");
+            $file = $this->getJsonFilePath($clubFile);
             return json_decode($file->getContent());
         } catch(NotFoundException $e) {
             $this->logger->debug("Cannot load prepaserd club", ["ex" => $e->getMessage()]);
+            return array();
         }
-
-        return self::runParser($clubFile);
     }
 
-    public static function runParser(File $clubFile): array {
-        $descriptors = array(
-            0 => array("pipe", "r"),  // STDIN
-            1 => array("pipe", "w"),  // STDOUT
-            2 => array("pipe", "w")   // STDERR
-        );
-
-        $cmd;
-        if (php_uname("m") == "x86_64") {
-            $cmd = __DIR__  . "/parser-x86_64";
-        }
-        else if (php_uname("m") == "armv7l") {
-            $cmd = __DIR__  . "/parser-armv7l";
-        }
-
-        $cmd = "$cmd  -v 3";
-        $process = proc_open($cmd, $descriptors, $pipes);
-
-        $fileStream = $clubFile->fopen("rb");
-        stream_copy_to_stream($fileStream, $pipes[0]);
-        fclose($pipes[0]);
-        fclose($fileStream);
-
-        $stdout = stream_get_contents($pipes[1]);
-        $stderr = stream_get_contents($pipes[2]);
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-
-        $returnCode = proc_close($process);
-        if ($returnCode === 0) {
-            return json_decode($stdout);
-        }
-        else {
-            throw new ClubException($stderr);
-        }
+    private function getJsonFilePath(File $clubFile) {
+        $parsedClubs = $this->appData->getFolder(self::PARSED_CLUBS_FOLDER_NAME);
+        return $parsedClubs->getFile($clubFile->getId() . ".json");
     }
 }

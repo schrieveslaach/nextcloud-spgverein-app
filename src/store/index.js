@@ -157,7 +157,7 @@ export const actions = {
 
 		commit('updateMembers', {});
 
-		fetch(generateUrl(`/apps/spgverein/members/${club}`))
+		fetch(generateUrl(`/apps/spgverein/members/${club.id}`))
 			.then(response => {
 				if (response.headers.get('content-type') === 'application/problem+json') {
 					return response.json().then(error => ({ members: [], error }));

@@ -60,7 +60,7 @@ export const getters = {
 			.map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
 			.join('&');
 
-		return generateUrl(`/apps/spgverein/labels/${getters.club}?${query}`);
+		return generateUrl(`/apps/spgverein/labels/${getters.club.id}?${query}`);
 	},
 };
 

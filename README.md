@@ -12,7 +12,7 @@
 - [ ] Provide all members as contacts in the addressbook
 - [ ] Provide all member birth dates in the calendar
 - [x] Support of SPG-Verein version 3
-- [ ] Support of SPG-Verein version 4
+- [x] Support of SPG-Verein version 4
 
 ## Screenshots
 

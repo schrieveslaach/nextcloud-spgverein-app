@@ -8,6 +8,7 @@ use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Files\Events\Node\NodeCreatedEvent;
 use OCP\Files\Events\Node\NodeWrittenEvent;
+use OCP\Files\File;
 use OCP\Files\IAppData;
 use OCP\Files\NotFoundException;
 use Psr\Log\LoggerInterface;
@@ -31,18 +32,20 @@ class ClubCreated implements IEventListener {
         }
 
         $node = $event->getNode();
-        if (Club::isClubFile($node)) {
+
+        if (Club::isV3ClubFile($node->getName()) || Club::isV4ClubFile($node->getName())) {
             $this->logger->info("Parsing club file", ["file" => $node->getName()]);
 
             try {
-                $members = Club::runParser($node);
-                error_log("----members--->" . count($members));
-
                 $folder = $this->getClubsFolder();
                 $file = $folder->newFile($node->getId() . ".json");
 
-                error_log("---file--->" . $file->getName());
-                $file->putContent(json_encode($members));
+                $version = "4";
+                if (!Club::isV4ClubFile($node->getName())) {
+                    $version = "3";
+                }
+
+                $this->runParserAndStore($version, $node->fopen("r"), $file->write());
             } catch(ClubException $e) {
                 $this->logger->error("Cannot parse club file", [
                     "file" => $node->getName(), 
@@ -60,6 +63,50 @@ class ClubCreated implements IEventListener {
                 "msg" => $e->getMessage()
             ]);
             return $this->appData->newFolder(Club::PARSED_CLUBS_FOLDER_NAME);
+        }
+    }
+
+
+
+    private function runParserAndStore(String $clubVersion, $clubFileStream, $cacheFileStream) {
+        $temp = tmpfile();
+        stream_copy_to_stream($clubFileStream, $temp);
+
+        $descriptors = array(
+            0 => array("pipe", "r"),  // STDIN
+            1 => array("pipe", "w"),  // STDOUT
+            2 => array("pipe", "w")   // STDERR
+        );
+
+        $cmd;
+        if (php_uname("m") == "x86_64") {
+            $cmd = __DIR__  . "/../parser-x86_64";
+        }
+        else if (php_uname("m") == "armv7l") {
+            $cmd = __DIR__  . "/../parser-armv7l";
+        }
+
+        $path = stream_get_meta_data($temp)['uri'];
+        $cmd = "$cmd  -v $clubVersion -f \"$path\"";
+
+        $this->logger->info("Running SPG file parser…", ["cmd" => $cmd]);
+        $process = proc_open($cmd, $descriptors, $pipes);
+
+        stream_set_blocking($pipes[2], 0);
+        
+        if ($error = stream_get_contents($pipes[2])) {
+            throw new ClubException($error);
+        }
+
+        $this->logger->info("SPG file parser finished…");
+        try {
+            stream_copy_to_stream($pipes[1], $cacheFileStream);
+        } finally {
+            fclose($temp);
+            fclose($pipes[0]);
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+            fclose($clubFileStream);
         }
     }
 }

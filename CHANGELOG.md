@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Translated changelog (#15)
 - Parse the clubs/members on node events to store the results in the app data folder (#17)
+- Add support of parsing version 4 files (#3).
 
 ## 0.8.1 – 2021-01-31
 ### Changed

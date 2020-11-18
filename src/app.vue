@@ -9,8 +9,8 @@
 					:loading="isLoadingClubList">
 					<template>
 						<AppNavigationItem v-for="club in clubs"
-							:key="club"
-							:title="club"
+							:key="club.id"
+							:title="club.name"
 							:icon="club === selectedClub ? 'icon-category-enabled' : null"
 							:loading="club === selectedClub && isLoadingMembers"
 							@click="selectedClub = club" />
@@ -22,7 +22,7 @@
 		</AppNavigation>
 
 		<AppContent :class="{ 'wait-for-data': isLoadingMembers }">
-			<div v-if="hasMembers" class="action-buttons">
+			<div v-if="hasMembers && exportUrl != null" class="action-buttons">
 				<button @click="exportAsOdt">
 					Export
 				</button>
@@ -133,7 +133,7 @@ export default {
 	},
 	data() {
 		return {
-			selectedClub: '',
+			selectedClub: null,
 		};
 	},
 
@@ -157,7 +157,10 @@ export default {
 		},
 
 		exportUrl() {
-			return generateUrl(`/apps/spgverein/files/${this.selectedClub}.ods`);
+			if (this.selectedClub == null) {
+				return null;
+			}
+			return generateUrl(`/apps/spgverein/files/${this.selectedClub.id}.ods`);
 		},
 	},
 

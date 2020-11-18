@@ -30,7 +30,7 @@ class ClubDeleted implements IEventListener {
         }
 
         $node = $event->getNode();
-        if (Club::isClubFile($node)) {
+        if (Club::isV3ClubFile($node->getName()) || Club::isV4ClubFile($node->getName())) {
             $this->logger->debug("Delete parsed club file", ["file" => $node->getName()]);
 
             try {

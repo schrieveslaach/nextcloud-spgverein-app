@@ -5,6 +5,7 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 ### Added
 - Changelog wurde übersetzt (#15)
 - Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert (#17)
+- Support von SPG-Verein 4 hinzugefügt (#3).
 
 ## 0.8.1 – 2021-01-31
 ### Changed
