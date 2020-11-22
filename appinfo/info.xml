@@ -28,7 +28,7 @@ SPG-Verein.
 
     <licence>agpl</licence>
     <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Marc Schreiber</author>
-    <version>0.7.2</version>
+    <version>0.8.0</version>
     <namespace>SPGVerein</namespace>
 
     <category>office</category>
@@ -42,7 +42,7 @@ SPG-Verein.
     <screenshot>https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/raw/master/assets/screencast.gif</screenshot>
 
     <dependencies>
-        <nextcloud min-version="14" max-version="19"/>
+        <nextcloud min-version="14" max-version="20"/>
         <lib>zip</lib>
         <lib>xmlreader</lib>
     </dependencies>

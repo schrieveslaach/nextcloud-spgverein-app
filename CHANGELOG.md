@@ -1,3 +1,7 @@
+# 0.8.0
+
+- Nextcloud 20 compatibility (#12)
+
 # 0.7.2
 
 - Add usage instructions to `info.xml` and to the web interface (#11).
