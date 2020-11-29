@@ -24,8 +24,6 @@ synchronisieren und die Nextcloud-App _spgverein_ zeigt Ihnen Ihre Mitglieder im
 web interface an. So können Sie von unterwegs auf Ihre Bestände zugreifen.
 ]]></description>
 
-SPG-Verein. 
-
     <licence>agpl</licence>
     <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Marc Schreiber</author>
     <version>0.8.0</version>
