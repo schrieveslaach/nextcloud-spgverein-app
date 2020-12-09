@@ -107,6 +107,7 @@ class Club
         fclose($fileStream);
 
         $stdout = stream_get_contents($pipes[1]);
+        $stderr = stream_get_contents($pipes[2]);
         fclose($pipes[1]);
         fclose($pipes[2]);
 
@@ -119,6 +120,9 @@ class Club
                 $this->addDocuments($clubFile, $member);
                 array_push($members, $member);
             }
+        }
+        else {
+            throw new ClubException($stderr);
         }
 
         return $members;

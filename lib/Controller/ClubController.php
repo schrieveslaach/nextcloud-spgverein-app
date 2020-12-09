@@ -6,6 +6,7 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use OCA\SPGVerein\Repository\Club;
+use OCA\SPGVerein\Repository\ClubException;
 
 class ClubController extends Controller {
 
@@ -21,8 +22,20 @@ class ClubController extends Controller {
      * @NoCSRFRequired
      */
     public function listMembers(string $club): \OCP\AppFramework\Http\JSONResponse {
-        $members = $this->club->getAllMembers($club);
-        return new JSONResponse($members);
+        try {
+            $members = $this->club->getAllMembers($club);
+            return new JSONResponse($members);
+        }
+        catch(ClubException $e) {
+            $r = new JSONResponse([
+                "type" => "https://httpstatuses.com/500",
+                "detail" => $e->getMessage()
+            ], 500);
+            $headers = $r->getHeaders();
+            $headers["Content-Type"] = "application/problem+json";
+            $r->setHeaders($headers);
+            return $r;
+        }
     }
 
     /**

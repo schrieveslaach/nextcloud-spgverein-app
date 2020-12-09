@@ -34,20 +34,28 @@
 			<Members v-if="hasMembers" />
 			<div v-else-if="isReady"
 				class="no-data">
-				<h1>Keine Vereinsdaten vorhanden</h1>
-				<p>
-					Synchronisieren Sie die Daten Ihres Programms <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
-					mit <a class="external-link" target="_blank" href="https://nextcloud.com/clients/">Nextcloud Desktop Client</a>
-					und besuchen Sie diese Seite erneut.
-				</p>
-				<p>
-					Aktuell wird Version 3 von <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
-					unterstützt. Synchronisieren Sie aus dem Installationsverzeichnis die Ordner, die Dateien beinhalten, die <i>mitgl.dat</i> enden.
-				</p>
-				<p>
-					Die Unterstützung von Version 4 befindet sich gerade in Arbeit. Weitere Informationen finden Sie
-					<a class="external-link" target="_blank" href="https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3">hier</a>.
-				</p>
+				<template v-if="error">
+					<h1 class="error">
+						Konnte Vereinsdaten nicht laden
+					</h1>
+					<p>{{ error }}</p>
+				</template>
+				<template v-else>
+					<h1>Keine Vereinsdaten vorhanden</h1>
+					<p>
+						Synchronisieren Sie die Daten Ihres Programms <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
+						mit <a class="external-link" target="_blank" href="https://nextcloud.com/clients/">Nextcloud Desktop Client</a>
+						und besuchen Sie diese Seite erneut.
+					</p>
+					<p>
+						Aktuell wird Version 3 von <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
+						unterstützt. Synchronisieren Sie aus dem Installationsverzeichnis die Ordner, die Dateien beinhalten, die <i>mitgl.dat</i> enden.
+					</p>
+					<p>
+						Die Unterstützung von Version 4 befindet sich gerade in Arbeit. Weitere Informationen finden Sie
+						<a class="external-link" target="_blank" href="https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3">hier</a>.
+					</p>
+				</template>
 			</div>
 		</AppContent>
 
@@ -86,6 +94,10 @@
 .no-data > h1 {
 	font-size: 130%;
 	padding-bottom: 1rem;
+}
+
+.no-data > h1.error {
+	color: var(--color-error);
 }
 
 .no-data > p {
@@ -131,7 +143,7 @@ export default {
 	},
 
 	computed: {
-		...mapGetters(['clubs', 'members', 'cities']),
+		...mapGetters(['clubs', 'members', 'cities', 'error']),
 
 		isReady() {
 			return !this.isLoadingClubList && !this.isLoadingMembers;

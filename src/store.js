@@ -30,6 +30,12 @@ export const getters = {
 
 		return cities;
 	},
+	error: state => {
+		if (state.error == null) {
+			return null;
+		}
+		return state.error.detail;
+	},
 	selectedCities: (state, getters) => {
 		if (state.selectedCities.size === 0) {
 			return getters.cities;
@@ -93,7 +99,7 @@ export const mutations = {
 		}
 	},
 
-	updateMembers(state, { members, club }) {
+	updateMembers(state, { members, club, error }) {
 		if (members != null) {
 			state.members = members.map(member => {
 				let birth = null;
@@ -116,6 +122,7 @@ export const mutations = {
 			state.members = null;
 		}
 		state.club = club;
+		state.error = error;
 		state.selectedCities.clear();
 	},
 
@@ -150,9 +157,15 @@ export const actions = {
 		commit('updateMembers', {});
 
 		fetch(fetch(generateUrl(`/apps/spgverein/members/${club}`))
-			.then(response => response.json())
-			.then(members => {
-				commit('updateMembers', { members, club });
+			.then(response => {
+				if (response.headers.get('content-type') === 'application/problem+json') {
+					return response.json().then(error => ({ members: [], error }));
+				}
+
+				return response.json().then(members => ({ members, error: null }));
+			})
+			.then(({ members, error }) => {
+				commit('updateMembers', { members, club, error });
 			}));
 	},
 
@@ -176,6 +189,7 @@ export default new Vuex.Store({
 		members: null,
 		nameFilter: null,
 		selectedCities: new Set(),
+		error: null,
 	},
 	getters,
 	mutations,
