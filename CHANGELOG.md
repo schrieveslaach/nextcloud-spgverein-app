@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 - Nextcloud 20 compatibility (#12)
 - Add changelog information to distribution (#14)
 
+### Changed
+- Update library dependencies
+
 ## 0.7.2 – 2020-09-05
 ### Added
 - Add usage instructions to `info.xml` and to the web interface (#11).

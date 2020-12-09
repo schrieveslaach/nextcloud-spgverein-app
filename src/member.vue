@@ -25,6 +25,7 @@
 					{{ file }}
 				</a>
 			</template>
+			<!-- eslint-disable-next-line vue/no-v-html -->
 			<span v-else v-html="'&nbsp;'" />
 		</td>
 	</tr>
@@ -105,7 +106,7 @@ import dayjs from 'dayjs';
 
 export default {
 	filters: {
-		date: function(value) {
+		date(value) {
 			if (!value) return '';
 			return dayjs(value).format('L');
 		},

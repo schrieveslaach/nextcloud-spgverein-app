@@ -7,7 +7,6 @@ use crate::opts::{Opt, SpgFileVersion};
 use async_std::io::prelude::*;
 use async_std::io::{self, Read, Result};
 use oxidized_mdf::MdfDatabase;
-use std::pin::Pin;
 use structopt::StructOpt;
 
 #[async_std::main]
@@ -19,7 +18,7 @@ async fn main() -> std::io::Result<()> {
     let mut members = match opt.file_version {
         SpgFileVersion::V3 => v3::parse(read).await?,
         SpgFileVersion::V4 => {
-            parse_v4(read).await?;
+            // parse_v4(read).await?;
             todo!()
         }
     };
@@ -40,7 +39,7 @@ async fn main() -> std::io::Result<()> {
     Ok(())
 }
 
-async fn parse_v4(read: Pin<Box<dyn Read>>) -> Result<()> {
+async fn parse_v4(read: Box<dyn Read + Unpin>) -> Result<()> {
     let database = MdfDatabase::from_read(read).await?;
 
     let mut stdout = io::stdout();
