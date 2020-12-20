@@ -26,7 +26,7 @@
 				<button @click="exportAsOdt">
 					Export
 				</button>
-				<button @click="showPrinting = !showPrinting">
+				<button @click="printSelectedCities">
 					Etiketten drucken
 				</button>
 			</div>
@@ -59,10 +59,7 @@
 			</div>
 		</AppContent>
 
-		<Labels v-if="isReady && showPrinting"
-			v-show="showPrinting"
-			title="Etiketten drucken"
-			@close="showPrinting=false" />
+		<AppSidebar />
 	</Content>
 </template>
 
@@ -119,26 +116,24 @@ import { generateUrl } from '@nextcloud/router';
 import AppContent from '@nextcloud/vue/dist/Components/AppContent';
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation';
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem';
+import AppSidebar from './app-sidebar.vue';
 import Content from '@nextcloud/vue/dist/Components/Content';
-import Labels from './labels.vue';
 import Members from './members.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
 
 	components: {
+		AppSidebar,
 		AppContent,
 		AppNavigation,
 		AppNavigationItem,
 		Content,
-		Labels,
 		Members,
 	},
 	data() {
 		return {
 			selectedClub: '',
-			printAllLabels: false,
-			showPrinting: false,
 		};
 	},
 
@@ -184,7 +179,7 @@ export default {
 	},
 
 	methods: {
-		...mapActions(['fetchClubs', 'openClub', 'filterByName', 'clearNameFilter']),
+		...mapActions(['fetchClubs', 'openClub', 'filterByName', 'clearNameFilter', 'printSelectedCities']),
 
 		exportAsOdt() {
 			window.open(this.exportUrl);

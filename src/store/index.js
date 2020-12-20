@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { generateUrl } from '@nextcloud/router';
 import dayjs from 'dayjs';
+import createLabelsStore from './labels.js';
 
 Vue.use(Vuex);
 
@@ -156,7 +157,7 @@ export const actions = {
 
 		commit('updateMembers', {});
 
-		fetch(fetch(generateUrl(`/apps/spgverein/members/${club}`))
+		fetch(generateUrl(`/apps/spgverein/members/${club}`))
 			.then(response => {
 				if (response.headers.get('content-type') === 'application/problem+json') {
 					return response.json().then(error => ({ members: [], error }));
@@ -166,7 +167,7 @@ export const actions = {
 			})
 			.then(({ members, error }) => {
 				commit('updateMembers', { members, club, error });
-			}));
+			});
 	},
 
 	filterMembersByCities({ commit }, cities) {
@@ -182,16 +183,23 @@ export const actions = {
 	},
 };
 
-export default new Vuex.Store({
-	state: {
-		club: null,
-		clubs: null,
-		members: null,
-		nameFilter: null,
-		selectedCities: new Set(),
-		error: null,
-	},
-	getters,
-	mutations,
-	actions,
-});
+export default async function createStore() {
+	const labelsStore = await createLabelsStore();
+
+	return new Vuex.Store({
+		state: {
+			club: null,
+			clubs: null,
+			members: null,
+			nameFilter: null,
+			selectedCities: new Set(),
+			error: null,
+		},
+		getters,
+		mutations,
+		actions,
+		modules: {
+			labels: labelsStore,
+		},
+	});
+}

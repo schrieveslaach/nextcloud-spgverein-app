@@ -10,16 +10,14 @@
 		</div>
 		<table>
 			<colgroup>
-				<col style="width:30%">
+				<col style="width:50%">
 				<col style="width:25%">
-				<col style="width:20%">
 				<col style="width:25%">
 			</colgroup>
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Adresse</th>
-					<th>Datümer</th>
+					<th>Name & Adresse</th>
+					<th>Datem</th>
 					<th>Anhänge</th>
 				</tr>
 			</thead>

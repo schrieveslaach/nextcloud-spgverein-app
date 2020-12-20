@@ -1,9 +1,22 @@
 <template>
 	<tr :id="member.id">
-		<td v-for="name in member.fullnames" :key="name">
-			{{ name }}
+		<td v-for="name in member.fullnames" :key="name" class="name-and-address">
+			<div class="name">
+				<span>{{ name }}</span>
+				<br>
+				<span class="address-line">
+					{{ member.street }}, {{ member.zipcode }} {{ member.city }}
+				</span>
+			</div>
+
+			<Actions>
+				<ActionButton icon="icon-filetype-file"
+					:close-after-click="true"
+					@click="selectMembersToPrint([ member.id ])">
+					Einzeletikett drucken
+				</ActionButton>
+			</Actions>
 		</td>
-		<td>{{ member.street }}, {{ member.zipcode }} {{ member.city }}</td>
 
 		<td>
 			<ul>
@@ -32,6 +45,18 @@
 </template>
 
 <style scoped>
+.name-and-address {
+	display: flex;
+}
+
+.name {
+	flex-grow: 6;
+}
+
+span.address-line {
+	color: var(--color-text-maxcontrast);
+}
+
 .attachment-link {
     display: flex;
     white-space: nowrap;
@@ -70,20 +95,15 @@
 
     td:nth-of-type(1):before {
 		color: var(--color-text-maxcontrast);
-        content: "Name";
+        content: "Name & Adresse";
     }
 
     td:nth-of-type(2):before {
 		color: var(--color-text-maxcontrast);
-        content: "Adresse";
+        content: "Daten";
     }
 
     td:nth-of-type(3):before {
-		color: var(--color-text-maxcontrast);
-        content: "Datümer";
-    }
-
-    td:nth-of-type(4):before {
 		color: var(--color-text-maxcontrast);
         content: "Anhänge";
     }
@@ -101,10 +121,17 @@
 </style>
 
 <script>
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton';
+import Actions from '@nextcloud/vue/dist/Components/Actions';
 import { generateUrl } from '@nextcloud/router';
 import dayjs from 'dayjs';
+import { mapActions } from 'vuex';
 
 export default {
+	components: {
+		ActionButton,
+		Actions,
+	},
 	filters: {
 		date(value) {
 			if (!value) return '';
@@ -126,6 +153,8 @@ export default {
 	},
 
 	methods: {
+		...mapActions(['selectMembersToPrint']),
+
 		getFileUrl(file) {
 			return generateUrl(`/apps/spgverein/files/${this.club}/${this.member.id}/${file}`);
 		},

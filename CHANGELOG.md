@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - Nextcloud 20 compatibility (#12)
 - Add changelog information to distribution (#14)
 - Add error handling during parsing and display errors to the user (#13)
+- Label printing of single member
 
 ### Changed
 - Update library dependencies

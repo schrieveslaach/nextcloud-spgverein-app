@@ -42,10 +42,14 @@ class LabelController extends Controller
     {
         $members = $this->club->getAllMembers($club);
 
-        $cities = str_getcsv(urldecode($this->request->getParam("cities", "")));
-
+        $cities = array_filter(str_getcsv(urldecode($this->request->getParam("cities", ""))));
         $members = array_filter($members, function ($member) use ($cities) {
-            return in_array($member->getCity(), $cities);
+            return empty($cities) || in_array($member->getCity(), $cities);
+        });
+
+        $memberIds = array_filter(str_getcsv(urldecode($this->request->getParam("members", ""))));
+		$members = array_filter($members, function ($member) use ($memberIds) {
+			return empty($memberIds) || in_array(strval($member->getId()), $memberIds);
         });
 
 		$resignedMembers = filter_var(urldecode($this->request->getParam("resignedMembers", "false")), FILTER_VALIDATE_BOOLEAN);
