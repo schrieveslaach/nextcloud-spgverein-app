@@ -1,6 +1,6 @@
 {
   "name": "spgverein",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,30 +9,30 @@
     "lint": "vue-cli-service lint --fix"
   },
   "dependencies": {
-    "@nextcloud/l10n": "^1.4.0",
+    "@nextcloud/l10n": "^1.4.1",
     "@nextcloud/router": "^1.2.0",
-    "@nextcloud/vue": "^3.3.1",
-    "core-js": "^3.6.5",
-    "dayjs": "^1.8.35",
+    "@nextcloud/vue": "^3.3.2",
+    "core-js": "^3.8.1",
+    "dayjs": "^1.9.7",
     "debounce": "^1.2.0",
     "vue": "^2.6.12",
-    "vuex": "^3.5.1"
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
-    "@nextcloud/eslint-config": "^2.0.0",
-    "@nextcloud/eslint-plugin": "^1.4.0",
+    "@nextcloud/eslint-config": "^2.2.0",
+    "@nextcloud/eslint-plugin": "^1.5.0",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
-    "@vue/cli-plugin-unit-jest": "^4.4.6",
+    "@vue/cli-plugin-unit-jest": "^4.5.9",
     "@vue/cli-service": "~4.3.0",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/test-utils": "^1.1.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.12"
   },

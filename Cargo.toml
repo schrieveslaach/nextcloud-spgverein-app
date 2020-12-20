@@ -1,6 +1,6 @@
 [package]
 name = "spg-parser"
-version = "0.7.1"
+version = "0.8.0"
 authors = ["Marc Schreiber <info@schrieveslaach.de>"]
 edition = "2018"
 
