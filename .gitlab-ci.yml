@@ -93,6 +93,7 @@ package:
    - cp -r templates/ spgverein/
    - cp -r vendor/ spgverein/
    - cp -r CHANGELOG.md spgverein/
+   - cp -r CHANGELOG.de.md spgverein/
    - cp -r README.md spgverein/
    - cp -r COPYING spgverein/
    - cp target/armv7-unknown-linux-gnueabihf/release/spg-parser spgverein/lib/Repository/parser-armv7l
