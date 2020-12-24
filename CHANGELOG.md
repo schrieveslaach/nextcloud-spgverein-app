@@ -1,6 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
 ## 0.8.9 – 2020-12-20
 ### Added
 - Nextcloud 20 compatibility (#12)
