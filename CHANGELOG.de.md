@@ -1,6 +1,11 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
+## [Unreleased]
+### Added
+- Changelog wurde übersetzt (#15)
+- Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert (#17)
+
 ## 0.8.9 – 2020-12-20
 ### Added
 - Kompatibilität mit Nextcloud 20 hergestellt (#12)

@@ -4,27 +4,50 @@ namespace OCA\SPGVerein\Repository;
 
 use OCA\SPGVerein\Model\Member;
 use OCP\Files\File;
+use OCP\Files\Folder;
+use OCP\Files\IAppData;
+use OCP\Files\NotFoundException;
 use OCP\IServerContainer;
+use Psr\Log\LoggerInterface;
 
 class Club
 {
+    /** @var LoggerInterface */
+    private $logger;
 
-    const MEMBER_DATA_FIELD_LENGTH = 3200;
-    const START_SYMBOLS = "\x00\x00\x4c\x80";
+    /** @var Folder */
+    private $userFolder;
 
-    private $storage;
+    /** @var IAppData */
+    private $appData;
 
     const MITGL_DAT = "mitgl.dat";
 
-    function __construct($storage)
+    const PARSED_CLUBS_FOLDER_NAME = "ParsedClubs";
+
+    function __construct(LoggerInterface $logger, Folder $userFolder, IAppData $appData)
     {
-        $this->storage = $storage;
+        $this->logger = $logger;
+        $this->userFolder = $userFolder;
+        $this->appData = $appData;
     }
 
     public function getAllMembers(string $club): array
     {
         $clubFile = $this->openClubFile($club);
-        return $this->parseFile($clubFile);
+        $json = $this->parseMembers($clubFile);
+
+        $members = array();
+        foreach($json as $jsonData) {
+            $member = new Member($jsonData);
+            array_push($members, $member);
+        }
+
+        foreach($members as $member) {
+            $this->addDocuments($clubFile, $member);
+        }
+
+        return $members;
     }
 
     private function addDocuments(File $clubFile, Member $member) : array {
@@ -32,29 +55,33 @@ class Club
             $id = str_pad($member->getId(), 10, "0", STR_PAD_LEFT);
 
             $searchPath = "/archiv/" . $id;
-            $archiveDirectories = $this->storage->search($id);
+            $archiveDirectories = $this->userFolder->search($id);
 
             foreach ($archiveDirectories as $directory) {
-                if ($this->endsWith($directory->getPath(), $searchPath)) {
+                if (self::endsWith($directory->getPath(), $searchPath)) {
                     foreach ($directory->getDirectoryListing() as $archivedFile) {
                         $member->addFile($archivedFile);
                     }
                 }
             }
-        } catch(\OCP\Files\NotFoundException $e) {
+        } catch(NotFoundException $e) {
         }
 
         return array();
     }
 
-    private function endsWith( $str, $sub ) {
+    public static function isClubFile(File $clubFile): bool {
+        return self::endsWith($clubFile->getName(), self::MITGL_DAT);
+    }
+
+    private static function endsWith( $str, $sub ) {
         return ( substr( $str, strlen( $str ) - strlen( $sub ) ) == $sub );
     }
 
 
     private function openClubFile(string $club): File
     {
-        $clubMemberFiles = $this->storage->search($club . self::MITGL_DAT);
+        $clubMemberFiles = $this->userFolder->search($club . self::MITGL_DAT);
 
         if (empty($clubMemberFiles)) {
             return false;
@@ -70,7 +97,7 @@ class Club
     }
 
     public function getAllClubs() {
-        $clubMemberFiles = $this->storage->search(self::MITGL_DAT);
+        $clubMemberFiles = $this->userFolder->search(self::MITGL_DAT);
 
         $clubs = array();
 
@@ -83,7 +110,19 @@ class Club
         return $clubs;
     }
 
-    private function parseFile(File $clubFile): array {
+    private function parseMembers(File $clubFile): array {
+        try {
+            $parsedClubs = $this->appData->getFolder(self::PARSED_CLUBS_FOLDER_NAME);
+            $file = $parsedClubs->getFile($clubFile->getId() . ".json");
+            return json_decode($file->getContent());
+        } catch(NotFoundException $e) {
+            $this->logger->debug("Cannot load prepaserd club", ["ex" => $e->getMessage()]);
+        }
+
+        return self::runParser($clubFile);
+    }
+
+    public static function runParser(File $clubFile): array {
         $descriptors = array(
             0 => array("pipe", "r"),  // STDIN
             1 => array("pipe", "w"),  // STDOUT
@@ -111,20 +150,12 @@ class Club
         fclose($pipes[1]);
         fclose($pipes[2]);
 
-        $members = array();
         $returnCode = proc_close($process);
         if ($returnCode === 0) {
-            $json = json_decode($stdout);
-            foreach($json as $jsonData) {
-                $member = new Member($jsonData);
-                $this->addDocuments($clubFile, $member);
-                array_push($members, $member);
-            }
+            return json_decode($stdout);
         }
         else {
             throw new ClubException($stderr);
         }
-
-        return $members;
     }
 }

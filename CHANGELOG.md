@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Translated changelog (#15)
+- Parse the clubs/members on node events to store the results in the app data folder (#17)
 
 ## 0.8.9 – 2020-12-20
 ### Added
