@@ -47,7 +47,7 @@
 							:key="item"
 							:value="item.id"
 							:selected="index === selectedLabelFormat">
-							{{ item.id }} ({{ item.size }}, {{ item.rows }}&#215;{{ item.columns }})
+							{{ index }} ({{ item.size }}, {{ item.rows }}&#215;{{ item.columns }})
 						</option>
 					</select>
 				</div>

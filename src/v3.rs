@@ -55,7 +55,7 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
                         .zipcode(to_opt_string(&chars[200..205]))
                         .city(to_opt_string(&chars[205..245]))
                         .related_member_id(
-                            to_opt_string(&chars[1432..1442])
+                            to_opt_string(&chars[1432..1443])
                                 .map(|id| id.parse::<usize>().ok())
                                 .flatten()
                                 .filter(|id| *id > 0),

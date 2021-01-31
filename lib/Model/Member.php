@@ -92,19 +92,19 @@ class Member implements JsonSerializable
 
     public function getFullname(): string
     {
-        $persons = $this->salutation;
+        $persons = trim($this->salutation);
 
-        if ($persons !== "") {
+        if (trim($persons) !== "") {
             $persons .= " ";
         }
 
-        $persons .= $this->title;
+        $persons .= trim($this->title);
 
-        if ($persons !== "") {
+        if (trim($persons) !== "") {
             $persons .= " ";
         }
 
-        return $persons . $this->firstname . " " . $this->lastname;
+        return trim($persons . $this->firstname . " " . $this->lastname);
     }
 
     public function getId(): int

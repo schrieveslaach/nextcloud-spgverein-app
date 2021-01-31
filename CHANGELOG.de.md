@@ -6,7 +6,12 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 - Changelog wurde übersetzt (#15)
 - Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert (#17)
 
-## 0.8.9 – 2020-12-20
+## 0.8.1 – 2021-01-31
+### Changed
+- Bug-Fix: Die Etiketten-Druchansicht zeigte die Zweckform-ID nicht an
+- Bug-Fix: Das Parsen der verknüpften Mitgliedsnummer wertete nicht alle Bytes aus
+
+## 0.8.0 – 2020-12-20
 ### Added
 - Kompatibilität mit Nextcloud 20 hergestellt (#12)
 - Changelog in den App-Informationen in "Liste der Veränderungen" hinzugefügt (#14)
