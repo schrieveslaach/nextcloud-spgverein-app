@@ -1,7 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 0.8.9 – 2020-12-20
+## 0.8.1 – 2021-01-31
+### Changed
+- Fixed: The label printing UI did not show the format ID
+- Fixed: The parser did not parsed all bytes of the related member ID
+
+## 0.8.0 – 2020-12-20
 ### Added
 - Nextcloud 20 compatibility (#12)
 - Add changelog information to distribution (#14)
