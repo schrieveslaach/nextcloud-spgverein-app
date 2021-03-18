@@ -26,8 +26,10 @@ class FileController extends Controller {
      * @NoCSRFRequired
      */
     public function exportClub(string $club): Response {
+        $file = tmpfile();
+        $path = stream_get_meta_data($file)['uri'];
         $writer = WriterEntityFactory::createODSWriter();
-        $writer->openToFile("/tmp/test.ods"); // write data to a file or to a PHP stream
+        $writer->openToFile($path);
 
         $members = $this->club->getAllMembers($club);
         usort($members, function ($a, $b) {
@@ -69,7 +71,8 @@ class FileController extends Controller {
         }
         $writer->close();
 
-        $content = file_get_contents("/tmp/test.ods");
+        $content = file_get_contents($path);
+        fclose($file);
         $response = new DataDownloadResponse($content, $club . ".ods","application/vnd.oasis.opendocument.spreadsheet");
         return $response;
     }
