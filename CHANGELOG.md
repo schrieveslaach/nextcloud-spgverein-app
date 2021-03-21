@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Add support of parsing version 4 files ([#3](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3)).
 ### Changed
 - Fixed: simultaneous ODT export ([#18](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/18))
+- Fixed: row border when tables cells have different heights ([#21](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/21))
 
 ## 0.8.1 – 2021-01-31
 ### Changed

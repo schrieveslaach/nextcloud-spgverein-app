@@ -114,7 +114,7 @@ span.address-line {
 		padding-left: 10px;
 	}
 
-	td {
+	tr {
 		border-bottom: 1px solid var(--color-border);
 	}
 }

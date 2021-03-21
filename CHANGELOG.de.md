@@ -7,7 +7,8 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 - Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert ([#17](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/17))
 - Support von SPG-Verein 4 hinzugefügt ([#3](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3)).
 ### Changed
-- Gleichzeitiges Exportieren von ODT-Dateien korrigiert ([#18](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/18))
+- Bug-Fix: Gleichzeitiges Exportieren von ODT-Dateien korrigiert ([#18](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/18))
+- Bug-Fix: Zeilenrand wird richtig dargestellt, wenn Tabellenzellen unterschiedlich sind ([#21](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/21))
 
 ## 0.8.1 – 2021-01-31
 ### Changed
