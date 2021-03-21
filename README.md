@@ -1,6 +1,9 @@
 [![pipeline status](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/badges/master/pipeline.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/commits/master)
 [![Download](https://img.shields.io/badge/download-spgverein.tar.gz-blue.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/jobs/artifacts/master/raw/spgverein.tar.gz?job=package)
 
+<script src="https://liberapay.com/schrieveslaach/widgets/button.js"></script>
+<noscript><a href="https://liberapay.com/schrieveslaach/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
+
 # SPG Verein
 
 [SPG-Verein](https://spg-direkt.de/) is a proprietary windows program for managing club members. For example, this program supports a club to generate direct debits. The nextcloud app *spgverein* implements additional behaviour for the club. 
@@ -17,7 +20,6 @@
 ## Screenshots
 
 ![Screenshot SPG Verein](assets/screencast.gif)
-
 
 ## Usage
 

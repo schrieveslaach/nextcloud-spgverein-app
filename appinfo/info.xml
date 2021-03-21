@@ -13,6 +13,11 @@ The Nextcloud app _spgverein_ makes the data of the proprietary windows program
 synchronize clubs that are managed by SPG-Verein into your nextcloud instance
 and the Nextcloud app _spgverein_ displays all your members in the web interface.
 This allows you to access your clubs when you are on the road.
+
+If you like the project or if it provides real value to your organization, please
+consider donating. Just click on the button below:
+
+[![pipeline status](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/schrieveslaach/donate)
 ]]></description>
     <description lang="de"><![CDATA[
 # SPG-Verein in Ihrem Nextcloud Hub
@@ -22,6 +27,12 @@ Die Nextcloud-App _spgverein_ macht die Daten des proprietären Windows-Programm
 die Bestände, die durch SPG-Verein verwaltet werden, mit Ihren Nextcloud-Dateien
 synchronisieren und die Nextcloud-App _spgverein_ zeigt Ihnen Ihre Mitglieder im
 web interface an. So können Sie von unterwegs auf Ihre Bestände zugreifen.
+
+Wenn Ihnen das Projekt gefällt oder wenn es für Ihre Organisation einen echten
+Mehrwert darstellt, ziehen Sie bitte eine Spende in Betracht. Klicken Sie einfach
+auf die Schaltfläche unten:
+
+[![pipeline status](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/schrieveslaach/donate)
 ]]></description>
 
     <licence>agpl</licence>
