@@ -3,9 +3,11 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## [Unreleased]
 ### Added
-- Changelog wurde übersetzt (#15)
-- Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert (#17)
-- Support von SPG-Verein 4 hinzugefügt (#3).
+- Changelog wurde übersetzt ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/15))
+- Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert ([#17](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/17))
+- Support von SPG-Verein 4 hinzugefügt ([#3](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3)).
+### Changed
+- Gleichzeitiges Exportieren von ODT-Dateien korrigiert ([#18](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/18))
 
 ## 0.8.1 – 2021-01-31
 ### Changed
@@ -14,9 +16,9 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## 0.8.0 – 2020-12-20
 ### Added
-- Kompatibilität mit Nextcloud 20 hergestellt (#12)
-- Changelog in den App-Informationen in "Liste der Veränderungen" hinzugefügt (#14)
-- Fehlerbehandlung während des Parsens und Ausgabe von Fehlern im Frontend hinzugefügt (#13)
+- Kompatibilität mit Nextcloud 20 hergestellt ([#12](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/12))
+- Changelog in den App-Informationen in "Liste der Veränderungen" hinzugefügt ([#14](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/14))
+- Fehlerbehandlung während des Parsens und Ausgabe von Fehlern im Frontend hinzugefügt ([#13](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/13))
 - Etikettendruck einzelner Mitglieder
 
 ### Changed
@@ -24,7 +26,7 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## 0.7.2 – 2020-09-05
 ### Added
-- App-Informationen zu `info.xml` und zum Web-Interface hinzugefügt (#11).
+- App-Informationen zu `info.xml` und zum Web-Interface hinzugefügt ([#11](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/11)).
 - Update der abhängigen Bibliotheken
 
 ## 0.7.1 – 2020-09-01
@@ -38,7 +40,7 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 ## 0.7.0 – 2020-08-10
 ### Added
 - Update der abhängigen Bibliotheken
-- Abhärtung beim Parsen von SPG-Dateien (#5).
+- Abhärtung beim Parsen von SPG-Dateien ([#5](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/5)).
 
 ## 0.6.0 – 2020-05-28
 ### Added
@@ -47,7 +49,7 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## 0.5.1 – 2020-05-28
 ### Added
-- Fehlerbehebung App-Signatur (#2)
+- Fehlerbehebung App-Signatur ([#2](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/2))
 
 ## 0.5.0 – 2020-01-01
 ### Added

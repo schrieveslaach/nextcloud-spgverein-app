@@ -3,9 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
-- Translated changelog (#15)
-- Parse the clubs/members on node events to store the results in the app data folder (#17)
-- Add support of parsing version 4 files (#3).
+- Translated changelog ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/)15)
+- Parse the clubs/members on node events to store the results in the app data folder ([#17](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/17))
+- Add support of parsing version 4 files ([#3](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3)).
+### Changed
+- Fixed: simultaneous ODT export ([#18](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/18))
 
 ## 0.8.1 – 2021-01-31
 ### Changed
@@ -14,9 +16,9 @@ All notable changes to this project will be documented in this file.
 
 ## 0.8.0 – 2020-12-20
 ### Added
-- Nextcloud 20 compatibility (#12)
-- Add changelog information to distribution (#14)
-- Add error handling during parsing and display errors to the user (#13)
+- Nextcloud 20 compatibility ([#12](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/12))
+- Add changelog information to distribution ([#14](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/14))
+- Add error handling during parsing and display errors to the user ([#13](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/13))
 - Label printing of single member
 
 ### Changed
@@ -36,7 +38,7 @@ All notable changes to this project will be documented in this file.
 ## 0.7.0 – 2020-08-10
 ### Added
 - Update JS Dependencies
-- Make parsing of SPG files more robust (#5).
+- Make parsing of SPG files more robust ([#5](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/5)).
 
 ## 0.6.0 – 2020-05-28
 ### Added
@@ -45,7 +47,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.5.1 – 2020-05-28
 ### Added
-- Fix app signing (#2)
+- Fix app signing ([#2](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/2))
 
 ## 0.5.0 – 2020-01-01
 ### Added
