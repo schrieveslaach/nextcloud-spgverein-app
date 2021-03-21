@@ -1,4 +1,4 @@
-[![Build Status](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/badges/master/build.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/pipelines)
+[![pipeline status](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/badges/master/pipeline.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/commits/master)
 [![Download](https://img.shields.io/badge/download-spgverein.tar.gz-blue.svg)](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/jobs/artifacts/master/raw/spgverein.tar.gz?job=package)
 
 # SPG Verein
@@ -21,4 +21,4 @@
 
 ## Usage
 
-Install the Nextcloud app [*spgverein* from the app store](https://apps.nextcloud.com/apps/spgverein) and synchronize the folder that contains the files that end with `*mitgl.dat`. Then, you will be able to access your club members in the Nextcloud UI.
+Install the Nextcloud app [*spgverein* from the app store](https://apps.nextcloud.com/apps/spgverein) and synchronize the folder that contains the files that either end with `*mitgl.dat` or that start with `spg_verein_` and have the extension `.mdf`. Then, you will be able to access your club members in the Nextcloud UI.

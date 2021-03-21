@@ -48,12 +48,9 @@
 						und besuchen Sie diese Seite erneut.
 					</p>
 					<p>
-						Aktuell wird Version 3 von <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
-						unterstützt. Synchronisieren Sie aus dem Installationsverzeichnis die Ordner, die Dateien beinhalten, die <i>mitgl.dat</i> enden.
-					</p>
-					<p>
-						Die Unterstützung von Version 4 befindet sich gerade in Arbeit. Weitere Informationen finden Sie
-						<a class="external-link" target="_blank" href="https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3">hier</a>.
+						Aktuell wird Version 3 und 4 von <a class="external-link" target="_blank" href="https://spg-direkt.de/">SPG-Verein</a>
+						unterstützt. Synchronisieren Sie für Version 3 aus dem Installationsverzeichnis die Ordner, die Dateien beinhalten, die mit
+						<i>mitgl.dat</i> enden. Für Version 4 synchronisieren Sie alle Dateien mit dem Namensscheme <i>spg_verein_*.mdf</i>.
 					</p>
 				</template>
 			</div>
