@@ -1,9 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## 0.9.0 – 2021-03-21
 ### Added
-- Translated changelog ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/)15)
+- Translated changelog ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/15))
 - Parse the clubs/members on node events to store the results in the app data folder ([#17](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/17))
 - Add support of parsing version 4 files ([#3](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/3)).
 ### Changed

@@ -1,7 +1,7 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
-## [Unreleased]
+## 0.9.0 – 2021-03-21
 ### Added
 - Changelog wurde übersetzt ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/15))
 - Vereine werden anhand von Events verarbeitet und die Ergebnisse werden im App-Folder zwischen gespeichert ([#17](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/17))
