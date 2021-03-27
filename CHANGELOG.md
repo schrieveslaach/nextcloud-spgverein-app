@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Changed
+- Fixed: text wrapping on small devices ([#21](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/21))
+
 ## 0.9.0 – 2021-03-21
 ### Added
 - Translated changelog ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/15))

@@ -1,6 +1,10 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
+## [Unreleased]
+### Changed
+- Bug-Fix: Textdarstellung auf kleinen Geräten ([#21](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/21))
+
 ## 0.9.0 – 2021-03-21
 ### Added
 - Changelog wurde übersetzt ([#15](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/15))

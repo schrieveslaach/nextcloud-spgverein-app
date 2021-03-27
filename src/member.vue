@@ -75,6 +75,7 @@ span.address-line {
     }
 
 	tr {
+		border-bottom: none !important;
 		padding-bottom: 0.5rem;
 	}
 
@@ -84,27 +85,33 @@ span.address-line {
         padding-left: 25%;
     }
 
+	td + td {
+		padding-top: 0.5em;
+	}
+
     td:before {
         position: absolute;
-        top: 6px;
-        left: 6px;
+		color: var(--color-text-maxcontrast);
+        top: 0px;
+        left: 0px;
         width: 20%;
+		height: 100%;
         padding-right: 10px;
-        white-space: nowrap;
+		margin-left: 3px;
+		white-space: pre-wrap;
     }
 
     td:nth-of-type(1):before {
-		color: var(--color-text-maxcontrast);
         content: "Name & Adresse";
     }
 
     td:nth-of-type(2):before {
-		color: var(--color-text-maxcontrast);
+		padding-top: 0.5em;
         content: "Daten";
     }
 
     td:nth-of-type(3):before {
-		color: var(--color-text-maxcontrast);
+		padding-top: 0.5em;
         content: "Anhänge";
     }
 
