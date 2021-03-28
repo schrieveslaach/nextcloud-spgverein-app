@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 0.10.2 – 2021-03-28
+### Changed
+- Fixed: broken release package ([#23](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/23)). Older Nextcloud versions allowed symlinks in packages.
+
 ## 0.10.1 – 2021-03-28
 ### Changed
 - Fixed: broken attachment link

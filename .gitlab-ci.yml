@@ -83,11 +83,8 @@ package:
    - mkdir spgverein
    - cp CHANGELOG.md spgverein/
    - cp -r appinfo/ spgverein/
-   - cp -r build/ spgverein/
-   - cp -r css/ spgverein/
    - cp -r fonts/ spgverein/
    - cp -r img/ spgverein/
-   - cp -r js/ spgverein/
    - cp -r l10n/ spgverein/
    - cp -r lib/ spgverein/
    - cp -r templates/ spgverein/
@@ -96,6 +93,8 @@ package:
    - cp -r CHANGELOG.de.md spgverein/
    - cp -r README.md spgverein/
    - cp -r COPYING spgverein/
+   - cp -r build/css/ spgverein/
+   - cp -r build/js/ spgverein/
    - cp target/armv7-unknown-linux-gnueabihf/release/spg-parser spgverein/lib/Repository/parser-armv7l
    - cp target/x86_64-unknown-linux-gnu/release/spg-parser spgverein/lib/Repository/parser-x86_64
    - tar  -cvzf spgverein.tar.gz spgverein/
