@@ -9,6 +9,7 @@ use OCA\SPGVerein\Controller\PageController;
 use OCA\SPGVerein\Repository\Listeners\ClubCreated;
 use OCA\SPGVerein\Repository\Listeners\ClubDeleted;
 use OCA\SPGVerein\Repository\Club;
+use OCA\SPGVerein\Repository\MemberSearchProvider;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -17,12 +18,15 @@ use OCP\Files\Events\Node\NodeCreatedEvent;
 use OCP\Files\Events\Node\NodeDeletedEvent;
 use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\Files\IAppData;
+use OCP\IURLGenerator;
 use Psr\Log\LoggerInterface;
 
 class Application extends App implements IBootstrap {
 
+    const APP_ID = "spgverein";
+
     public function __construct(array $urlParams = array()) {
-        parent::__construct('spgverein', $urlParams);
+        parent::__construct(self::APP_ID, $urlParams);
     }
 
     public function register(IRegistrationContext $context): void {
@@ -32,7 +36,7 @@ class Application extends App implements IBootstrap {
 
         $container->registerService('PageController', function($c) {
             return new PageController(
-                $c->query('AppName'), $c->query('Request')
+                $c->query('AppName'), $c->query('Request'), $c->query(IURLGenerator::class)
             );
         });
 
@@ -79,6 +83,8 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(NodeCreatedEvent::class, ClubCreated::class);
 		$context->registerEventListener(NodeDeletedEvent::class, ClubDeleted::class);
 		$context->registerEventListener(NodeWrittenEvent::class, ClubCreated::class);
+
+        $context->registerSearchProvider(MemberSearchProvider::class);
     }
 
     public function boot(IBootContext $context): void {

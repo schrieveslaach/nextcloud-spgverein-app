@@ -24,12 +24,85 @@
 			<transition-group tag="tbody" name="table-row">
 				<Member v-for="member in members"
 					:key="member.id"
+					:ref="member.id"
+					:highlighted="member.id == highlightedMember"
 					:club="club"
 					:member="member" />
 			</transition-group>
 		</table>
 	</div>
 </template>
+
+<script>
+import Member from './member.vue';
+import Multiselect from '@nextcloud/vue/dist/Components/Multiselect';
+import { mapGetters, mapActions } from 'vuex';
+
+export default {
+
+	components: {
+		Member,
+		Multiselect,
+	},
+
+	data() {
+		return {
+			selectedCities: [],
+			nameFilter: null,
+		};
+	},
+
+	computed: {
+		...mapGetters(['members', 'cities', 'club', 'highlightedMember']),
+	},
+
+	watch: {
+		selectedCities(selectedCities) {
+			this.filterMembersByCities(selectedCities);
+		},
+
+		addressLine(newAddressLine) {
+			localStorage.addressLine = newAddressLine;
+		},
+
+		groupMembers(newGroupMembers) {
+			localStorage.groupMembers = newGroupMembers;
+		},
+
+		selectedLabelFormat(newSelectedLabelFormat) {
+			localStorage.selectedLabelFormat = newSelectedLabelFormat;
+		},
+
+		highlightedMember(newHighlightedMember) {
+			if (newHighlightedMember != null) {
+				const el = this.$refs[newHighlightedMember][0];
+				this.$nextTick(() => {
+					el.$el.scrollIntoView({
+						behavior: 'smooth',
+						block: 'center',
+					});
+				});
+			}
+		},
+	},
+
+	mounted() {
+		if (this.highlightedMember != null) {
+			const el = this.$refs[this.highlightedMember][0];
+			this.$nextTick(() => {
+				el.$el.scrollIntoView({
+					behavior: 'smooth',
+					block: 'center',
+				});
+			});
+		}
+	},
+
+	methods: {
+		...mapActions(['filterMembersByCities']),
+	},
+};
+</script>
 
 <style scoped>
 .table-row-enter-active, .table-row-leave-active {
@@ -78,50 +151,3 @@ table {
     }
 }
 </style>
-
-<script>
-import Member from './member.vue';
-import Multiselect from '@nextcloud/vue/dist/Components/Multiselect';
-import { mapGetters, mapActions } from 'vuex';
-
-export default {
-
-	components: {
-		Member,
-		Multiselect,
-	},
-
-	data() {
-		return {
-			selectedCities: [],
-			nameFilter: null,
-		};
-	},
-
-	computed: {
-		...mapGetters(['members', 'cities', 'club']),
-	},
-
-	watch: {
-		selectedCities(selectedCities) {
-			this.filterMembersByCities(selectedCities);
-		},
-
-		addressLine(newAddressLine) {
-			localStorage.addressLine = newAddressLine;
-		},
-
-		groupMembers(newGroupMembers) {
-			localStorage.groupMembers = newGroupMembers;
-		},
-
-		selectedLabelFormat(newSelectedLabelFormat) {
-			localStorage.selectedLabelFormat = newSelectedLabelFormat;
-		},
-	},
-
-	methods: {
-		...mapActions(['filterMembersByCities']),
-	},
-};
-</script>

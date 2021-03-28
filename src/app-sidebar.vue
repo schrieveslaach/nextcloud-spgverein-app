@@ -79,32 +79,6 @@
 	</AppSidebar>
 </template>
 
-<style scoped>
-.labels-preview {
-    margin-top: 25px;
-	margin-left: 10px;
-	margin-right: 10px;
-    min-height: 250px;
-	width: 95%;
-}
-
-.label-parameters {
-    display: flex;
-    flex-direction: column;
-	padding-top: 1.5rem;
-	padding-right: 0.3rem;
-	padding-left: 0.3rem;
-}
-
-.text-box-label {
-    display: block;
-}
-
-.text-box-input {
-    width: 100%;
-}
-</style>
-
 <script>
 import debounce from 'debounce';
 import AppSidebar from '@nextcloud/vue/dist/Components/AppSidebar';
@@ -173,3 +147,29 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+.labels-preview {
+    margin-top: 25px;
+	margin-left: 10px;
+	margin-right: 10px;
+    min-height: 250px;
+	width: 95%;
+}
+
+.label-parameters {
+    display: flex;
+    flex-direction: column;
+	padding-top: 1.5rem;
+	padding-right: 0.3rem;
+	padding-left: 0.3rem;
+}
+
+.text-box-label {
+    display: block;
+}
+
+.text-box-input {
+    width: 100%;
+}
+</style>

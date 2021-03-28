@@ -20,8 +20,8 @@ function compareWith(a, b, comparator) {
 }
 
 export const getters = {
-	club: state => state.club,
-	clubs: state => state.clubs,
+	club: ({ club }) => club,
+	clubs: ({ clubs }) => clubs,
 	cities: state => {
 		const cities = state.members.map(m => m.city)
 			.filter(c => c != null)
@@ -50,7 +50,6 @@ export const getters = {
 		}
 
 		const selectedCities = state.selectedCities;
-		const nameFilter = state.nameFilter;
 
 		const regex = /(.*)\s+((\d+)\s*([a-z])?)/;
 		function sort(m1, m2) {
@@ -81,12 +80,10 @@ export const getters = {
 		}
 
 		return state.members.filter(member => {
-			if (nameFilter == null) return true;
-			return member.fullnames.filter(name => name.toLowerCase().indexOf(nameFilter) !== -1).length > 0;
-		}).filter(member => {
 			return selectedCities == null || selectedCities.size === 0 || selectedCities.has(member.city);
 		}).sort(sort);
 	},
+	highlightedMember: ({ highlightedMember }) => highlightedMember,
 };
 
 export const mutations = {
@@ -127,12 +124,8 @@ export const mutations = {
 		state.selectedCities.clear();
 	},
 
-	updateNameFilter(state, nameFilter) {
-		if (nameFilter != null) {
-			state.nameFilter = nameFilter.toLowerCase();
-		} else {
-			state.nameFilter = null;
-		}
+	updateHighlightedMember(state, memberId) {
+		state.highlightedMember = memberId;
 	},
 
 	updateSelectedCities(state, cities) {
@@ -174,12 +167,8 @@ export const actions = {
 		commit('updateSelectedCities', new Set(cities));
 	},
 
-	filterByName({ commit }, nameFilter) {
-		commit('updateNameFilter', nameFilter);
-	},
-
-	clearNameFilter({ commit }) {
-		commit('updateNameFilter', null);
+	highlightMember({ commit }, memberId) {
+		commit('updateHighlightedMember', memberId != null ? Number(memberId) : null);
 	},
 };
 
@@ -191,7 +180,7 @@ export default async function createStore() {
 			club: null,
 			clubs: null,
 			members: null,
-			nameFilter: null,
+			highlightedMember: null,
 			selectedCities: new Set(),
 			error: null,
 		},

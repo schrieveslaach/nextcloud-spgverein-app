@@ -1,5 +1,5 @@
 <template>
-	<tr :id="member.id">
+	<tr :id="member.id" :class="{ 'highlighted': highlighted }">
 		<td v-for="name in member.fullnames" :key="name" class="name-and-address">
 			<div class="name">
 				<span>{{ name }}</span>
@@ -44,6 +44,52 @@
 	</tr>
 </template>
 
+<script>
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton';
+import Actions from '@nextcloud/vue/dist/Components/Actions';
+import { generateUrl } from '@nextcloud/router';
+import dayjs from 'dayjs';
+import { mapActions } from 'vuex';
+
+export default {
+	components: {
+		ActionButton,
+		Actions,
+	},
+	filters: {
+		date(value) {
+			if (!value) return '';
+			return dayjs(value).format('L');
+		},
+	},
+	props: {
+		member: {
+			type: Object,
+			required: true,
+		},
+		club: {
+			type: String,
+			required: true,
+		},
+		highlighted: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	data() {
+		return {};
+	},
+
+	methods: {
+		...mapActions(['selectMembersToPrint']),
+
+		getFileUrl(file) {
+			return generateUrl(`/apps/spgverein/files/${this.club}/${this.member.id}/${file}`);
+		},
+	},
+};
+</script>
+
 <style scoped>
 .name-and-address {
 	display: flex;
@@ -66,6 +112,10 @@ span.address-line {
 }
 .attachment-link > .icon-file {
 	margin-right: 0.2rem;
+}
+
+.highlighted {
+	background-color: var(--color-background-hover);
 }
 
 @media only screen and (max-width: 760px) {
@@ -126,45 +176,3 @@ span.address-line {
 	}
 }
 </style>
-
-<script>
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton';
-import Actions from '@nextcloud/vue/dist/Components/Actions';
-import { generateUrl } from '@nextcloud/router';
-import dayjs from 'dayjs';
-import { mapActions } from 'vuex';
-
-export default {
-	components: {
-		ActionButton,
-		Actions,
-	},
-	filters: {
-		date(value) {
-			if (!value) return '';
-			return dayjs(value).format('L');
-		},
-	},
-	props: {
-		member: {
-			type: Object,
-			required: true,
-		},
-		club: {
-			type: String,
-			required: true,
-		},
-	},
-	data() {
-		return {};
-	},
-
-	methods: {
-		...mapActions(['selectMembersToPrint']),
-
-		getFileUrl(file) {
-			return generateUrl(`/apps/spgverein/files/${this.club}/${this.member.id}/${file}`);
-		},
-	},
-};
-</script>

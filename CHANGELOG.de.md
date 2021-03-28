@@ -2,6 +2,8 @@
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## [Unreleased]
+### Added
+- Verwendung von Nextclouds eingebauter Suche ([#25](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/25))
 ### Changed
 - Bug-Fix: Textdarstellung auf kleinen Geräten ([#21](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/21))
 

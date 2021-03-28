@@ -4,15 +4,21 @@ namespace OCA\SPGVerein\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\ContentSecurityPolicy;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
+use OCP\IURLGenerator;
 
 class PageController extends Controller
 {
 
-    public function __construct($AppName, IRequest $request)
+    /** @var IURLGenerator */
+    private $urlGenerator;
+
+    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator)
     {
         parent::__construct($AppName, $request);
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -25,8 +31,7 @@ class PageController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function index()
-    {
+    public function index() {
         $response = new TemplateResponse('spgverein', 'index');
         $csp = new ContentSecurityPolicy();
         $csp->addAllowedObjectDomain('*');
@@ -34,4 +39,12 @@ class PageController extends Controller
         return $response;
     }
 
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function redirectToMember($club, $member) {
+        $url = $this->urlGenerator->linkToRoute('spgverein.page.index');
+        return new RedirectResponse("${url}/#/clubs/${club}?member=${member}");
+    }
 }

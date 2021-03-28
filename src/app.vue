@@ -11,6 +11,7 @@
 						<AppNavigationItem v-for="club in clubs"
 							:key="club.id"
 							:title="club.name"
+							:to="{ name: 'Clubs', params: { id: club.id } }"
 							:icon="club === selectedClub ? 'icon-category-enabled' : null"
 							:loading="club === selectedClub && isLoadingMembers"
 							@click="selectedClub = club" />
@@ -59,54 +60,6 @@
 		<AppSidebar />
 	</Content>
 </template>
-
-<style scoped>
-.wait-for-data::after {
-	z-index: 2;
-	content: '';
-	height: 28px;
-	width: 28px;
-	margin: -16px 0 0 -16px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	border-radius: 100%;
-	-webkit-animation: rotate 0.8s infinite linear;
-	animation: rotate 0.8s infinite linear;
-	-webkit-transform-origin: center;
-	-ms-transform-origin: center;
-	transform-origin: center;
-	border: 2px solid var(--color-loading-light);
-	border-top-color: var(--color-loading-dark);
-}
-
-.no-data {
-	text-align: center;
-	padding-top: 1rem;
-}
-
-.no-data > h1 {
-	font-size: 130%;
-	padding-bottom: 1rem;
-}
-
-.no-data > h1.error {
-	color: var(--color-error);
-}
-
-.no-data > p {
-	padding-bottom: 0.25rem;
-}
-
-.action-buttons {
-	position: absolute;
-	right: 0;
-}
-
-a.external-link {
-	text-decoration: underline;
-}
-</style>
 
 <script>
 import { generateUrl } from '@nextcloud/router';
@@ -163,7 +116,12 @@ export default {
 
 	watch: {
 		clubs(newClubs) {
-			this.selectedClub = newClubs[0];
+			if (this.$route.name == null) {
+				this.$router.push({ name: 'Clubs', params: { id: newClubs[0].id } });
+			} else if (this.$route.name === 'Clubs') {
+				this.selectedClub = newClubs.find(club => `${club.id}` === `${this.$route.params.id}`);
+				this.highlightMember(this.$route.query.member);
+			}
 		},
 
 		selectedClub(club) {
@@ -171,15 +129,21 @@ export default {
 				this.openClub(club);
 			}
 		},
+
+		$route(to) {
+			if (to.name === 'Clubs') {
+				this.selectedClub = this.clubs.find(club => club.id === to.params.id);
+				this.highlightMember(to.query.member);
+			}
+		},
 	},
 
 	mounted() {
 		this.fetchClubs();
-		OC.Search = new OCA.Search(this.filterByName, this.clearNameFilter);
 	},
 
 	methods: {
-		...mapActions(['fetchClubs', 'openClub', 'filterByName', 'clearNameFilter', 'printSelectedCities']),
+		...mapActions(['fetchClubs', 'openClub', 'printSelectedCities', 'highlightMember']),
 
 		exportAsOdt() {
 			window.open(this.exportUrl);
@@ -187,3 +151,51 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+.wait-for-data::after {
+	z-index: 2;
+	content: '';
+	height: 28px;
+	width: 28px;
+	margin: -16px 0 0 -16px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border-radius: 100%;
+	-webkit-animation: rotate 0.8s infinite linear;
+	animation: rotate 0.8s infinite linear;
+	-webkit-transform-origin: center;
+	-ms-transform-origin: center;
+	transform-origin: center;
+	border: 2px solid var(--color-loading-light);
+	border-top-color: var(--color-loading-dark);
+}
+
+.no-data {
+	text-align: center;
+	padding-top: 1rem;
+}
+
+.no-data > h1 {
+	font-size: 130%;
+	padding-bottom: 1rem;
+}
+
+.no-data > h1.error {
+	color: var(--color-error);
+}
+
+.no-data > p {
+	padding-bottom: 0.25rem;
+}
+
+.action-buttons {
+	position: absolute;
+	right: 0;
+}
+
+a.external-link {
+	text-decoration: underline;
+}
+</style>

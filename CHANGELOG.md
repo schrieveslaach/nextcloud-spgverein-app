@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Use Nextcloud's unified search API ([#25](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/25))
 ### Changed
 - Fixed: text wrapping on small devices ([#21](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/21))
 
