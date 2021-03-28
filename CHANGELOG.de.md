@@ -1,7 +1,11 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
-## [Unreleased]
+## 0.10.1 – 2021-03-28
+### Changed
+- Bug-Fix: Link zu Anhängen korrigiert
+
+## 0.10.0 – 2021-03-28
 ### Added
 - Verwendung von Nextclouds eingebauter Suche ([#25](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/25))
 ### Changed

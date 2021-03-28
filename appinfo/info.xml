@@ -37,7 +37,7 @@ auf die Schaltfläche unten:
 
     <licence>agpl</licence>
     <author mail="info@schrieveslaach.de" homepage="https://schrieveslaach.de">Marc Schreiber</author>
-    <version>0.10.0</version>
+    <version>0.10.1</version>
     <namespace>SPGVerein</namespace>
 
     <category>office</category>

@@ -1,7 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## 0.10.1 – 2021-03-28
+### Changed
+- Fixed: broken attachment link
+
+## 0.10.0 – 2021-03-28
 ### Added
 - Use Nextcloud's unified search API ([#25](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/25))
 ### Changed

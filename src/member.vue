@@ -84,7 +84,7 @@ export default {
 		...mapActions(['selectMembersToPrint']),
 
 		getFileUrl(file) {
-			return generateUrl(`/apps/spgverein/files/${this.club}/${this.member.id}/${file}`);
+			return generateUrl(`/apps/spgverein/files/${this.club.id}/${this.member.id}/${file}`);
 		},
 	},
 };
