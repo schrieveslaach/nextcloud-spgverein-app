@@ -65,7 +65,7 @@ build-backend:
 
 build-frontend:
   stage: Build
-  image: alpine:edge
+  image: alpine:3
   script:
    - apk add --no-cache curl unzip nodejs nodejs-npm
    - npm ci
