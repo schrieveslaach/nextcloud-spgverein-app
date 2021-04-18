@@ -1,7 +1,8 @@
 use crate::{Member, MemberBuilder};
-use async_std::io::{Read, Result};
+use async_std::io::Read;
 use async_std::stream::StreamExt;
 use chrono::{Date, Utc};
+use color_eyre::eyre::Result;
 use oxidized_mdf::{MdfDatabase, Value};
 use std::pin::Pin;
 
@@ -17,8 +18,6 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
     };
 
     while let Some(row) = rows.next().await {
-        let row = row.unwrap();
-
         let id = row.value("MitgliedID").unwrap();
 
         let member = MemberBuilder::default()
@@ -60,7 +59,7 @@ fn to_opt_date(v: Option<&Value>) -> Option<Date<Utc>> {
 mod tests {
     use super::*;
     use async_std::fs::File;
-    use async_std::io::Result;
+    use color_eyre::eyre::Result;
 
     #[async_std::test]
     async fn should_parse_spg_test_club() -> Result<()> {

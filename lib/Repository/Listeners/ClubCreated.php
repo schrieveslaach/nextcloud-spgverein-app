@@ -66,8 +66,6 @@ class ClubCreated implements IEventListener {
         }
     }
 
-
-
     private function runParserAndStore(String $clubVersion, $clubFileStream, $cacheFileStream) {
         $temp = tmpfile();
         stream_copy_to_stream($clubFileStream, $temp);
@@ -87,7 +85,7 @@ class ClubCreated implements IEventListener {
         }
 
         $path = stream_get_meta_data($temp)['uri'];
-        $cmd = "$cmd  -v $clubVersion -f \"$path\"";
+        $cmd = "sh -c 'chmod +x $cmd && $cmd -v $clubVersion -f \"$path\"'";
 
         $this->logger->info("Running SPG file parser…", ["cmd" => $cmd]);
         $process = proc_open($cmd, $descriptors, $pipes);

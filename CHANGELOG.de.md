@@ -1,6 +1,10 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
+## 0.10.3 – 2021-04-18
+### Changed
+- Bug-Fix: es wird sichergestellt, dass der Parser ausführbar ist ([#27](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/27))
+
 ## 0.10.2 – 2021-03-28
 ### Changed
 - Bug-Fix: Release-Package wurde korrigiert ([#23](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/23)). Ältere Nextcloud-Versionen unterstützten Symlinks innerhalb der Release-Pakete.
