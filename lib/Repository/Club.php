@@ -122,7 +122,6 @@ class Club
             array_push($clubs, array(
                 "name" => $name,
                 "id" => $file->getId(),
-                "path" => $file->getPath(),
             ));
         }
 
@@ -149,7 +148,6 @@ class Club
             array_push($clubs, array(
                 "name" => $name,
                 "id" => $file->getId(),
-                "path" => $file->getPath(),
             ));
         }
 

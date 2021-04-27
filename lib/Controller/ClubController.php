@@ -7,14 +7,19 @@ use OCP\IRequest;
 use OCP\AppFramework\Controller;
 use OCA\SPGVerein\Repository\Club;
 use OCA\SPGVerein\Repository\ClubException;
+use OCP\IURLGenerator;
 
 class ClubController extends Controller {
 
     private $club;
 
-    public function __construct($AppName, IRequest $request, Club $club) {
+    /** @var IURLGenerator */
+    private $urlGenerator;
+
+    public function __construct($AppName, IRequest $request, Club $club, IURLGenerator $urlGenerator) {
         parent::__construct($AppName, $request);
         $this->club = $club;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -43,6 +48,10 @@ class ClubController extends Controller {
      * @NoCSRFRequired
      */
     public function listClubs(): JSONResponse {
-        return new JSONResponse($this->club->getAllClubs());
+        $urlGenerator = $this->urlGenerator;
+        return new JSONResponse(array_map(function($club) use ($urlGenerator) {
+            $club['link'] = $urlGenerator->linkToRoute('files.view.index', ['fileid' => $club['id']]);
+            return $club;
+        }, $this->club->getAllClubs()));
     }
 }

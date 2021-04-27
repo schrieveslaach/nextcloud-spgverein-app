@@ -14,7 +14,15 @@
 							:to="{ name: 'Clubs', params: { id: club.id } }"
 							:icon="club === selectedClub ? 'icon-category-enabled' : null"
 							:loading="club === selectedClub && isLoadingMembers"
-							@click="selectedClub = club" />
+							:forceMenu="true"
+							@click="selectedClub = club">
+							<template slot="actions">
+								<ActionLink
+									title="In Dateien anzeigen"
+									icon="icon-folder"
+									:href="club.link" />
+							</template>
+						</AppNavigationItem>
 						<!-- TODO: without the following tag there is nothing in the navigation bar -->
 						<AppNavigationItem title="AppNavigationItemChild2" style="display: none" />
 					</template>
@@ -63,6 +71,7 @@
 
 <script>
 import { generateUrl } from '@nextcloud/router';
+import ActionLink from '@nextcloud/vue/dist/Components/ActionLink';
 import AppContent from '@nextcloud/vue/dist/Components/AppContent';
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation';
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem';
@@ -74,6 +83,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
 	components: {
+		ActionLink,
 		AppSidebar,
 		AppContent,
 		AppNavigation,

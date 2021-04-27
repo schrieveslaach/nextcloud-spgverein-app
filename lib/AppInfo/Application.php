@@ -42,7 +42,7 @@ class Application extends App implements IBootstrap {
 
         $container->registerService('ClubController', function ($c) {
             return new ClubController(
-                $c->query('AppName'), $c->query('Request'), $c->query('Club')
+                $c->query('AppName'), $c->query('Request'), $c->query('Club'), $c->query(IURLGenerator::class)
             );
         });
 
