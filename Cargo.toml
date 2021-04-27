@@ -1,8 +1,10 @@
 [package]
 name = "spg-parser"
-version = "0.10.3"
+version = "0.11.0"
 authors = ["Marc Schreiber <info@schrieveslaach.de>"]
 edition = "2018"
+
+resolver = "2"
 
 [dependencies]
 async-std = { version = "1.8", features = ["attributes"] }
