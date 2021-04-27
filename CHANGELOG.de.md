@@ -1,6 +1,10 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
+## [Unreleased]
+## Added
+- Verlinkung zwischen den Dateien und Vereinen wurde hinzugefügt ([#29](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/29))
+
 ## 0.10.3 – 2021-04-18
 ### Changed
 - Bug-Fix: es wird sichergestellt, dass der Parser ausführbar ist ([#27](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/27))

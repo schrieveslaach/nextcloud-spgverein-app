@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+## Added
+- Link clubs to the file in the files app ([#29](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/29))
+
 ## 0.10.3 – 2021-04-18
 ### Changed
 - Fixed: ensure that executable flag is set ([#27](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/27))
