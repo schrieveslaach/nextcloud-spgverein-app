@@ -102,17 +102,17 @@ export const mutations = {
 			state.members = members.map(member => {
 				let birth = null;
 				if (member.birth != null) {
-					birth = dayjs(member.birth);
+					birth = dayjs(member.birth.substring(0, member.birth.length - 3));
 				}
 
 				let admissionDate = null;
 				if (member.admissionDate != null) {
-					admissionDate = dayjs(member.admissionDate);
+					admissionDate = dayjs(member.admissionDate.substring(0, member.admissionDate.length - 3));
 				}
 
 				let resignationDate = null;
 				if (member.resignationDate != null) {
-					resignationDate = dayjs(member.resignationDate);
+					resignationDate = dayjs(member.resignationDate.substring(0, member.resignationDate.length - 3));
 				}
 				return { ...member, birth, admissionDate, resignationDate };
 			});

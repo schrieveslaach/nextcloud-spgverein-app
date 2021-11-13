@@ -14,7 +14,7 @@
 							:to="{ name: 'Clubs', params: { id: club.id } }"
 							:icon="club === selectedClub ? 'icon-category-enabled' : null"
 							:loading="club === selectedClub && isLoadingMembers"
-							:forceMenu="true"
+							:force-menu="true"
 							@click="selectedClub = club">
 							<template slot="actions">
 								<ActionLink

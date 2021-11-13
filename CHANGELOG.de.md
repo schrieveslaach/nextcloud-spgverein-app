@@ -2,8 +2,11 @@
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## [Unreleased]
-## Added
+### Added
 - Verlinkung zwischen den Dateien und Vereinen wurde hinzugefügt ([#29](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/29))
+### Changed
+- Update der abhängigen Bibliotheken
+- Kompatibilität mit Nextcloud 22 und 23
 
 ## 0.10.3 – 2021-04-18
 ### Changed
