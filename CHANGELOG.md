@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## 0.11.0 - 2021-11-14 
 ### Added
 - Link clubs to the file in the files app ([#29](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/29))
 ### Changed
