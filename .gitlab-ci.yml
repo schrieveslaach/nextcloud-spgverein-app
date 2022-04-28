@@ -67,7 +67,7 @@ build-frontend:
   stage: Build
   image: alpine:3
   script:
-   - apk add --no-cache curl unzip nodejs npm
+   - apk add --no-cache curl unzip nodejs npm python3 make g++
    - npm ci
    - npm run test:unit
    - npm run build
