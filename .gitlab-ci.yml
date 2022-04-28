@@ -55,7 +55,7 @@ build-backend:
   stage: Build
   image: alpine:3
   script:
-    - apk add --no-cache composer php-zip php-xmlreader curl
+    - apk add --no-cache composer php8-zip php8-xmlreader curl
     - composer install
     # Patch spout until PR has been merged: https://github.com/box/spout/pull/735
     - curl -o vendor/box/spout/src/Spout/Writer/ODS/Manager/WorksheetManager.php https://raw.githubusercontent.com/schrieveslaach/spout/25742181f889487c570e817c258778a94b37f223/src/Spout/Writer/ODS/Manager/WorksheetManager.php
