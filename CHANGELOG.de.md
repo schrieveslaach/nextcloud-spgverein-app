@@ -1,6 +1,10 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
+## [Unreleased]
+### Changed
+- Update der abhängigen Parser-Bibliotheken und Modernisierung des Commandline-Interfaces
+
 ## 0.11.0 - 2021-11-14 
 ### Added
 - Verlinkung zwischen den Dateien und Vereinen wurde hinzugefügt ([#29](https://gitlab.com/schrieveslaach/nextcloud-spgverein-app/-/issues/29))

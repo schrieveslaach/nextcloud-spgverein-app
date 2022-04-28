@@ -6,14 +6,14 @@ mod v4;
 use crate::member::{Member, MemberBuilder};
 use crate::opts::{Opt, SpgFileVersion};
 use async_std::prelude::*;
+use clap::Parser;
 use color_eyre::eyre::Result;
-use structopt::StructOpt;
 
 #[async_std::main]
 async fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let opt = Opt::from_args();
+    let opt = Opt::parse();
 
     let read = opt.read().await?;
 
