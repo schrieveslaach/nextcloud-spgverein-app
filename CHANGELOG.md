@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Changed
 - Update parser library dependencies and modernize CLI handling
+- Compatibility with Nextcloud 24
 
 ## 0.11.0 - 2021-11-14 
 ### Added

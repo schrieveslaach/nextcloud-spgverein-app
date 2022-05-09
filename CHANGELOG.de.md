@@ -4,6 +4,7 @@ Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 ## [Unreleased]
 ### Changed
 - Update der abhängigen Parser-Bibliotheken und Modernisierung des Commandline-Interfaces
+- Kompatibilität mit Nextcloud 24
 
 ## 0.11.0 - 2021-11-14 
 ### Added
