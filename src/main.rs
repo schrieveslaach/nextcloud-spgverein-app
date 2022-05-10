@@ -3,7 +3,7 @@ mod opts;
 mod v3;
 mod v4;
 
-use crate::member::{Member, MemberBuilder};
+use crate::member::{BankAccount, BankAccountBuilder, Member, MemberBuilder};
 use crate::opts::{Opt, SpgFileVersion};
 use async_std::prelude::*;
 use clap::Parser;

@@ -2,6 +2,8 @@
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
 ## [Unreleased]
+### Add
+- Anzeigen der Bankinformationen in einer Detailansicht
 ### Changed
 - Update der abhängigen Parser-Bibliotheken und Modernisierung des Commandline-Interfaces
 - Kompatibilität mit Nextcloud 24

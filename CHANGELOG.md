@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Display banking information in detailed member view
 ### Changed
 - Update parser library dependencies and modernize CLI handling
 - Compatibility with Nextcloud 24

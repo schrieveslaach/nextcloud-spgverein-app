@@ -60,6 +60,9 @@ class Member implements JsonSerializable
         if(isset($jsonData->resignationDate)) {
             $this->resignationDate = $jsonData->resignationDate;
         }
+        if(isset($jsonData->bankAccount)) {
+            $this->bankAccount = new BankAccount($jsonData->bankAccount);
+        }
 
         $this->files = array();
     }
@@ -75,6 +78,7 @@ class Member implements JsonSerializable
             "birth" => $this->birth,
             "admissionDate" => $this->admissionDate,
             "resignationDate" => $this->resignationDate,
+            "bankAccount" => $this->bankAccount,
             "files" => $this->jsonFiles()
         );
     }

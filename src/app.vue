@@ -35,7 +35,7 @@
 				<button @click="exportAsOdt">
 					Export
 				</button>
-				<button @click="printSelectedCities">
+				<button @click="selectMemmberToPrintBySelectedCities">
 					Etiketten drucken
 				</button>
 			</div>
@@ -153,7 +153,7 @@ export default {
 	},
 
 	methods: {
-		...mapActions(['fetchClubs', 'openClub', 'printSelectedCities', 'highlightMember']),
+		...mapActions(['fetchClubs', 'openClub', 'selectMemmberToPrintBySelectedCities', 'highlightMember']),
 
 		exportAsOdt() {
 			window.open(this.exportUrl);

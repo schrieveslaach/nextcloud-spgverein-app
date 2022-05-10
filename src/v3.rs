@@ -1,4 +1,4 @@
-use crate::{Member, MemberBuilder};
+use crate::{BankAccount, BankAccountBuilder, Member, MemberBuilder};
 use async_std::io::prelude::*;
 use async_std::io::{ErrorKind, Read, Result};
 use chrono::{Date, NaiveDate, Utc};
@@ -56,13 +56,13 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
                         .city(to_opt_string(&chars[205..245]))
                         .related_member_id(
                             to_opt_string(&chars[1432..1443])
-                                .map(|id| id.parse::<usize>().ok())
-                                .flatten()
+                                .and_then(|id| id.parse::<usize>().ok())
                                 .filter(|id| *id > 0),
                         )
                         .birth(parse_date(to_opt_string(&chars[305..316])))
                         .admission_date(parse_date(to_opt_string(&chars[419..430])))
                         .resignation_date(parse_date(to_opt_string(&chars[431..441])))
+                        .bank_account(parse_bank_account(to_opt_string(&chars[1556..1590])))
                         .build()
                         .unwrap();
 
@@ -83,6 +83,12 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
     Ok(members)
 }
 
+fn parse_bank_account(bank_account_data: Option<String>) -> Option<BankAccount> {
+    bank_account_data
+        .and_then(|iban| iban.parse::<iban::Iban>().ok())
+        .and_then(|iban| BankAccountBuilder::default().iban(iban).build().ok())
+}
+
 fn to_opt_string(member_data: &[char]) -> Option<String> {
     let s = member_data.iter().copied().collect::<String>();
     let s = s.trim();
@@ -96,8 +102,7 @@ fn to_opt_string(member_data: &[char]) -> Option<String> {
 fn parse_date(date_str: Option<String>) -> Option<Date<Utc>> {
     date_str
         .filter(|s| s != "00.00.0000")
-        .map(|s| NaiveDate::parse_from_str(&s, "%d.%m.%Y").ok())
-        .flatten()
+        .and_then(|s| NaiveDate::parse_from_str(&s, "%d.%m.%Y").ok())
         .map(|d| Date::from_utc(d, Utc))
 }
 

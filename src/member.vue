@@ -15,6 +15,11 @@
 					@click="selectMembersToPrint([ member.id ])">
 					Einzeletikett drucken
 				</ActionButton>
+				<ActionButton icon="icon-details"
+					:close-after-click="true"
+					@click="selectMemberToDisplayDetails(member)">
+					Details
+				</ActionButton>
 			</Actions>
 		</td>
 
@@ -81,7 +86,7 @@ export default {
 	},
 
 	methods: {
-		...mapActions(['selectMembersToPrint']),
+		...mapActions(['selectMembersToPrint', 'selectMemberToDisplayDetails']),
 
 		getFileUrl(file) {
 			return generateUrl(`/apps/spgverein/files/${this.club.id}/${this.member.id}/${file}`);

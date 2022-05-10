@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import { generateUrl } from '@nextcloud/router';
 import dayjs from 'dayjs';
 import createLabelsStore from './labels.js';
+import createDetailsStore from './details.js';
 
 Vue.use(Vuex);
 
@@ -170,10 +171,35 @@ export const actions = {
 	highlightMember({ commit }, memberId) {
 		commit('updateHighlightedMember', memberId != null ? Number(memberId) : null);
 	},
+
+	selectMemberToDisplayDetails({ commit, dispatch }, member) {
+		dispatch('labels/clearLabelPrintingFilter', null, { root: true });
+		dispatch('details/showMember', member, { root: true });
+		commit('updateHighlightedMember', Number(member.id));
+	},
+
+	selectMembersToPrint({ commit, dispatch }, memberIds) {
+		dispatch('labels/selectMembersToPrint', memberIds, { root: true });
+		dispatch('details/clearSelectedMember', null, { root: true });
+		commit('updateHighlightedMember', Number(memberIds[0]));
+	},
+
+	selectMemmberToPrintBySelectedCities({ commit, dispatch }) {
+		dispatch('labels/selectMemmberToPrintBySelectedCities', null, { root: true });
+		dispatch('details/clearSelectedMember', null, { root: true });
+		commit('updateHighlightedMember', null);
+	},
+
+	clearSelection({ commit, dispatch }) {
+		dispatch('labels/clearLabelPrintingFilter', null, { root: true });
+		dispatch('details/clearSelectedMember', null, { root: true });
+		commit('updateHighlightedMember', null);
+	},
 };
 
 export default async function createStore() {
 	const labelsStore = await createLabelsStore();
+	const detailsStore = await createDetailsStore();
 
 	return new Vuex.Store({
 		state: {
@@ -188,7 +214,8 @@ export default async function createStore() {
 		mutations,
 		actions,
 		modules: {
-			labels: labelsStore,
+			labels: { namespaced: true, ...labelsStore },
+			details: { namespaced: true, ...detailsStore },
 		},
 	});
 }

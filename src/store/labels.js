@@ -20,7 +20,7 @@ export const getters = {
 
 	memberSelectionOnly: state => state.memberIds.length > 0,
 
-	printLabelsUrl: (state, getters) => {
+	printLabelsUrl: (state, getters, rootState, rootGetters) => {
 		if (state.memberIds.length === 0 && !state.printSelectedCities) {
 			return null;
 		}
@@ -51,7 +51,7 @@ export const getters = {
 				params.resignedMembers = state.includeResignedMembers;
 			}
 
-			params.cities = getters.selectedCities
+			params.cities = rootGetters.selectedCities
 				.map(v => encodeURIComponent(v))
 				.join(',');
 		}
@@ -60,7 +60,7 @@ export const getters = {
 			.map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
 			.join('&');
 
-		return generateUrl(`/apps/spgverein/labels/${getters.club.id}?${query}`);
+		return generateUrl(`/apps/spgverein/labels/${rootState.club.id}?${query}`);
 	},
 };
 
@@ -109,7 +109,7 @@ export const actions = {
 		commit('updateLabelPrintFilter', { memberIds });
 	},
 
-	printSelectedCities({ commit }) {
+	selectMemmberToPrintBySelectedCities({ commit }) {
 		commit('setPrintSelectedCities', true);
 	},
 

@@ -17,7 +17,7 @@
 			<thead>
 				<tr>
 					<th>Name & Adresse</th>
-					<th>Datem</th>
+					<th>Daten</th>
 					<th>Anhänge</th>
 				</tr>
 			</thead>

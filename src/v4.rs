@@ -1,4 +1,4 @@
-use crate::{Member, MemberBuilder};
+use crate::{BankAccount, BankAccountBuilder, Member, MemberBuilder};
 use async_std::io::Read;
 use async_std::stream::StreamExt;
 use chrono::{Date, Utc};
@@ -32,6 +32,7 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
             .birth(to_opt_date(row.value("Geburtsdatum")))
             .admission_date(to_opt_date(row.value("Eintritt_Datum")))
             .resignation_date(to_opt_date(row.value("Austritt_Datum")))
+            .bank_account(parse_bank_account(row.value("IBAN_Nr")))
             .build()
             .unwrap();
 
@@ -39,6 +40,13 @@ pub async fn parse(read: Pin<Box<dyn Read>>) -> Result<Vec<Member>> {
     }
 
     Ok(members)
+}
+
+fn parse_bank_account(bank_account_data: Option<&Value>) -> Option<BankAccount> {
+    bank_account_data
+        .map(|iban| iban.to_string())
+        .and_then(|iban| iban.parse::<iban::Iban>().ok())
+        .and_then(|iban| BankAccountBuilder::default().iban(iban).build().ok())
 }
 
 fn to_opt_string(v: Option<&Value>) -> Option<String> {

@@ -50,6 +50,10 @@ pub struct Member {
         skip_serializing_if = "Option::is_none"
     )]
     pub resignation_date: Option<Date<Utc>>,
+
+    #[builder(default = "None")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub bank_account: Option<BankAccount>,
 }
 
 fn serialize_option_date<S>(x: &Option<Date<Utc>>, s: S) -> Result<S::Ok, S::Error>
@@ -100,6 +104,12 @@ where
         (None, Some(_)) => Ordering::Greater,
         _ => Ordering::Equal,
     }
+}
+
+#[derive(derive_builder::Builder, Clone, Debug, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BankAccount {
+    iban: iban::Iban,
 }
 
 #[cfg(test)]
