@@ -1,7 +1,7 @@
 # Changelog
 Alle relevanten Änderungen des Projektes werden in dieser Datei dokumentiert
 
-## [Unreleased]
+## 0.12.0 - 2022-05-10
 ### Add
 - Anzeigen der Bankinformationen in einer Detailansicht
 ### Changed
