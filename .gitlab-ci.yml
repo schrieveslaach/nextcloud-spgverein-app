@@ -15,8 +15,11 @@ build-parser-x86_64-unknown-linux-gnu:
   services:
    - docker:19.03.12-dind
   variables:
+    CROSS_REMOTE: "1"
     DOCKER_HOST: "tcp://docker:2375"
     DOCKER_DRIVER: "overlay2"
+  before_script:
+   - curl -L https://github.com/cross-rs/cross/releases/download/v0.2.2/cross-x86_64-unknown-linux-gnu.tar.gz | tar xz -C /usr/local/bin/
   script:
    - apt -qq update
    - apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common > /dev/null
@@ -24,7 +27,6 @@ build-parser-x86_64-unknown-linux-gnu:
    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
    - apt -qq update
    - apt install -y docker-ce > /dev/null
-   - cargo install --git https://github.com/schrieveslaach/cross.git --branch docker-remote
    - cross build --release --target x86_64-unknown-linux-gnu
   artifacts:
     paths:
@@ -36,8 +38,11 @@ build-parser-armv7-unknown-linux-gnueabihf:
   services:
    - docker:19.03.12-dind
   variables:
+    CROSS_REMOTE: "1"
     DOCKER_HOST: "tcp://docker:2375"
     DOCKER_DRIVER: "overlay2"
+  before_script:
+   - curl -L https://github.com/cross-rs/cross/releases/download/v0.2.2/cross-x86_64-unknown-linux-gnu.tar.gz | tar xz -C /usr/local/bin/
   script:
    - apt -qq update
    - apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common > /dev/null
@@ -45,7 +50,6 @@ build-parser-armv7-unknown-linux-gnueabihf:
    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
    - apt -qq update
    - apt install -y docker-ce > /dev/null
-   - cargo install --git https://github.com/schrieveslaach/cross.git --branch docker-remote
    - cross build --release --target armv7-unknown-linux-gnueabihf
   artifacts:
     paths:
