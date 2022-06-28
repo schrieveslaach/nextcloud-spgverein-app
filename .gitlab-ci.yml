@@ -28,7 +28,7 @@ test-parser:
 
 build-parser-x86_64-unknown-linux-gnu:
   stage: Build
-  <<:*cross-compile-parser
+  <<: *cross-compile-parser
   script:
    - cross build --release --target x86_64-unknown-linux-gnu
   artifacts:
@@ -37,7 +37,7 @@ build-parser-x86_64-unknown-linux-gnu:
 
 build-parser-armv7-unknown-linux-gnueabihf:
   stage: Build
-  <<:*cross-compile-parser
+  <<: *cross-compile-parser
   script:
    - cross build --release --target armv7-unknown-linux-gnueabihf
   artifacts:
