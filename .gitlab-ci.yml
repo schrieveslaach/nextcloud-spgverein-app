@@ -30,7 +30,7 @@ build-parser-x86_64-unknown-linux-gnu:
   stage: Build
   <<: *cross-compile-parser
   script:
-   - cross build --release --target x86_64-unknown-linux-gnu
+   - cross build -v --release --target x86_64-unknown-linux-gnu
   artifacts:
     paths:
       - target/x86_64-unknown-linux-gnu/release/spg-parser
@@ -39,7 +39,7 @@ build-parser-armv7-unknown-linux-gnueabihf:
   stage: Build
   <<: *cross-compile-parser
   script:
-   - cross build --release --target armv7-unknown-linux-gnueabihf
+   - cross build -v --release --target armv7-unknown-linux-gnueabihf
   artifacts:
     paths:
       - target/armv7-unknown-linux-gnueabihf/release/spg-parser
