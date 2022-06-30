@@ -20,7 +20,7 @@ test-parser:
   before_script:
    - curl -LO https://github.com/cross-rs/cross/files/9018559/cross-x86_64-unknown-linux-gnu.zip
    - unzip cross-x86_64-unknown-linux-gnu.zip -d /tmp
-   - tar xz /tmp/cross-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/bin/
+   - tar xzf /tmp/cross-x86_64-unknown-linux-gnu.tar.gz -C /usr/local/bin/
    - apt -qq update
    - apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common > /dev/null
    - curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
